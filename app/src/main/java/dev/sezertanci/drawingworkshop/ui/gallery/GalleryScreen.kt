@@ -33,6 +33,7 @@ import dev.sezertanci.drawingworkshop.ui.components.screenContainer
 import dev.sezertanci.drawingworkshop.ui.gallery.components.CardGrid
 import dev.sezertanci.drawingworkshop.ui.gallery.components.DrawingCard
 import dev.sezertanci.drawingworkshop.ui.gallery.components.GalleryCard
+import dev.sezertanci.drawingworkshop.ui.gallery.components.LandscapeBackground
 import dev.sezertanci.drawingworkshop.ui.gallery.components.OverlayButtonSize
 import dev.sezertanci.drawingworkshop.ui.gallery.components.ScreenHeader
 import dev.sezertanci.drawingworkshop.ui.gallery.components.SectionTitle
@@ -81,15 +82,10 @@ fun GalleryScreen(
     }
 }
 
-/** Ekranı dolduran manzara resmi; üstündeki yarı saydam beyaz katman yazıların okunmasını kolaylaştırır. */
+/** Rastgele dizilen manzara; üstündeki yarı saydam beyaz katman yazıların okunmasını kolaylaştırır. */
 @Composable
 private fun GalleryBackground() {
-    Image(
-        painter = painterResource(R.drawable.gallery_background),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxSize(),
-    )
+    LandscapeBackground()
     Box(Modifier.fillMaxSize().background(Color.White.copy(alpha = BACKGROUND_SCRIM_ALPHA)))
 }
 
