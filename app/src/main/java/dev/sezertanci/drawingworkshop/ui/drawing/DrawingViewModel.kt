@@ -62,7 +62,10 @@ class DrawingViewModel @Inject constructor(
      * Boya kovası parmak kalkınca, parmağın son durduğu yeri doldurur. Böylece çocuk parmağını doğru
      * yere kaydırabilir; büyütmek için ikinci parmak konursa doldurma yapılmaz.
      */
-    private var pendingFill: PointF? = null
+    private val pendingFill = PointF()
+
+    /** Dokunuş başladığında seçili olan araç; dokunuş bitene kadar olaylar bu araca gider. */
+    private var touchTool: ToolType? = null
 
     val uiState: StateFlow<DrawingUiState> = combine(selection, engine.historyState) { state, history ->
         state.copy(canUndo = history.canUndo, canRedo = history.canRedo)
@@ -73,7 +76,17 @@ class DrawingViewModel @Inject constructor(
         viewModelScope.launch { loadDrawing() }
     }
 
-    fun selectTool(tool: ToolType) = updateSelection { it.copy(tool = tool) }
+    /** Çıkartma aracından çıkılırken düzenlenen çıkartma resme işlenir. */
+    fun selectTool(tool: ToolType) {
+        if (tool != ToolType.STICKER) engine.commitSticker()
+        updateSelection { it.copy(tool = tool) }
+    }
+
+    /** Düzenlenen bir çıkartma varsa onun resmi de değişir. */
+    fun selectSticker(emoji: String) {
+        updateSelection { it.copy(sticker = emoji) }
+        engine.changeStickerEmoji(emoji)
+    }
 
     fun selectBrushSize(size: BrushSize) = updateSelection { it.copy(brushSize = size) }
 
@@ -90,11 +103,16 @@ class DrawingViewModel @Inject constructor(
 
     fun redo() = engine.redo()
 
-    fun saveNow() = autoSaver.saveNow()
+    /** Düzenlenen çıkartma kaybolmasın diye kayıttan önce resme işlenir. */
+    fun saveNow() {
+        engine.commitSticker()
+        autoSaver.saveNow()
+    }
 
     fun export() {
         val state = selection.value
         if (!state.isLoaded || state.exportStatus == ExportStatus.RUNNING) return
+        engine.commitSticker()
         val layer = engine.copyLayer() ?: return
         val backgroundColor = engine.backgroundColor
         setExportStatus(ExportStatus.RUNNING)
@@ -109,30 +127,44 @@ class DrawingViewModel @Inject constructor(
     override fun onTouchStart(x: Float, y: Float, zoom: Float) {
         val state = selection.value
         if (!state.isLoaded) return
-        if (state.tool == ToolType.BUCKET) {
-            pendingFill = PointF(x, y)
-        } else {
-            engine.startStroke(x, y, zoom)
+        touchTool = state.tool
+        when (state.tool) {
+            ToolType.BUCKET -> pendingFill.set(x, y)
+            ToolType.STICKER -> engine.startStickerTouch(state.sticker, x, y, zoom)
+            else -> engine.startStroke(x, y, zoom)
         }
     }
 
     override fun onTouchMove(x: Float, y: Float) {
-        val fillPoint = pendingFill
-        if (fillPoint != null) fillPoint.set(x, y) else engine.extendStroke(x, y)
+        when (touchTool) {
+            null -> Unit
+            ToolType.BUCKET -> pendingFill.set(x, y)
+            ToolType.STICKER -> engine.moveStickerTouch(x, y)
+            else -> engine.extendStroke(x, y)
+        }
     }
 
     override fun onTouchBatchEnd() = engine.invalidate()
 
     override fun onTouchEnd() {
-        val fillPoint = pendingFill ?: return engine.endStroke()
-        pendingFill = null
-        val color = selection.value.strokeColor
-        viewModelScope.launch { engine.fill(fillPoint.x, fillPoint.y, color) }
+        val tool = touchTool ?: return
+        touchTool = null
+        when (tool) {
+            ToolType.BUCKET -> {
+                val color = selection.value.strokeColor
+                val (x, y) = pendingFill.x to pendingFill.y
+                viewModelScope.launch { engine.fill(x, y, color) }
+            }
+            ToolType.STICKER -> engine.endStickerTouch()
+            else -> engine.endStroke()
+        }
     }
 
+    /** İkinci parmak konunca çağrılır: çizgi iptal edilir, kova doldurmaz, çıkartma yerinde kalır. */
     override fun onTouchCancel() {
-        pendingFill = null
+        touchTool = null
         engine.cancelStroke()
+        engine.endStickerTouch()
     }
 
     /** Ekrandan çıkılırken son değişiklikler kaydedilir; kopya alındıktan sonra motor bırakılır. */

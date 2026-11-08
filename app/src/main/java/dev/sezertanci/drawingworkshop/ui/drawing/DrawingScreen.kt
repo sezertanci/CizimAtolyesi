@@ -17,6 +17,7 @@ import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
 import dev.sezertanci.drawingworkshop.ui.components.screenContainer
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ColorPanel
+import dev.sezertanci.drawingworkshop.ui.drawing.components.StickerPanel
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ToolPanel
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ToolPanelActions
 
@@ -49,10 +50,11 @@ fun DrawingRoute(onHome: () -> Unit, viewModel: DrawingViewModel = hiltViewModel
         onSizeSelected = viewModel::selectBrushSize,
         onColorTargetSelected = viewModel::selectColorTarget,
         onColorSelected = viewModel::selectColor,
+        onStickerSelected = viewModel::selectSticker,
     )
 }
 
-/** Yatay yerleşim: solda araç paneli, ortada tuval, sağda renk paneli. */
+/** Yatay yerleşim: solda araç paneli, ortada tuval, sağda renk paneli (çıkartma aracında çıkartma paneli). */
 @Composable
 fun DrawingScreen(
     state: DrawingUiState,
@@ -62,6 +64,7 @@ fun DrawingScreen(
     onSizeSelected: (BrushSize) -> Unit,
     onColorTargetSelected: (ColorTarget) -> Unit,
     onColorSelected: (Int) -> Unit,
+    onStickerSelected: (String) -> Unit,
 ) {
     Row(
         modifier = Modifier.screenContainer(),
@@ -80,11 +83,15 @@ fun DrawingScreen(
                 .fillMaxHeight()
                 .padding(vertical = CanvasPadding),
         )
-        ColorPanel(
-            colorTarget = state.colorTarget,
-            selectedColor = state.selectedColor,
-            onColorTargetSelected = onColorTargetSelected,
-            onColorSelected = onColorSelected,
-        )
+        if (state.tool == ToolType.STICKER) {
+            StickerPanel(selectedSticker = state.sticker, onStickerSelected = onStickerSelected)
+        } else {
+            ColorPanel(
+                colorTarget = state.colorTarget,
+                selectedColor = state.selectedColor,
+                onColorTargetSelected = onColorTargetSelected,
+                onColorSelected = onColorSelected,
+            )
+        }
     }
 }

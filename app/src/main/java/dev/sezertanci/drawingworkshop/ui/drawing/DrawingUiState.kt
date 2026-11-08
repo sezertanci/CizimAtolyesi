@@ -3,6 +3,7 @@ package dev.sezertanci.drawingworkshop.ui.drawing
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.Palette
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
+import dev.sezertanci.drawingworkshop.domain.sticker.StickerCatalog
 
 /** Renk panelinde seçilen rengin nereye uygulanacağı. */
 enum class ColorTarget {
@@ -16,6 +17,7 @@ data class DrawingUiState(
     val strokeColor: Int = Palette.RED,
     val backgroundColor: Int = Palette.WHITE,
     val colorTarget: ColorTarget = ColorTarget.STROKE,
+    val sticker: String = StickerCatalog.default,
     val canUndo: Boolean = false,
     val canRedo: Boolean = false,
     val isLoaded: Boolean = false,

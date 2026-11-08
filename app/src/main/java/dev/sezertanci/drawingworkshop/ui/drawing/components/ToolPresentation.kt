@@ -18,6 +18,7 @@ val ToolType.emoji: String
         ToolType.SPRAY -> "💨"
         ToolType.ERASER -> "🧽"
         ToolType.BUCKET -> "🪣"
+        ToolType.STICKER -> "🌟"
     }
 
 @get:StringRes
@@ -31,6 +32,7 @@ val ToolType.labelRes: Int
         ToolType.SPRAY -> R.string.tool_spray
         ToolType.ERASER -> R.string.tool_eraser
         ToolType.BUCKET -> R.string.tool_bucket
+        ToolType.STICKER -> R.string.tool_sticker
     }
 
 @get:StringRes

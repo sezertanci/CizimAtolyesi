@@ -1,18 +1,13 @@
 package dev.sezertanci.drawingworkshop.ui.drawing.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -28,8 +23,6 @@ import dev.sezertanci.drawingworkshop.ui.components.PanelButton
 import dev.sezertanci.drawingworkshop.ui.drawing.ExportStatus
 
 private val PanelWidth = 88.dp
-private val PanelPadding = 12.dp
-private val ItemSpacing = 10.dp
 private val PanelDividerWidth = 56.dp
 private val PanelDividerThickness = 2.dp
 
@@ -61,12 +54,7 @@ fun ToolPanel(
     modifier: Modifier = Modifier,
 ) {
     val dotBrush = if (selectedTool == ToolType.RAINBOW) RainbowDotBrush else SolidColor(strokeColor)
-    LazyColumn(
-        modifier = modifier.width(PanelWidth).fillMaxHeight(),
-        contentPadding = PaddingValues(vertical = PanelPadding),
-        verticalArrangement = Arrangement.spacedBy(ItemSpacing),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
+    PanelColumn(width = PanelWidth, modifier = modifier) {
         item { ActionButton(HOME_EMOJI, R.string.action_home, onClick = actions.onHome) }
         item { PanelDivider() }
         items(ToolType.entries) { tool ->

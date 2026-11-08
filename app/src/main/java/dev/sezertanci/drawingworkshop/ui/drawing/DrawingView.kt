@@ -67,7 +67,7 @@ class DrawingView(context: Context) : View(context) {
         val saved = canvas.save()
         canvas.translate(viewport.offsetX, viewport.offsetY)
         canvas.scale(viewport.scale, viewport.scale)
-        engine.draw(canvas)
+        engine.draw(canvas, viewport.scale)
         canvas.restoreToCount(saved)
     }
 

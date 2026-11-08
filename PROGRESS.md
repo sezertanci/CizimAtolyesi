@@ -115,15 +115,20 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
 8. [ ] 4. Aşama: gökkuşağı fırçası, simetri modu, çıkartmalar, ses efektleri. Planlama sürüyor.
    Her parça ayrı yapılır, tablette denenir ve onaylanınca commit edilir.
    - **Sıra:** gökkuşağı fırçası → çıkartmalar → ses efektleri → simetri (en zoru, en sona).
-   - **Gökkuşağı fırçası (yapıldı, commit bekliyor):** çizgi boyunca renk kendiliğinden döner; renk
+   - **Gökkuşağı fırçası (commit edildi: `04ffefe`):** çizgi boyunca renk kendiliğinden döner; renk
      paneli bu araçta kullanılmaz. `RainbowCycle` (48 renk kademesi, 360 dp'de bir tam tur) ve
      `RainbowStroke` (aynı kademedeki parçalar tek yol; bölüm uçları düz, bölümler bir parça örtüşür,
      yalnızca çizginin iki ucu yuvarlak). Seçiliyken boyut noktaları gökkuşağı renginde görünür.
      Ortak `toDirtyRegion` yardımcısı `StrokeBounds.kt` içinde. 48 birim testi geçiyor; tablette düz
      çizgi, sarmal, nokta ve geri alma denendi.
-   - **Çıkartmalar:** emoji; geometrik şekiller ileride ayrıca eklenecek. Dokununca çıkartma önce
-     düzenleme hâlinde konur: sürüklenerek taşınır, köşe tutamacıyla büyütülüp küçültülür,
-     ✓ ile resme işlenir, ✕ ile vazgeçilir.
+   - **Çıkartmalar (tamamlandı, commit bekliyor):** emoji; geometrik şekiller ileride ayrıca
+     eklenecek. Dokununca çıkartma önce düzenleme hâlinde konur: sürüklenerek taşınır, sağ alt
+     tutamaçla büyütülüp küçültülür, ✓ ile resme işlenir, ✕ ile vazgeçilir. Çıkartmanın dışına
+     dokunmak onu oraya taşır. Araç değişince, kayıtta ve dışa aktarmada açık çıkartma resme işlenir;
+     açık çıkartmada geri al onu kaldırır. Çıkartma aracında sağda renk paneli yerine 32 emojilik
+     çıkartma paneli görünür. `StickerEditor` / `StickerDraft` / `StickerCatalog` (`domain/sticker`),
+     `StickerRenderer` (motor), ortak panel iskeleti `PanelColumn`. 59 birim testi geçiyor; tablette
+     koyma, büyütme, emoji değiştirme, sürükleme, ✓, geri al ve araç değiştirme denendi.
    - **Ses efektleri:** sesler özgün, programla üretilir. İlk açılışta açık gelir, istenirse kapatılır.
    - **Simetri:** seçenekler sol–sağ, üst–alt ve nokta simetrisi (4 parça, 8 parça).
      Kova için "simetrik doldur / tek doldur" seçimi yalnızca simetri açıkken görünür.

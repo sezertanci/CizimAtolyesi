@@ -2,6 +2,7 @@ package dev.sezertanci.drawingworkshop.ui.drawing.engine
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Rect
 import android.util.Size
 import dagger.hilt.android.scopes.ViewModelScoped
 import dev.sezertanci.drawingworkshop.di.DefaultDispatcher
@@ -11,6 +12,8 @@ import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.Palette
 import dev.sezertanci.drawingworkshop.domain.model.StrokeSettings
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
+import dev.sezertanci.drawingworkshop.domain.sticker.StickerEditor
+import dev.sezertanci.drawingworkshop.domain.sticker.StickerTouchResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,8 +26,9 @@ data class HistoryState(val canUndo: Boolean, val canRedo: Boolean)
 /**
  * Tuvalin çizim motoru: çizgileri, boya kovasını ve geri al / yinele geçmişini yönetir.
  *
- * Katmanlar alttan üste: arka plan rengi, boya katmanı, o an çizilen çizgi ve varsa boyama sayfasının
- * çizgileri. Çizgiler ayrı tutulduğu için fırça onları örtmez, silgi silmez; boya kovası onları duvar sayar.
+ * Katmanlar alttan üste: arka plan rengi, boya katmanı, o an çizilen çizgi, düzenlenen çıkartma ve varsa
+ * boyama sayfasının çizgileri; en üstte çıkartmanın düğmeleri. Çizgiler ayrı tutulduğu için fırça onları
+ * örtmez, silgi silmez; boya kovası onları duvar sayar. Çıkartma ✓ ile boya katmanına işlenir.
  *
  * Tüm metotlar ana iş parçacığından çağrılır. Yalnızca boya kovasının piksel hesabı arka planda
  * yapılır; bu sırada yeni çizgi ve geri alma kabul edilmez, böylece bitmap tutarlı kalır.
@@ -32,10 +36,12 @@ data class HistoryState(val canUndo: Boolean, val canRedo: Boolean)
 @ViewModelScoped
 class DrawingEngine @Inject constructor(
     private val strokeFactory: StrokeFactory,
+    private val stickerRenderer: StickerRenderer,
     private val floodFiller: FloodFiller,
     @param:DefaultDispatcher private val fillDispatcher: CoroutineDispatcher,
 ) {
     private val surface = DrawingSurface()
+    private val stickerEditor = StickerEditor(stickerRenderer.metrics)
     private val history = UndoRedoHistory<RegionSnapshot>(UNDO_CAPACITY, RegionSnapshot::release)
     private val _historyState = MutableStateFlow(HistoryState(canUndo = false, canRedo = false))
     private val _contentVersion = MutableStateFlow(0)
@@ -97,11 +103,15 @@ class DrawingEngine @Inject constructor(
     /** Boya katmanının kopyası; serbest bırakmak çağırana aittir. */
     fun copyLayer(): Bitmap? = surface.copy()
 
-    fun draw(canvas: Canvas) {
+    /** [zoom], çıkartma düğmelerinin ekranda hep aynı boyda görünmesi için kullanılır. */
+    fun draw(canvas: Canvas, zoom: Float) {
         canvas.drawColor(backgroundColor)
         surface.drawTo(canvas)
         activeStroke?.drawPreview(canvas)
+        val sticker = stickerEditor.draft
+        sticker?.let { stickerRenderer.drawSticker(canvas, it) }
         currentLineArt()?.let { canvas.drawBitmap(it.bitmap, 0f, 0f, null) }
+        sticker?.let { stickerRenderer.drawControls(canvas, it, zoom) }
     }
 
     /** [zoom] büyüdükçe çizgi resim üzerinde incelir; böylece ekranda aynı kalınlıkta görünür. */
@@ -122,19 +132,39 @@ class DrawingEngine @Inject constructor(
         val stroke = activeStroke ?: return
         activeStroke = null
         stroke.end()
-        surface.snapshot(stroke.dirtyRegion())?.let { before ->
-            history.record(before)
-            surface.paint(stroke::commit)
-            markContentChanged()
-        }
-        publishHistory()
-        notifyChanged()
+        commitToLayer(stroke.dirtyRegion(), stroke::commit)
     }
 
     fun cancelStroke() {
         if (activeStroke == null) return
         activeStroke = null
         notifyChanged()
+    }
+
+    /** Çıkartma dokunuşu; onay düğmesine dokunulduysa çıkartma resme işlenir. */
+    fun startStickerTouch(emoji: String, x: Float, y: Float, zoom: Float) {
+        if (isFilling) return
+        val result = stickerEditor.touchStart(emoji, x, y, zoom)
+        if (result == StickerTouchResult.CONFIRMED) commitSticker() else notifyChanged()
+    }
+
+    fun moveStickerTouch(x: Float, y: Float) = stickerEditor.touchMove(x, y)
+
+    fun endStickerTouch() = stickerEditor.touchEnd()
+
+    fun changeStickerEmoji(emoji: String) {
+        stickerEditor.changeEmoji(emoji)
+        notifyChanged()
+    }
+
+    /**
+     * Düzenlenen çıkartma varsa resme işler. Onay düğmesinin yanında araç değişince, kayıttan ve
+     * dışa aktarmadan önce de çağrılır; böylece konan çıkartma kaybolmaz.
+     */
+    fun commitSticker() {
+        if (isFilling) return
+        val draft = stickerEditor.take() ?: return
+        commitToLayer(stickerRenderer.bounds(draft)) { stickerRenderer.drawSticker(it, draft) }
     }
 
     suspend fun fill(x: Float, y: Float, color: Int) {
@@ -159,12 +189,17 @@ class DrawingEngine @Inject constructor(
         }
     }
 
-    fun undo() = applyHistory { history.undo(surface::restore) }
+    /** Düzenlenen bir çıkartma varsa geri alma önce onu kaldırır. */
+    fun undo() {
+        if (stickerEditor.take() != null) return notifyChanged()
+        applyHistory { history.undo(surface::restore) }
+    }
 
     fun redo() = applyHistory { history.redo(surface::restore) }
 
     fun release() {
         onChanged = null
+        stickerEditor.take()
         history.clear()
         surface.release()
         lineArt?.release()
@@ -178,6 +213,17 @@ class DrawingEngine @Inject constructor(
             publishHistory()
             notifyChanged()
         }
+    }
+
+    /** Bölgenin önceki hâlini geçmişe kaydeder, sonra [block] ile boya katmanına çizer. */
+    private fun commitToLayer(region: Rect, block: (Canvas) -> Unit) {
+        surface.snapshot(region)?.let { before ->
+            history.record(before)
+            surface.paint(block)
+            markContentChanged()
+        }
+        publishHistory()
+        notifyChanged()
     }
 
     /** Tuval yeniden boyutlanıp çizgiler henüz yenilenmediyse eski çizgiler kullanılmaz. */

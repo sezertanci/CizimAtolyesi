@@ -10,6 +10,8 @@
     <string name="tool_spray">Sprey</string>
     <string name="tool_eraser">Silgi</string>
     <string name="tool_bucket">Boya kovası</string>
+    <string name="tool_sticker">Çıkartma</string>
+    <string name="sticker_item">Çıkartma seç</string>
 
     <string name="size_small">İnce</string>
     <string name="size_medium">Orta</string>

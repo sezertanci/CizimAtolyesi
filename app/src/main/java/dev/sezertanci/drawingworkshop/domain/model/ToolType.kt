@@ -10,4 +10,5 @@ enum class ToolType {
     SPRAY,
     ERASER,
     BUCKET,
+    STICKER,
 }

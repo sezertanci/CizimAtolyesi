@@ -1,14 +1,8 @@
 package dev.sezertanci.drawingworkshop.ui.drawing.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -19,9 +13,6 @@ import dev.sezertanci.drawingworkshop.ui.components.EmojiIcon
 import dev.sezertanci.drawingworkshop.ui.components.PanelButton
 import dev.sezertanci.drawingworkshop.ui.drawing.ColorTarget
 
-private val PanelWidth = 80.dp
-private val PanelPadding = 12.dp
-private val ItemSpacing = 10.dp
 private val SwatchSize = 52.dp
 
 /**
@@ -36,12 +27,7 @@ fun ColorPanel(
     onColorSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
-        modifier = modifier.width(PanelWidth).fillMaxHeight(),
-        contentPadding = PaddingValues(vertical = PanelPadding),
-        verticalArrangement = Arrangement.spacedBy(ItemSpacing),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
+    PanelColumn(width = RightPanelWidth, modifier = modifier) {
         item {
             PanelButton(
                 selected = colorTarget == ColorTarget.STROKE,
