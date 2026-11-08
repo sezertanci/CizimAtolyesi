@@ -1,6 +1,7 @@
 package dev.sezertanci.drawingworkshop.ui.gallery
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -74,7 +75,36 @@ fun GalleryScreen(
     onOpenTrash: () -> Unit,
     onToggleSound: () -> Unit,
 ) {
-    Column(Modifier.screenContainer()) {
+    Box(Modifier.screenContainer()) {
+        GalleryBackground()
+        GalleryContent(state, thumbnails, onNewDrawing, onOpenDrawing, onOpenColoringPage, onMoveToTrash, onOpenTrash, onToggleSound)
+    }
+}
+
+/** Ekranı dolduran manzara resmi; üstündeki yarı saydam beyaz katman yazıların okunmasını kolaylaştırır. */
+@Composable
+private fun GalleryBackground() {
+    Image(
+        painter = painterResource(R.drawable.gallery_background),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier.fillMaxSize(),
+    )
+    Box(Modifier.fillMaxSize().background(Color.White.copy(alpha = BACKGROUND_SCRIM_ALPHA)))
+}
+
+@Composable
+private fun GalleryContent(
+    state: GalleryUiState,
+    thumbnails: ThumbnailSource,
+    onNewDrawing: () -> Unit,
+    onOpenDrawing: (String) -> Unit,
+    onOpenColoringPage: (String) -> Unit,
+    onMoveToTrash: (String) -> Unit,
+    onOpenTrash: () -> Unit,
+    onToggleSound: () -> Unit,
+) {
+    Column(Modifier.fillMaxSize()) {
         ScreenHeader(
             title = stringResource(R.string.app_name),
             trailing = {
@@ -168,3 +198,4 @@ private const val TRASH_EMOJI = "🗑️"
 private const val SOUND_ON_EMOJI = "🔊"
 private const val SOUND_OFF_EMOJI = "🔇"
 private val HeaderButtonSpacing = 16.dp
+private const val BACKGROUND_SCRIM_ALPHA = 0.25f
