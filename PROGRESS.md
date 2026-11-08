@@ -99,10 +99,11 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
    - **Duvarlar:** Opaklığı 192 ve üstü olan çizgi pikselleri duvardır; daha yumuşak kenarlar
      doldurulur, böylece çizgi ile boya arasında boşluk kalmaz.
    - **Fayton (`carriage`):** İlk sürüm ticari bir boyama kitabının sayfasından fotoğrafla çevrilmişti;
-     telif sorunu olmaması için diğer sayfalar gibi özgün bir çizimle değiştirildi (tavanında bavul,
-     fenerli, iki tekerlekli kutu biçimli fayton). Kimlik `carriage` aynı kaldı; tabletteki eski fayton
-     resimleri silindi. Tüm bölgelerin kapalı olduğu bilgisayarda bölge haritasıyla, tablette boya
-     kovasıyla denendi. Not: eski çizim git geçmişinde (`87358ca`) hâlâ duruyor.
+     telif sorunu olmaması için özgün bir çizimle değiştirildi ve eski çizim git geçmişinden de
+     temizlendi. Yeni çizim aynı türde ama özgün bir kabak biçimli masal arabasıdır (boncuklu taç,
+     yuvarlak pencere, kemerli kapı, yıldızlar, uçları kıvrık şasi, kıvrık telli tekerlekler).
+     Kimlik `carriage` aynı kaldı; tabletteki eski fayton resimleri silindi. Tüm bölgelerin kapalı
+     olduğu bilgisayarda bölge haritasıyla, tablette boya kovasıyla denendi.
 7. [ ] 4. Aşama: gökkuşağı fırçası, simetri modu, çıkartmalar, ses efektleri.
 
 > Her aşama onay alınmadan başlamaz.
