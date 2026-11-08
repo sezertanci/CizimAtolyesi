@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Çizim Atölyesi</string>
+
+    <string name="tool_pencil">Kurşun kalem</string>
+    <string name="tool_brush">Fırça</string>
+    <string name="tool_marker">Keçeli kalem</string>
+    <string name="tool_crayon">Pastel boya</string>
+    <string name="tool_spray">Sprey</string>
+    <string name="tool_eraser">Silgi</string>
+    <string name="tool_bucket">Boya kovası</string>
+
+    <string name="size_small">İnce</string>
+    <string name="size_medium">Orta</string>
+    <string name="size_large">Kalın</string>
+
+    <string name="action_undo">Geri al</string>
+    <string name="action_redo">Yinele</string>
+
+    <string name="color_target_stroke">Kalem rengi</string>
+    <string name="color_target_background">Arka plan rengi</string>
+    <string name="color_swatch">Renk</string>
+</resources>

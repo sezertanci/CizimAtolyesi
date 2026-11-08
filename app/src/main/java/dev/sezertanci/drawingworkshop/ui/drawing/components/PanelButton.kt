@@ -1,0 +1,63 @@
+package dev.sezertanci.drawingworkshop.ui.drawing.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import dev.sezertanci.drawingworkshop.ui.theme.WorkshopColors
+
+private val ButtonSize = 64.dp
+private val SelectedBorder = 4.dp
+private val NormalBorder = 1.dp
+private const val DISABLED_ALPHA = 0.35f
+private val DefaultShape = RoundedCornerShape(16.dp)
+
+/** Panellerdeki tüm düğmelerin ortak görünümü: seçiliyse turuncu çerçeve, pasifse soluk. */
+@Composable
+fun PanelButton(
+    selected: Boolean,
+    description: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    size: Dp = ButtonSize,
+    shape: Shape = DefaultShape,
+    background: Color = if (selected) WorkshopColors.SelectionBackground else WorkshopColors.ItemBackground,
+    content: @Composable () -> Unit,
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .size(size)
+            .alpha(if (enabled) 1f else DISABLED_ALPHA)
+            .clip(shape)
+            .background(background)
+            .border(
+                width = if (selected) SelectedBorder else NormalBorder,
+                color = if (selected) WorkshopColors.Selection else WorkshopColors.Outline,
+                shape = shape,
+            )
+            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .semantics {
+                contentDescription = description
+                this.selected = selected
+            },
+    ) {
+        content()
+    }
+}

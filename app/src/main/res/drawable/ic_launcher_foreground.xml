@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Renk paleti biçiminde uygulama simgesi. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M54,28 C69,28 81,38 81,51 C81,58 76,61 70,61 L65,61 C61,61 59,64 61,67 C63,70 62,80 54,80 C39,80 27,68 27,54 C27,40 39,28 54,28 Z" />
+    <path
+        android:fillColor="#FFE53935"
+        android:pathData="M43,40 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+    <path
+        android:fillColor="#FF1E88E5"
+        android:pathData="M58,37 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+    <path
+        android:fillColor="#FF43A047"
+        android:pathData="M70,48 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+    <path
+        android:fillColor="#FF8E24AA"
+        android:pathData="M38,55 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+    <path
+        android:fillColor="#FFFB8C00"
+        android:pathData="M45,68 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+</vector>
