@@ -63,6 +63,28 @@ class ScanlineFloodFillerTest {
     }
 
     @Test
+    fun fill_WallColumn_StopsAtWallAndLeavesItUnpainted() {
+        val pixels = canvas { _, _ -> TRANSPARENT }
+        val walls = BooleanArray(SIZE * SIZE) { it % SIZE == WALL_X }
+
+        val bounds = filler.fill(pixels, SIZE, SIZE, 0, 0, RED, walls)
+
+        assertEquals(FillBounds(0, 0, WALL_X, SIZE), bounds)
+        assertEquals(RED, pixels[WALL_X - 1])
+        assertEquals(TRANSPARENT, pixels[WALL_X])
+        assertEquals(TRANSPARENT, pixels[WALL_X + 1])
+    }
+
+    @Test
+    fun fill_StartOnWall_ReturnsNull() {
+        val pixels = canvas { _, _ -> TRANSPARENT }
+        val walls = BooleanArray(SIZE * SIZE) { it % SIZE == WALL_X }
+
+        assertNull(filler.fill(pixels, SIZE, SIZE, WALL_X, 0, RED, walls))
+        assertTrue(pixels.all { it == TRANSPARENT })
+    }
+
+    @Test
     fun sourceOver_OpaqueSource_ReturnsSource() {
         assertEquals(BLACK, ColorMath.sourceOver(BLACK, RED))
     }
@@ -76,6 +98,7 @@ class ScanlineFloodFillerTest {
 
     private companion object {
         const val SIZE = 7
+        const val WALL_X = 3
         const val TOLERANCE = 48
         const val WHITE = 0xFFFFFFFF.toInt()
         const val BLACK = 0xFF000000.toInt()

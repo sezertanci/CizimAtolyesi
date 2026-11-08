@@ -9,7 +9,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.sezertanci.drawingworkshop.data.image.renderFlattened
+import dev.sezertanci.drawingworkshop.data.image.DrawingFlattener
 import dev.sezertanci.drawingworkshop.data.image.writePng
 import dev.sezertanci.drawingworkshop.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -31,20 +31,22 @@ class MediaStoreDrawingExporter @Inject constructor(
     @param:ApplicationContext private val context: Context,
     @param:IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val clock: Clock,
+    private val flattener: DrawingFlattener,
 ) : DrawingExporter {
 
-    override suspend fun export(layer: Bitmap, backgroundColor: Int): Boolean = withContext(ioDispatcher) {
-        val image = try {
-            renderFlattened(layer, backgroundColor)
-        } finally {
-            layer.recycle()
+    override suspend fun export(layer: Bitmap, backgroundColor: Int, templateId: String?): Boolean =
+        withContext(ioDispatcher) {
+            val image = try {
+                flattener.flatten(layer, backgroundColor, templateId)
+            } finally {
+                layer.recycle()
+            }
+            try {
+                insert(context.contentResolver, image)
+            } finally {
+                image.recycle()
+            }
         }
-        try {
-            insert(context.contentResolver, image)
-        } finally {
-            image.recycle()
-        }
-    }
 
     private fun insert(resolver: ContentResolver, image: Bitmap): Boolean {
         val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, pendingValues()) ?: return false

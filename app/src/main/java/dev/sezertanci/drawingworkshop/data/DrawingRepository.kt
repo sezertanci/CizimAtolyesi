@@ -4,11 +4,20 @@ import android.graphics.Bitmap
 import dev.sezertanci.drawingworkshop.domain.drawing.Drawing
 import kotlinx.coroutines.flow.Flow
 
-/** Kaydedilecek resim içeriği. [layer] kaydedildikten sonra serbest bırakılır. */
-class SaveRequest(val id: String, val layer: Bitmap, val backgroundColor: Int, val updatedAt: Long)
+/**
+ * Kaydedilecek resim içeriği. [layer] kaydedildikten sonra serbest bırakılır.
+ * [templateId] resmin açıldığı boyama sayfasıdır; boş tuvalse `null`.
+ */
+class SaveRequest(
+    val id: String,
+    val layer: Bitmap,
+    val backgroundColor: Int,
+    val templateId: String?,
+    val updatedAt: Long,
+)
 
 /** Açılan resmin kayıtlı içeriği. Boya katmanı dosyası okunamazsa [layer] `null` olur. */
-class StoredDrawing(val backgroundColor: Int, val layer: Bitmap?)
+class StoredDrawing(val backgroundColor: Int, val layer: Bitmap?, val templateId: String?)
 
 interface DrawingRepository {
     /** Galerideki resimler, en son düzenlenen başta. */

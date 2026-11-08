@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.sezertanci.drawingworkshop.data.image.renderFlattened
+import dev.sezertanci.drawingworkshop.data.image.DrawingFlattener
 import dev.sezertanci.drawingworkshop.data.image.writePng
 import dev.sezertanci.drawingworkshop.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,14 +23,15 @@ import javax.inject.Inject
 class InternalDrawingFileStore @Inject constructor(
     @param:ApplicationContext private val context: Context,
     @param:IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val flattener: DrawingFlattener,
 ) : DrawingFileStore {
 
     private val root: File get() = File(context.filesDir, ROOT_DIR)
 
-    override suspend fun write(id: String, layer: Bitmap, backgroundColor: Int): Boolean =
+    override suspend fun write(id: String, layer: Bitmap, backgroundColor: Int, templateId: String?): Boolean =
         withContext(ioDispatcher) {
             val dir = directory(id).apply { mkdirs() }
-            val thumbnail = renderFlattened(layer, backgroundColor, THUMBNAIL_MAX_SIDE)
+            val thumbnail = flattener.flatten(layer, backgroundColor, templateId, THUMBNAIL_MAX_SIDE)
             try {
                 writeAtomically(layer, File(dir, LAYER_FILE)) && writeAtomically(thumbnail, File(dir, THUMBNAIL_FILE))
             } finally {

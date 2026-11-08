@@ -57,11 +57,20 @@ class DefaultDrawingRepositoryTest {
     }
 
     @Test
+    fun load_DrawingFromColoringPage_ReturnsTemplateId() = runBlocking {
+        dao.rows["a"] = entity("a", deletedAt = null).copy(templateId = "cat")
+
+        val stored = repository.load("a")
+
+        assertEquals("cat", stored?.templateId)
+    }
+
+    @Test
     fun load_UnknownId_ReturnsNull() = runBlocking {
         assertNull(repository.load("missing"))
     }
 
-    private fun entity(id: String, deletedAt: Long?) = DrawingEntity(id, updatedAt = 0, deletedAt, backgroundColor = 0)
+    private fun entity(id: String, deletedAt: Long?) = DrawingEntity(id, updatedAt = 0, deletedAt, backgroundColor = 0, templateId = null)
 }
 
 private class FakeDrawingDao : DrawingDao {
@@ -99,7 +108,7 @@ private class FakeDrawingDao : DrawingDao {
 private class FakeFileStore : DrawingFileStore {
     val deleted = mutableListOf<String>()
 
-    override suspend fun write(id: String, layer: Bitmap, backgroundColor: Int) = true
+    override suspend fun write(id: String, layer: Bitmap, backgroundColor: Int, templateId: String?) = true
 
     override suspend fun readLayer(id: String): Bitmap? = null
 

@@ -2,6 +2,7 @@ package dev.sezertanci.drawingworkshop.ui.drawing.engine
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.util.Size
 import dagger.hilt.android.scopes.ViewModelScoped
 import dev.sezertanci.drawingworkshop.di.DefaultDispatcher
 import dev.sezertanci.drawingworkshop.domain.fill.FloodFiller
@@ -22,6 +23,9 @@ data class HistoryState(val canUndo: Boolean, val canRedo: Boolean)
 /**
  * Tuvalin çizim motoru: çizgileri, boya kovasını ve geri al / yinele geçmişini yönetir.
  *
+ * Katmanlar alttan üste: arka plan rengi, boya katmanı, o an çizilen çizgi ve varsa boyama sayfasının
+ * çizgileri. Çizgiler ayrı tutulduğu için fırça onları örtmez, silgi silmez; boya kovası onları duvar sayar.
+ *
  * Tüm metotlar ana iş parçacığından çağrılır. Yalnızca boya kovasının piksel hesabı arka planda
  * yapılır; bu sırada yeni çizgi ve geri alma kabul edilmez, böylece bitmap tutarlı kalır.
  */
@@ -35,11 +39,16 @@ class DrawingEngine @Inject constructor(
     private val history = UndoRedoHistory<RegionSnapshot>(UNDO_CAPACITY, RegionSnapshot::release)
     private val _historyState = MutableStateFlow(HistoryState(canUndo = false, canRedo = false))
     private val _contentVersion = MutableStateFlow(0)
+    private val _canvasSize = MutableStateFlow<Size?>(null)
     private var activeStroke: ActiveStroke? = null
+    private var lineArt: LineArt? = null
     private var isFilling = false
     private var onChanged: (() -> Unit)? = null
 
     val historyState: StateFlow<HistoryState> = _historyState.asStateFlow()
+
+    /** Tuvalin piksel boyutu; görünüm ölçülene kadar `null`. Çizgi katmanı bu boyutta hazırlanır. */
+    val canvasSize: StateFlow<Size?> = _canvasSize.asStateFlow()
 
     /** Resim her değiştiğinde artar (çizgi, doldurma, geri al, arka plan). Otomatik kayıt bunu izler. */
     val contentVersion: StateFlow<Int> = _contentVersion.asStateFlow()
@@ -62,6 +71,7 @@ class DrawingEngine @Inject constructor(
     fun resize(width: Int, height: Int) {
         cancelStroke()
         surface.resize(width, height)
+        if (surface.width > 0) _canvasSize.value = Size(surface.width, surface.height)
         notifyChanged()
     }
 
@@ -77,6 +87,13 @@ class DrawingEngine @Inject constructor(
         notifyChanged()
     }
 
+    /** Boyama sayfasının çizgilerini yerleştirir; önceki çizgiler serbest bırakılır. [art] motora devredilir. */
+    fun setLineArt(art: LineArt) {
+        lineArt?.release()
+        lineArt = art
+        notifyChanged()
+    }
+
     /** Boya katmanının kopyası; serbest bırakmak çağırana aittir. */
     fun copyLayer(): Bitmap? = surface.copy()
 
@@ -84,6 +101,7 @@ class DrawingEngine @Inject constructor(
         canvas.drawColor(backgroundColor)
         surface.drawTo(canvas)
         activeStroke?.drawPreview(canvas)
+        currentLineArt()?.let { canvas.drawBitmap(it.bitmap, 0f, 0f, null) }
     }
 
     fun startStroke(x: Float, y: Float) {
@@ -125,8 +143,9 @@ class DrawingEngine @Inject constructor(
         isFilling = true
         try {
             val pixels = surface.readPixels()
+            val walls = currentLineArt()?.walls
             val bounds = withContext(fillDispatcher) {
-                floodFiller.fill(pixels, width, height, x.toInt(), y.toInt(), color)
+                floodFiller.fill(pixels, width, height, x.toInt(), y.toInt(), color, walls)
             } ?: return
             if (surface.width != width || surface.height != height) return
             surface.snapshot(bounds.toRect())?.let(history::record)
@@ -147,6 +166,8 @@ class DrawingEngine @Inject constructor(
         onChanged = null
         history.clear()
         surface.release()
+        lineArt?.release()
+        lineArt = null
     }
 
     private fun applyHistory(action: () -> Boolean) {
@@ -157,6 +178,9 @@ class DrawingEngine @Inject constructor(
             notifyChanged()
         }
     }
+
+    /** Tuval yeniden boyutlanıp çizgiler henüz yenilenmediyse eski çizgiler kullanılmaz. */
+    private fun currentLineArt(): LineArt? = lineArt?.takeIf { it.matches(surface.width, surface.height) }
 
     private fun publishHistory() {
         _historyState.value = HistoryState(history.canUndo, history.canRedo)

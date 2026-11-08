@@ -4,8 +4,11 @@ import android.graphics.Bitmap
 
 /** Resimlerin görüntü dosyalarını (boya katmanı ve küçük resim) saklar. */
 interface DrawingFileStore {
-    /** Boya katmanını ve ondan üretilen küçük resmi yazar. Başarısız olursa `false` döner. */
-    suspend fun write(id: String, layer: Bitmap, backgroundColor: Int): Boolean
+    /**
+     * Boya katmanını ve ondan üretilen küçük resmi yazar. Küçük resimde boyama sayfasının çizgileri
+     * de bulunur. Başarısız olursa `false` döner.
+     */
+    suspend fun write(id: String, layer: Bitmap, backgroundColor: Int, templateId: String?): Boolean
 
     suspend fun readLayer(id: String): Bitmap?
 

@@ -20,7 +20,14 @@ sağda renk paneli, ortada tuval bulunur. Tuval dolu olsa bile akıcı çalışm
 - Silinen resim çöp kutusuna gider, oradan geri getirilebilir; 24 saat sonra kalıcı olarak silinir
 - 📤 düğmesiyle resim cihaz galerisine (`Pictures/Çizim Atölyesi`) PNG olarak aktarılır
 
-Hazır boyama sayfaları sonraki aşamada galeriye ayrı bir bölüm olarak eklenecek.
+### Boyama sayfaları (3. aşama)
+
+- Galeride "Resimlerim"in altında 8 boyama sayfası bulunur: kedi, balık, ev, araba, çiçek, kelebek, dinozor, güneş
+- Sayfaya dokununca o sayfadan yeni bir resim açılır; sayfanın kendisi değişmez
+- Resim ancak boyanınca kaydedilir; açılıp kapatılan sayfa galeride boş resim bırakmaz
+- Çizgiler her zaman en üstte durur: fırça çizgileri örtmez, silgi çizgileri silmez
+- Boya kovası çizgileri duvar sayar ve rengi çizgilerin yumuşak kenarlarının altına kadar doldurur
+- Küçük resim ve dışa aktarılan PNG çizgileri de içerir
 
 ## Gereksinimler
 
@@ -57,6 +64,7 @@ Windows'ta `./gradlew` yerine `gradlew.bat` kullanılabilir.
 - `domain/` — Android'den bağımsız mantık: araç modelleri, geri al geçmişi, çizgi yumuşatma, boya kovası,
   çöp kutusu süresi (`domain/drawing`) ve ölçekleme hesabı (`domain/geometry`)
 - `data/` — Room veritabanı, resim dosyalarının iç depoda saklanması, kayıt kuyruğu ve dışa aktarma
+- `data/coloring/` — Boyama sayfası kataloğu ve sayfaların çizimi; sayfalar `res/drawable/coloring_*.xml` vektörleridir
 - `ui/drawing/engine/` — Çizim motoru: ekran dışı bitmap, fırça türleri, bölge anlık görüntüleri
 - `ui/drawing/` — Ekran, paneller, ViewModel, otomatik kayıt ve dokunmatik görünüm
 - `ui/gallery/` — Galeri ve çöp kutusu ekranları

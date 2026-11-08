@@ -23,19 +23,27 @@ class DefaultDrawingRepository @Inject constructor(
 
     override suspend fun load(id: String): StoredDrawing? {
         val entity = dao.findById(id) ?: return null
-        return StoredDrawing(entity.backgroundColor, fileStore.readLayer(id))
+        return StoredDrawing(entity.backgroundColor, fileStore.readLayer(id), entity.templateId)
     }
 
     /** Önce dosyalar yazılır, sonra kayıt güncellenir; dosya yazılamazsa kayıt değişmez. */
     override suspend fun save(request: SaveRequest) {
         try {
-            if (!fileStore.write(request.id, request.layer, request.backgroundColor)) return
+            if (!fileStore.write(request.id, request.layer, request.backgroundColor, request.templateId)) return
         } finally {
             request.layer.recycle()
         }
         val updated = dao.updateContent(request.id, request.updatedAt, request.backgroundColor)
         if (updated == 0) {
-            dao.insert(DrawingEntity(request.id, request.updatedAt, deletedAt = null, request.backgroundColor))
+            dao.insert(
+                DrawingEntity(
+                    id = request.id,
+                    updatedAt = request.updatedAt,
+                    deletedAt = null,
+                    backgroundColor = request.backgroundColor,
+                    templateId = request.templateId,
+                ),
+            )
         }
     }
 

@@ -2,4 +2,5 @@
 <resources>
     <color name="panel_background">#FFFFF4D6</color>
     <color name="launcher_background">#FFFFD54F</color>
+    <color name="line_art">#FF000000</color>
 </resources>

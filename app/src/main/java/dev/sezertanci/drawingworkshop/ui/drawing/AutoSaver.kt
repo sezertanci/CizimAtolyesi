@@ -26,11 +26,16 @@ class AutoSaver @Inject constructor(
     private val clock: Clock,
 ) {
     private var drawingId: String? = null
+    private var templateId: String? = null
     private var savedVersion = 0
 
-    /** Yükleme bittikten sonra çağrılır; o anki hal kayıtlı kabul edilir. */
-    fun start(id: String, scope: CoroutineScope) {
+    /**
+     * Yükleme bittikten sonra çağrılır; o anki hal kayıtlı kabul edilir. [pageId] resmin açıldığı
+     * boyama sayfasıdır; boş tuvalse `null`.
+     */
+    fun start(id: String, pageId: String?, scope: CoroutineScope) {
         drawingId = id
+        templateId = pageId
         savedVersion = engine.contentVersion.value
         scope.launch {
             engine.contentVersion.collectLatest { version ->
@@ -47,7 +52,7 @@ class AutoSaver @Inject constructor(
         if (version == savedVersion) return
         val layer = engine.copyLayer() ?: return
         savedVersion = version
-        saveQueue.enqueue(SaveRequest(id, layer, engine.backgroundColor, clock.millis()))
+        saveQueue.enqueue(SaveRequest(id, layer, engine.backgroundColor, templateId, clock.millis()))
     }
 
     private companion object {

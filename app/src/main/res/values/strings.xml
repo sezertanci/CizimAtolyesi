@@ -30,6 +30,9 @@
     <string name="action_open_drawing">Resmi aç</string>
     <string name="action_move_to_trash">Çöp kutusuna at</string>
 
+    <string name="gallery_coloring_pages">Boyama sayfaları</string>
+    <string name="action_open_coloring_page">Boyama sayfasını aç</string>
+
     <string name="trash_title">Çöp kutusu</string>
     <string name="trash_item">Çöp kutusundaki resim</string>
     <string name="action_restore">Geri getir</string>

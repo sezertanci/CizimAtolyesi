@@ -22,17 +22,18 @@ fun AppNavHost() {
             GalleryRoute(
                 onNewDrawing = { navController.navigateFrom(entry, Routes.drawing(null)) },
                 onOpenDrawing = { id -> navController.navigateFrom(entry, Routes.drawing(id)) },
+                onOpenColoringPage = { id -> navController.navigateFrom(entry, Routes.coloringPage(id)) },
                 onOpenTrash = { navController.navigateFrom(entry, Routes.TRASH) },
             )
         }
         composable(
             route = Routes.DRAWING_PATTERN,
-            arguments = listOf(
-                navArgument(Routes.ARG_DRAWING_ID) {
+            arguments = listOf(Routes.ARG_DRAWING_ID, Routes.ARG_TEMPLATE_ID).map { name ->
+                navArgument(name) {
                     type = NavType.StringType
                     nullable = true
-                },
-            ),
+                }
+            },
         ) { entry ->
             DrawingRoute(onHome = { navController.popBackFrom(entry) })
         }

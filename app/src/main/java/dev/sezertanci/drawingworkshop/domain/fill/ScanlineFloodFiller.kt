@@ -12,12 +12,20 @@ import kotlin.math.abs
  */
 class ScanlineFloodFiller @Inject constructor() : FloodFiller {
 
-    override fun fill(pixels: IntArray, width: Int, height: Int, startX: Int, startY: Int, color: Int): FillBounds? {
+    override fun fill(
+        pixels: IntArray,
+        width: Int,
+        height: Int,
+        startX: Int,
+        startY: Int,
+        color: Int,
+        walls: BooleanArray?,
+    ): FillBounds? {
         if (startX !in 0 until width || startY !in 0 until height) return null
         val target = pixels[startY * width + startX]
         if (target == color) return null
 
-        val region = FillRegion(pixels, width, height, target)
+        val region = FillRegion(pixels, width, height, target, walls)
         region.floodFrom(startX, startY, color)
         repeat(EDGE_BLEND_PASSES) { region.blendEdges(color) }
         return region.bounds()
@@ -28,6 +36,7 @@ class ScanlineFloodFiller @Inject constructor() : FloodFiller {
         private val width: Int,
         private val height: Int,
         private val target: Int,
+        private val walls: BooleanArray?,
     ) {
         private val filled = BooleanArray(pixels.size)
         private val stack = IntStack()
@@ -99,7 +108,8 @@ class ScanlineFloodFiller @Inject constructor() : FloodFiller {
                 (y < height - 1 && filled[index + width])
         }
 
-        private fun canFill(index: Int): Boolean = !filled[index] && ColorMath.isClose(pixels[index], target, TOLERANCE)
+        private fun canFill(index: Int): Boolean =
+            !filled[index] && (walls == null || !walls[index]) && ColorMath.isClose(pixels[index], target, TOLERANCE)
 
         private fun paint(index: Int, color: Int) {
             pixels[index] = color

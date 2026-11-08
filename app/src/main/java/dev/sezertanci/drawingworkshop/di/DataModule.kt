@@ -10,6 +10,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.sezertanci.drawingworkshop.data.DefaultDrawingRepository
 import dev.sezertanci.drawingworkshop.data.DrawingRepository
+import dev.sezertanci.drawingworkshop.data.coloring.BuiltInColoringPageCatalog
+import dev.sezertanci.drawingworkshop.data.coloring.ColoringPageCatalog
+import dev.sezertanci.drawingworkshop.data.coloring.ColoringPageRenderer
+import dev.sezertanci.drawingworkshop.data.coloring.DrawableColoringPageRenderer
 import dev.sezertanci.drawingworkshop.data.export.DrawingExporter
 import dev.sezertanci.drawingworkshop.data.export.MediaStoreDrawingExporter
 import dev.sezertanci.drawingworkshop.data.file.DrawingFileStore
@@ -35,6 +39,13 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindDrawingExporter(impl: MediaStoreDrawingExporter): DrawingExporter
+
+    @Binds
+    @Singleton
+    abstract fun bindColoringPageCatalog(impl: BuiltInColoringPageCatalog): ColoringPageCatalog
+
+    @Binds
+    abstract fun bindColoringPageRenderer(impl: DrawableColoringPageRenderer): ColoringPageRenderer
 
     companion object {
         @Provides

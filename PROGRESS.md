@@ -1,6 +1,6 @@
 # Çizim Atölyesi — İlerleme ve Açık Sorular
 
-Tarih: 2026-11-08
+Tarih: 2026-11-08 (3. aşama tamamlandı)
 
 ## Proje özeti
 
@@ -77,8 +77,7 @@ Tarih: 2026-11-08
    Tablette denendi: yeni resim, otomatik kayıt, yeniden açma, dışa aktarma, çöp kutusuna atma,
    geri getirme ve hızlı çift dokunuşta gezinme koruması çalışıyor; çökme yok.
    - **Açılış ekranı galeridir.** Galeri bölümlerden oluşur: şimdilik "Resimlerim". Hazır boyama
-     sayfaları ileride ayrı bir bölüm olarak eklenecek; resim kaydında `templateId` alanı bunun için
-     ayrılmadı (YAGNI), bölüm yapısı ekranda hazır tutulur.
+     sayfaları 3. aşamada "Boyama sayfaları" bölümü olarak eklendi.
    - **Resmin adı yok.** Galeride küçük resimler, en son düzenlenen en başta görünür.
    - **Kayıt:** Room'da resim listesi (`id`, `updatedAt`, `deletedAt`, `backgroundColor`).
      Boya katmanı şeffaf PNG, küçük resim ayrı PNG olarak iç depoda tutulur. Geçici dosyaya yazılıp
@@ -89,7 +88,17 @@ Tarih: 2026-11-08
      kalıcı olarak silinir (galeri ve çöp kutusu ekranı açılırken temizlik yapılır).
    - **Dışa aktarma:** Çizim ekranındaki 📤 düğmesi; PNG, MediaStore ile `Pictures/Çizim Atölyesi`
      klasörüne, izin gerekmeden.
-6. [ ] Sonraki aşamalar: boyama sayfaları, seçilen ek özellikler.
+6. [x] 3. Aşama: boyama sayfaları. Derleniyor, 36 birim testi geçiyor. Tablette denendi: eski resimler
+   veritabanı geçişinden sonra duruyor; 8 sayfanın hepsi açılıyor ve boya kovası çizgileri duvar sayıyor;
+   fırça çizgilerin altında kalıyor; küçük resim ve dışa aktarma çizgileri içeriyor; boyanmadan kapatılan
+   sayfa kaydedilmiyor. Kare sürelerinin %90'ı 16 ms altında, çökme yok.
+   - **Sayfalar:** 8 özgün VectorDrawable, beyaz zemin. Her sayfanın değişmez bir kimliği var
+     (`cat`, `fish`, `house`, `car`, `flower`, `butterfly`, `dinosaur`, `sun`).
+   - **Kayıt:** Resim kaydına `templateId` eklendi (Room 1→2 AutoMigration, şema `app/schemas`
+     altında). Çizgi katmanı kaydedilmez; açılışta sayfadan yeniden çizilir.
+   - **Duvarlar:** Opaklığı 192 ve üstü olan çizgi pikselleri duvardır; daha yumuşak kenarlar
+     doldurulur, böylece çizgi ile boya arasında boşluk kalmaz.
+7. [ ] 4. Aşama: gökkuşağı fırçası, simetri modu, çıkartmalar, ses efektleri.
 
 > Her aşama onay alınmadan başlamaz.
 

@@ -81,7 +81,7 @@ fun ScreenHeader(
     }
 }
 
-/** Izgarada tüm satırı kaplayan bölüm başlığı (ör. "Resimlerim"; ileride "Boyama sayfaları"). */
+/** Izgarada tüm satırı kaplayan bölüm başlığı (ör. "Resimlerim", "Boyama sayfaları"). */
 @Composable
 fun SectionTitle(text: String) {
     Text(text = text, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
