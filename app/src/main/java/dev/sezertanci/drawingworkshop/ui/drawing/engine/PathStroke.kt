@@ -8,7 +8,6 @@ import android.graphics.RectF
 import dev.sezertanci.drawingworkshop.domain.stroke.QuadSegment
 import dev.sezertanci.drawingworkshop.domain.stroke.StrokePoint
 import dev.sezertanci.drawingworkshop.domain.stroke.StrokeSmoother
-import kotlin.math.ceil
 
 /**
  * Yumuşatılmış bir yol (path) olarak çizilen çizgi. Kalem, fırça, keçeli kalem, pastel boya ve silgi
@@ -39,7 +38,6 @@ class PathStroke(
 
     override fun end() {
         smoother.finish()?.let(::append)
-        // Dokunup kaldırınca da bir nokta görünsün diye çok kısa bir çizgi eklenir.
         if (!hasSegments) path.lineTo(startPoint.x + DOT_OFFSET, startPoint.y)
     }
 
@@ -54,9 +52,7 @@ class PathStroke(
     override fun dirtyRegion(): Rect {
         val bounds = RectF()
         path.computeBounds(bounds, true)
-        val padding = commitPaint.strokeWidth / 2f + EDGE_PADDING
-        bounds.inset(-padding, -padding)
-        return Rect(bounds.left.toInt(), bounds.top.toInt(), ceil(bounds.right).toInt(), ceil(bounds.bottom).toInt())
+        return bounds.toDirtyRegion(commitPaint.strokeWidth)
     }
 
     private fun append(segment: QuadSegment) {
@@ -65,7 +61,7 @@ class PathStroke(
     }
 
     private companion object {
+        /** Dokunup hemen kaldırınca da bir nokta görünsün diye yola eklenen çok kısa çizginin uzunluğu. */
         const val DOT_OFFSET = 0.1f
-        const val EDGE_PADDING = 2f
     }
 }

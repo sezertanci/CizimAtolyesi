@@ -12,6 +12,7 @@ val ToolType.emoji: String
     get() = when (this) {
         ToolType.PENCIL -> "✏️"
         ToolType.BRUSH -> "🖌️"
+        ToolType.RAINBOW -> "🌈"
         ToolType.MARKER -> "🖊️"
         ToolType.CRAYON -> "🖍️"
         ToolType.SPRAY -> "💨"
@@ -24,6 +25,7 @@ val ToolType.labelRes: Int
     get() = when (this) {
         ToolType.PENCIL -> R.string.tool_pencil
         ToolType.BRUSH -> R.string.tool_brush
+        ToolType.RAINBOW -> R.string.tool_rainbow
         ToolType.MARKER -> R.string.tool_marker
         ToolType.CRAYON -> R.string.tool_crayon
         ToolType.SPRAY -> R.string.tool_spray

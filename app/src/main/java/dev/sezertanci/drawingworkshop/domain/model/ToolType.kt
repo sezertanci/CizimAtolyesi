@@ -4,6 +4,7 @@ package dev.sezertanci.drawingworkshop.domain.model
 enum class ToolType {
     PENCIL,
     BRUSH,
+    RAINBOW,
     MARKER,
     CRAYON,
     SPRAY,

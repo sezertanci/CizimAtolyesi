@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import dev.sezertanci.drawingworkshop.domain.model.StrokeSettings
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
+import dev.sezertanci.drawingworkshop.domain.stroke.RainbowCycle
 import dev.sezertanci.drawingworkshop.domain.stroke.SprayScatter
 import javax.inject.Inject
 
@@ -25,8 +26,15 @@ class StrokeFactory @Inject constructor(
         return when (settings.tool) {
             ToolType.SPRAY -> createSpray(settings.color, width, scale)
             ToolType.ERASER -> createEraser(backgroundColor, width, scale)
+            ToolType.RAINBOW -> createRainbow(width, scale)
             else -> createPath(settings, width, style.alpha, scale)
         }
+    }
+
+    /** Renk panelindeki seçim kullanılmaz; renk çizgi boyunca kendiliğinden değişir. */
+    private fun createRainbow(width: Float, scale: Scale): ActiveStroke {
+        val paint = strokePaint(RainbowCycle.colorOf(0), width, OPAQUE)
+        return RainbowStroke(paint, scale.toPx(MIN_POINT_DISTANCE_DP), RainbowCycle(scale.toPx(RAINBOW_CYCLE_DP)))
     }
 
     private fun createPath(settings: StrokeSettings, width: Float, alpha: Int, scale: Scale): ActiveStroke {
@@ -72,9 +80,13 @@ class StrokeFactory @Inject constructor(
         const val SPRAY_DOT_DP = 1.5f
         const val SPRAY_DOTS_PER_TOUCH = 14
 
+        /** Gökkuşağının bir tam turu (kırmızıdan yeniden kırmızıya) için gereken yol. */
+        const val RAINBOW_CYCLE_DP = 360f
+
         val TOOL_STYLES = mapOf(
             ToolType.PENCIL to ToolStyle(widthFactor = 0.35f, alpha = 230),
             ToolType.BRUSH to ToolStyle(widthFactor = 1f),
+            ToolType.RAINBOW to ToolStyle(widthFactor = 1f),
             ToolType.MARKER to ToolStyle(widthFactor = 1.3f, alpha = 170),
             ToolType.CRAYON to ToolStyle(widthFactor = 1.2f),
             ToolType.SPRAY to ToolStyle(widthFactor = 1.6f),

@@ -14,12 +14,15 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.sezertanci.drawingworkshop.R
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
+import dev.sezertanci.drawingworkshop.domain.stroke.RainbowCycle
 import dev.sezertanci.drawingworkshop.ui.components.EmojiIcon
 import dev.sezertanci.drawingworkshop.ui.components.PanelButton
 import dev.sezertanci.drawingworkshop.ui.drawing.ExportStatus
@@ -29,6 +32,11 @@ private val PanelPadding = 12.dp
 private val ItemSpacing = 10.dp
 private val PanelDividerWidth = 56.dp
 private val PanelDividerThickness = 2.dp
+
+/** Gökkuşağı fırçası seçiliyken boyut noktaları tek renk yerine gökkuşağı renkleriyle görünür. */
+private val RainbowDotBrush = Brush.sweepGradient(
+    (0..RainbowCycle.STEPS).map { Color(RainbowCycle.colorOf(it)) },
+)
 
 /** Panelin araç dışındaki düğmeleri: galeriye dönme, geri al / yinele ve galeriye aktarma. */
 class ToolPanelActions(
@@ -52,6 +60,7 @@ fun ToolPanel(
     onSizeSelected: (BrushSize) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val dotBrush = if (selectedTool == ToolType.RAINBOW) RainbowDotBrush else SolidColor(strokeColor)
     LazyColumn(
         modifier = modifier.width(PanelWidth).fillMaxHeight(),
         contentPadding = PaddingValues(vertical = PanelPadding),
@@ -73,7 +82,7 @@ fun ToolPanel(
                 selected = size == selectedSize,
                 description = stringResource(size.labelRes),
                 onClick = { onSizeSelected(size) },
-            ) { Box(Modifier.size(size.previewDiameter).background(strokeColor, CircleShape)) }
+            ) { Box(Modifier.size(size.previewDiameter).background(dotBrush, CircleShape)) }
         }
         item { PanelDivider() }
         item { ActionButton(UNDO_EMOJI, R.string.action_undo, actions.canUndo, actions.onUndo) }
