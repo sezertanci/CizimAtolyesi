@@ -1,10 +1,6 @@
 package dev.sezertanci.drawingworkshop.domain.fill
 
-/** Doldurmanın etkilediği dikdörtgen. [right] ve [bottom] dahil değildir. */
-data class FillBounds(val left: Int, val top: Int, val right: Int, val bottom: Int) {
-    val width: Int get() = right - left
-    val height: Int get() = bottom - top
-}
+import dev.sezertanci.drawingworkshop.domain.geometry.PixelRect
 
 /** Boya kovası algoritması. Piksel dizisi ARGB biçimindedir ve yerinde değiştirilir. */
 interface FloodFiller {
@@ -20,5 +16,5 @@ interface FloodFiller {
         startY: Int,
         color: Int,
         walls: BooleanArray? = null,
-    ): FillBounds?
+    ): PixelRect?
 }

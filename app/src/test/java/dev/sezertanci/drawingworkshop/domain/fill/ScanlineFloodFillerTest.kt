@@ -1,5 +1,6 @@
 package dev.sezertanci.drawingworkshop.domain.fill
 
+import dev.sezertanci.drawingworkshop.domain.geometry.PixelRect
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -15,7 +16,7 @@ class ScanlineFloodFillerTest {
 
         val bounds = filler.fill(pixels, SIZE, SIZE, 3, 3, RED)
 
-        assertEquals(FillBounds(2, 2, 5, 5), bounds)
+        assertEquals(PixelRect(2, 2, 5, 5), bounds)
         assertEquals(RED, pixels[3 * SIZE + 3])
         assertEquals(BLACK, pixels[1 * SIZE + 1])
         assertEquals(WHITE, pixels[0])
@@ -45,7 +46,7 @@ class ScanlineFloodFillerTest {
 
         val bounds = filler.fill(pixels, SIZE, SIZE, 0, 0, RED)
 
-        assertEquals(FillBounds(0, 0, SIZE, SIZE), bounds)
+        assertEquals(PixelRect(0, 0, SIZE, SIZE), bounds)
         assertTrue(pixels.all { it == RED })
     }
 
@@ -69,7 +70,7 @@ class ScanlineFloodFillerTest {
 
         val bounds = filler.fill(pixels, SIZE, SIZE, 0, 0, RED, walls)
 
-        assertEquals(FillBounds(0, 0, WALL_X, SIZE), bounds)
+        assertEquals(PixelRect(0, 0, WALL_X, SIZE), bounds)
         assertEquals(RED, pixels[WALL_X - 1])
         assertEquals(TRANSPARENT, pixels[WALL_X])
         assertEquals(TRANSPARENT, pixels[WALL_X + 1])

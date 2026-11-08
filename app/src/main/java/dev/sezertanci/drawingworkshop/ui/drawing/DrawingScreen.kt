@@ -15,9 +15,11 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
+import dev.sezertanci.drawingworkshop.domain.symmetry.SymmetryMode
 import dev.sezertanci.drawingworkshop.ui.components.screenContainer
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ColorPanel
 import dev.sezertanci.drawingworkshop.ui.drawing.components.StickerPanel
+import dev.sezertanci.drawingworkshop.ui.drawing.components.SymmetryControls
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ToolPanel
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ToolPanelActions
 
@@ -46,6 +48,13 @@ fun DrawingRoute(onHome: () -> Unit, viewModel: DrawingViewModel = hiltViewModel
             onRedo = viewModel::redo,
             onExport = viewModel::export,
         ),
+        symmetry = SymmetryControls(
+            mode = state.symmetry,
+            symmetricFill = state.symmetricFill,
+            showFillChoice = state.tool == ToolType.BUCKET && state.symmetry != SymmetryMode.OFF,
+            onModeSelected = viewModel::selectSymmetry,
+            onSymmetricFillSelected = viewModel::selectSymmetricFill,
+        ),
         onToolSelected = viewModel::selectTool,
         onSizeSelected = viewModel::selectBrushSize,
         onColorTargetSelected = viewModel::selectColorTarget,
@@ -60,6 +69,7 @@ fun DrawingScreen(
     state: DrawingUiState,
     canvas: @Composable (Modifier) -> Unit,
     actions: ToolPanelActions,
+    symmetry: SymmetryControls,
     onToolSelected: (ToolType) -> Unit,
     onSizeSelected: (BrushSize) -> Unit,
     onColorTargetSelected: (ColorTarget) -> Unit,
@@ -74,6 +84,7 @@ fun DrawingScreen(
             selectedSize = state.brushSize,
             strokeColor = Color(state.strokeColor),
             actions = actions,
+            symmetry = symmetry,
             onToolSelected = onToolSelected,
             onSizeSelected = onSizeSelected,
         )

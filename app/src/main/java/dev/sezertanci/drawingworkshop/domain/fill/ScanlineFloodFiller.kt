@@ -1,5 +1,6 @@
 package dev.sezertanci.drawingworkshop.domain.fill
 
+import dev.sezertanci.drawingworkshop.domain.geometry.PixelRect
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -20,7 +21,7 @@ class ScanlineFloodFiller @Inject constructor() : FloodFiller {
         startY: Int,
         color: Int,
         walls: BooleanArray?,
-    ): FillBounds? {
+    ): PixelRect? {
         if (startX !in 0 until width || startY !in 0 until height) return null
         val target = pixels[startY * width + startX]
         if (target == color) return null
@@ -98,7 +99,7 @@ class ScanlineFloodFiller @Inject constructor() : FloodFiller {
             }
         }
 
-        fun bounds(): FillBounds? = if (maxX < 0) null else FillBounds(minX, minY, maxX + 1, maxY + 1)
+        fun bounds(): PixelRect? = if (maxX < 0) null else PixelRect(minX, minY, maxX + 1, maxY + 1)
 
         private fun touchesFilled(x: Int, y: Int): Boolean {
             val index = y * width + x

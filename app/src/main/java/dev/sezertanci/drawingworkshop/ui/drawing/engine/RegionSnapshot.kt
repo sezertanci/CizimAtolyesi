@@ -8,3 +8,13 @@ class RegionSnapshot(val bitmap: Bitmap, val left: Int, val top: Int) {
         bitmap.recycle()
     }
 }
+
+/**
+ * Tek bir işlemin geri al kaydı. Simetrik çizgide her kopyanın bölgesi ayrı tutulur; böylece köşeye
+ * çizilen bir çizgi için bütün tuvalin kopyası alınmaz. Bölgeler birbiriyle kesişmez.
+ */
+class LayerChange(val snapshots: List<RegionSnapshot>) {
+    fun release() {
+        snapshots.forEach(RegionSnapshot::release)
+    }
+}

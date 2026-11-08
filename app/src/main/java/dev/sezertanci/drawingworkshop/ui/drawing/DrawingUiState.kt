@@ -4,6 +4,7 @@ import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.Palette
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
 import dev.sezertanci.drawingworkshop.domain.sticker.StickerCatalog
+import dev.sezertanci.drawingworkshop.domain.symmetry.SymmetryMode
 
 /** Renk panelinde seçilen rengin nereye uygulanacağı. */
 enum class ColorTarget {
@@ -18,6 +19,10 @@ data class DrawingUiState(
     val backgroundColor: Int = Palette.WHITE,
     val colorTarget: ColorTarget = ColorTarget.STROKE,
     val sticker: String = StickerCatalog.default,
+    val symmetry: SymmetryMode = SymmetryMode.OFF,
+
+    /** Simetri açıkken boya kovası her kopya noktasını da doldurur. */
+    val symmetricFill: Boolean = true,
     val canUndo: Boolean = false,
     val canRedo: Boolean = false,
     val isLoaded: Boolean = false,

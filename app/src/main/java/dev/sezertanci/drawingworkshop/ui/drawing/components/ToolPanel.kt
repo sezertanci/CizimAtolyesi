@@ -42,13 +42,14 @@ class ToolPanelActions(
     val onExport: () -> Unit,
 )
 
-/** Soldaki kaydırılabilir araç paneli: galeri, araçlar, fırça boyutları, geri al, yinele ve aktarma. */
+/** Soldaki kaydırılabilir araç paneli: galeri, araçlar, fırça boyutları, simetri, geri al, yinele ve aktarma. */
 @Composable
 fun ToolPanel(
     selectedTool: ToolType,
     selectedSize: BrushSize,
     strokeColor: Color,
     actions: ToolPanelActions,
+    symmetry: SymmetryControls,
     onToolSelected: (ToolType) -> Unit,
     onSizeSelected: (BrushSize) -> Unit,
     modifier: Modifier = Modifier,
@@ -72,6 +73,8 @@ fun ToolPanel(
                 onClick = { onSizeSelected(size) },
             ) { Box(Modifier.size(size.previewDiameter).background(dotBrush, CircleShape)) }
         }
+        item { PanelDivider() }
+        symmetryItems(symmetry)
         item { PanelDivider() }
         item { ActionButton(UNDO_EMOJI, R.string.action_undo, actions.canUndo, actions.onUndo) }
         item { ActionButton(REDO_EMOJI, R.string.action_redo, actions.canRedo, actions.onRedo) }

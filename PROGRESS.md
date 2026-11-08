@@ -112,7 +112,7 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
    - Fırça ekranda hep aynı kalınlıkta görünür; büyütülmüşken resim üzerinde daha ince çizer.
    - **Kova artık parmak kalkınca, parmağın son durduğu yeri doldurur** (önceden değdiği an dolduruyordu).
    - Büyütme kaydedilmez; sayfa her açılışta normal boyutta gelir.
-8. [ ] 4. Aşama: gökkuşağı fırçası, simetri modu, çıkartmalar, ses efektleri. Planlama sürüyor.
+8. [x] 4. Aşama: gökkuşağı fırçası, simetri modu, çıkartmalar, ses efektleri. Hepsi tamamlandı.
    Her parça ayrı yapılır, tablette denenir ve onaylanınca commit edilir.
    - **Sıra:** gökkuşağı fırçası → çıkartmalar → ses efektleri → simetri (en zoru, en sona).
    - **Gökkuşağı fırçası (commit edildi: `04ffefe`):** çizgi boyunca renk kendiliğinden döner; renk
@@ -129,17 +129,27 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      çıkartma paneli görünür. `StickerEditor` / `StickerDraft` / `StickerCatalog` (`domain/sticker`),
      `StickerRenderer` (motor), ortak panel iskeleti `PanelColumn`. 59 birim testi geçiyor; tablette
      koyma, büyütme, emoji değiştirme, sürükleme, ✓, geri al ve araç değiştirme denendi.
-   - **Ses efektleri (commit edildi):** sesler özgün, programla üretilir. İlk açılışta
+   - **Ses efektleri (commit edildi: `cf621bb`, GitHub'a gönderildi):** sesler özgün, programla üretilir. İlk açılışta
      açık gelir; galerideki 🔊/🔇 düğmesiyle kapatılır, seçim hatırlanır. Dört ses var: düğme dokunuşu,
      kova doldurma, çıkartma yapışması ve galeriye kaydetme. `SoundSynth` notaları PCM'e çevirir,
      `WavEncoder` WAV yapar, `SoundPoolPlayer` açılışta arka planda yükleyip çalar; ayar
      `PreferencesSoundSettings` içinde. Düğmeler ortak `clickableWithSound` ile ses çıkarır. Sürekli
      çizim sesi bilerek eklenmedi. 65 birim testi geçiyor; tablette düğme, kova ve çıkartma seslerinin
      çaldığı ve kapatma seçiminin yeniden açılışta korunduğu doğrulandı.
-   - **Simetri:** seçenekler sol–sağ, üst–alt ve nokta simetrisi (4 parça, 8 parça).
-     Kova için "simetrik doldur / tek doldur" seçimi yalnızca simetri açıkken görünür.
-   - **Açık soru (simetriye gelince sorulacak):** 4 ve 8 parçalı simetri ayna mı (kaleydoskop)
-     yoksa yalnızca döndürme mi olacak.
+   - **Simetri (commit edildi, kullanıcı tablette onayladı):** ayna (kaleydoskop) seçildi. Modlar:
+     kapalı, sol–sağ, üst–alt, 4 parça (iki eksende ayna), 8 parça (kaleydoskop). Merkez tuvalin
+     ortası. Sol paneldeki 🪞 düğmesi beş seçenekli kutuyu açar; düğme seçili modun eksen simgesini
+     gösterir. Eksenler ekranda soluk kesikli çizgiyle görünür, kayda ve dışa aktarmaya girmez.
+     Bütün çizgi araçlarında çalışır, çıkartmalar aynalanmaz. Kova seçiliyken "×N" (simetrik, varsayılan)
+     ve "×1" (tek) seçimi çıkar. Kopyalar tek adımda geri alınır (kopya başına ayrı bölge kopyası,
+     `LayerChange`). Simetri resimle birlikte kaydedilmez. Kare olmayan tuvalde 8 parçanın çapraz
+     kopyalarının bir kısmı tuvalin dışına düşer ve kesilir (bilinen sınır). Kod: `domain/symmetry`
+     (`SymmetryTransform`, `SymmetryMode`), `domain/geometry/PixelRect` (eski `FillBounds`),
+     `SymmetryPainter`, `SymmetryGuides`, `SymmetryControls`. 78 birim testi geçiyor; tablette 8 parça
+     çizim, tek adımda geri alma ve simetrik kova denendi.
+   - **Sıradaki adım:** 4. aşama bitti; yeni iş kullanıcıyla konuşularak belirlenir. Push yalnızca istenirse yapılır.
+   - **İsteğe bağlı küçük düzeltme:** bazı emojiler (ör. kedinin bıyıkları) kare düzenleme
+     çerçevesinden taşıyor; resme işleme doğru. Kullanıcı isterse yapılır.
 
 > Her aşama onay alınmadan başlamaz.
 
@@ -149,3 +159,10 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
 - **Tablet:** Seri numarası `9p8pmf9hdmrwm7l7`, Android 16 (API 36).
 - **SDK:** 36 ve 37 kurulu.
 - **JAVA_HOME:** Android Studio'nun JBR'ını gösteriyor.
+- **Derleme ve test:** proje kökünde `./gradlew.bat assembleDebug testDebugUnitTest -q`. Test sayısı
+  `app/build/test-results/testDebugUnitTest/*.xml` içindeki `tests=` değerlerinin toplamıdır (şu an 78).
+- **Git Bash'te adb:** önce `export MSYS_NO_PATHCONV=1`. Ekran görüntüsü küçültülmüş gelirse görüntüdeki
+  koordinatlar 1,06 ile çarpılarak dokunma koordinatı bulunur. Uygulama açıldıktan sonraki ilk dokunuş
+  bazen algılanmaz; ikinci kez dokunulur.
+- **Python:** PATH eski olabilir; tam yol kullanılır: `C:\Users\Lenovo\AppData\Local\Programs\Python\Python313\python.exe`.
+- **GitHub:** `main` dalı `origin/main`'i izliyor; push yalnızca kullanıcı isteyince yapılır.

@@ -13,6 +13,7 @@ import dev.sezertanci.drawingworkshop.domain.model.StrokeSettings
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
 import dev.sezertanci.drawingworkshop.domain.sound.SoundEffect
 import dev.sezertanci.drawingworkshop.domain.sound.SoundPlayer
+import dev.sezertanci.drawingworkshop.domain.symmetry.SymmetryMode
 import dev.sezertanci.drawingworkshop.ui.drawing.engine.DrawingEngine
 import dev.sezertanci.drawingworkshop.ui.drawing.engine.LineArtFactory
 import dev.sezertanci.drawingworkshop.ui.navigation.Routes
@@ -93,6 +94,11 @@ class DrawingViewModel @Inject constructor(
 
     fun selectBrushSize(size: BrushSize) = updateSelection { it.copy(brushSize = size) }
 
+    /** Simetri kaydedilmez; her resim simetri kapalı açılır. */
+    fun selectSymmetry(mode: SymmetryMode) = updateSelection { it.copy(symmetry = mode) }
+
+    fun selectSymmetricFill(symmetric: Boolean) = updateSelection { it.copy(symmetricFill = symmetric) }
+
     fun selectColorTarget(target: ColorTarget) = updateSelection { it.copy(colorTarget = target) }
 
     fun selectColor(color: Int) = updateSelection {
@@ -155,9 +161,11 @@ class DrawingViewModel @Inject constructor(
         touchTool = null
         when (tool) {
             ToolType.BUCKET -> {
-                val color = selection.value.strokeColor
+                val state = selection.value
                 val (x, y) = pendingFill.x to pendingFill.y
-                viewModelScope.launch { if (engine.fill(x, y, color)) sounds.play(SoundEffect.FILL) }
+                viewModelScope.launch {
+                    if (engine.fill(x, y, state.strokeColor, state.symmetricFill)) sounds.play(SoundEffect.FILL)
+                }
             }
             ToolType.STICKER -> engine.endStickerTouch()
             else -> engine.endStroke()
@@ -219,6 +227,7 @@ class DrawingViewModel @Inject constructor(
     private fun applyToEngine(state: DrawingUiState) {
         engine.settings = StrokeSettings(state.tool, state.brushSize, state.strokeColor)
         engine.backgroundColor = state.backgroundColor
+        engine.symmetry = state.symmetry
     }
 
     private companion object {

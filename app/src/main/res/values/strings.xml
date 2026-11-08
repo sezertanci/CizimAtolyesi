@@ -17,6 +17,15 @@
     <string name="size_medium">Orta</string>
     <string name="size_large">Kalın</string>
 
+    <string name="symmetry_menu">Simetri</string>
+    <string name="symmetry_off">Simetri kapalı</string>
+    <string name="symmetry_left_right">Sol–sağ simetri</string>
+    <string name="symmetry_top_bottom">Üst–alt simetri</string>
+    <string name="symmetry_four">4 parçalı simetri</string>
+    <string name="symmetry_eight">8 parçalı simetri</string>
+    <string name="fill_symmetric">Simetrik doldur</string>
+    <string name="fill_single">Tek doldur</string>
+
     <string name="action_undo">Geri al</string>
     <string name="action_redo">Yinele</string>
 

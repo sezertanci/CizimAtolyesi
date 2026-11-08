@@ -9,7 +9,7 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.RectF
 import androidx.core.graphics.createBitmap
-import dev.sezertanci.drawingworkshop.domain.fill.FillBounds
+import dev.sezertanci.drawingworkshop.domain.geometry.PixelRect
 import dev.sezertanci.drawingworkshop.domain.geometry.fitCenter
 
 /**
@@ -78,8 +78,15 @@ class DrawingSurface {
         canvas?.let(block)
     }
 
+    /** Bölgelerin kopyasını tek geri al kaydı olarak alır; hepsi tuvalin dışındaysa `null` döner. */
+    fun snapshot(regions: List<Rect>): LayerChange? =
+        regions.mapNotNull(::snapshot).takeIf { it.isNotEmpty() }?.let(::LayerChange)
+
+    /** Kopyaları yerine koyar ve önceki hâli ters işlem olarak döndürür. Bölgeler kesişmediği için sıra önemsizdir. */
+    fun restore(change: LayerChange): LayerChange = LayerChange(change.snapshots.map(::restore))
+
     /** Verilen bölgenin kopyasını alır; bölge tuvalin dışındaysa `null` döner. */
-    fun snapshot(region: Rect): RegionSnapshot? {
+    private fun snapshot(region: Rect): RegionSnapshot? {
         val source = bitmap ?: return null
         val clipped = Rect(region)
         if (!clipped.intersect(0, 0, source.width, source.height)) return null
@@ -88,7 +95,7 @@ class DrawingSurface {
     }
 
     /** Kopyayı yerine koyar ve o bölgenin önceki halini ters işlem olarak döndürür. */
-    fun restore(snapshot: RegionSnapshot): RegionSnapshot {
+    private fun restore(snapshot: RegionSnapshot): RegionSnapshot {
         val region = Rect(
             snapshot.left,
             snapshot.top,
@@ -108,7 +115,7 @@ class DrawingSurface {
         return pixels
     }
 
-    fun writePixels(pixels: IntArray, bounds: FillBounds) {
+    fun writePixels(pixels: IntArray, bounds: PixelRect) {
         val target = bitmap ?: return
         val offset = bounds.top * target.width + bounds.left
         target.setPixels(pixels, offset, target.width, bounds.left, bounds.top, bounds.width, bounds.height)
