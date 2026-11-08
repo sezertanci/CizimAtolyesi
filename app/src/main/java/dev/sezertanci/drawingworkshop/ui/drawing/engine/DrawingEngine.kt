@@ -142,10 +142,13 @@ class DrawingEngine @Inject constructor(
     }
 
     /** Çıkartma dokunuşu; onay düğmesine dokunulduysa çıkartma resme işlenir. */
-    fun startStickerTouch(emoji: String, x: Float, y: Float, zoom: Float) {
-        if (isFilling) return
+    /** Dokunuş ✓ düğmesine geldiyse çıkartma resme işlenir ve `true` döner. */
+    fun startStickerTouch(emoji: String, x: Float, y: Float, zoom: Float): Boolean {
+        if (isFilling) return false
         val result = stickerEditor.touchStart(emoji, x, y, zoom)
-        if (result == StickerTouchResult.CONFIRMED) commitSticker() else notifyChanged()
+        if (result == StickerTouchResult.CONFIRMED) return commitSticker()
+        notifyChanged()
+        return false
     }
 
     fun moveStickerTouch(x: Float, y: Float) = stickerEditor.touchMove(x, y)
@@ -159,16 +162,18 @@ class DrawingEngine @Inject constructor(
 
     /**
      * Düzenlenen çıkartma varsa resme işler. Onay düğmesinin yanında araç değişince, kayıttan ve
-     * dışa aktarmadan önce de çağrılır; böylece konan çıkartma kaybolmaz.
+     * dışa aktarmadan önce de çağrılır; böylece konan çıkartma kaybolmaz. İşlendiyse `true` döner.
      */
-    fun commitSticker() {
-        if (isFilling) return
-        val draft = stickerEditor.take() ?: return
+    fun commitSticker(): Boolean {
+        if (isFilling) return false
+        val draft = stickerEditor.take() ?: return false
         commitToLayer(stickerRenderer.bounds(draft)) { stickerRenderer.drawSticker(it, draft) }
+        return true
     }
 
-    suspend fun fill(x: Float, y: Float, color: Int) {
-        if (isFilling) return
+    /** Bir bölge boyandıysa `true` döner; dokunulan yer zaten o renkse veya boyama yarıda kaldıysa `false`. */
+    suspend fun fill(x: Float, y: Float, color: Int): Boolean {
+        if (isFilling) return false
         val width = surface.width
         val height = surface.height
         isFilling = true
@@ -177,13 +182,14 @@ class DrawingEngine @Inject constructor(
             val walls = currentLineArt()?.walls
             val bounds = withContext(fillDispatcher) {
                 floodFiller.fill(pixels, width, height, x.toInt(), y.toInt(), color, walls)
-            } ?: return
-            if (surface.width != width || surface.height != height) return
+            } ?: return false
+            if (surface.width != width || surface.height != height) return false
             surface.snapshot(bounds.toRect())?.let(history::record)
             surface.writePixels(pixels, bounds)
             markContentChanged()
             publishHistory()
             notifyChanged()
+            return true
         } finally {
             isFilling = false
         }

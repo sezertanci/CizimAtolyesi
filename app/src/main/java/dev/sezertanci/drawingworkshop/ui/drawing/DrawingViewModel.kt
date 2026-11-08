@@ -11,6 +11,8 @@ import dev.sezertanci.drawingworkshop.data.export.DrawingExporter
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.StrokeSettings
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
+import dev.sezertanci.drawingworkshop.domain.sound.SoundEffect
+import dev.sezertanci.drawingworkshop.domain.sound.SoundPlayer
 import dev.sezertanci.drawingworkshop.ui.drawing.engine.DrawingEngine
 import dev.sezertanci.drawingworkshop.ui.drawing.engine.LineArtFactory
 import dev.sezertanci.drawingworkshop.ui.navigation.Routes
@@ -45,6 +47,7 @@ class DrawingViewModel @Inject constructor(
     private val exporter: DrawingExporter,
     private val pageCatalog: ColoringPageCatalog,
     private val lineArtFactory: LineArtFactory,
+    private val sounds: SoundPlayer,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel(), DrawingTouchListener {
 
@@ -78,7 +81,7 @@ class DrawingViewModel @Inject constructor(
 
     /** Çıkartma aracından çıkılırken düzenlenen çıkartma resme işlenir. */
     fun selectTool(tool: ToolType) {
-        if (tool != ToolType.STICKER) engine.commitSticker()
+        if (tool != ToolType.STICKER) commitSticker()
         updateSelection { it.copy(tool = tool) }
     }
 
@@ -119,6 +122,7 @@ class DrawingViewModel @Inject constructor(
         viewModelScope.launch {
             val exported = exporter.export(layer, backgroundColor, templateId)
             setExportStatus(if (exported) ExportStatus.DONE else ExportStatus.FAILED)
+            if (exported) sounds.play(SoundEffect.SUCCESS)
             delay(EXPORT_FEEDBACK_DURATION)
             setExportStatus(ExportStatus.IDLE)
         }
@@ -130,7 +134,7 @@ class DrawingViewModel @Inject constructor(
         touchTool = state.tool
         when (state.tool) {
             ToolType.BUCKET -> pendingFill.set(x, y)
-            ToolType.STICKER -> engine.startStickerTouch(state.sticker, x, y, zoom)
+            ToolType.STICKER -> if (engine.startStickerTouch(state.sticker, x, y, zoom)) sounds.play(SoundEffect.STICKER)
             else -> engine.startStroke(x, y, zoom)
         }
     }
@@ -153,7 +157,7 @@ class DrawingViewModel @Inject constructor(
             ToolType.BUCKET -> {
                 val color = selection.value.strokeColor
                 val (x, y) = pendingFill.x to pendingFill.y
-                viewModelScope.launch { engine.fill(x, y, color) }
+                viewModelScope.launch { if (engine.fill(x, y, color)) sounds.play(SoundEffect.FILL) }
             }
             ToolType.STICKER -> engine.endStickerTouch()
             else -> engine.endStroke()
@@ -199,6 +203,10 @@ class DrawingViewModel @Inject constructor(
             }
         }
         ready.await()
+    }
+
+    private fun commitSticker() {
+        if (engine.commitSticker()) sounds.play(SoundEffect.STICKER)
     }
 
     private fun setExportStatus(status: ExportStatus) = selection.update { it.copy(exportStatus = status) }

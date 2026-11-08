@@ -1,8 +1,10 @@
 package dev.sezertanci.drawingworkshop.ui.gallery
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
@@ -17,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.sezertanci.drawingworkshop.R
@@ -52,6 +55,7 @@ fun GalleryRoute(
         onOpenColoringPage = onOpenColoringPage,
         onMoveToTrash = viewModel::moveToTrash,
         onOpenTrash = onOpenTrash,
+        onToggleSound = viewModel::toggleSound,
     )
 }
 
@@ -68,11 +72,17 @@ fun GalleryScreen(
     onOpenColoringPage: (String) -> Unit,
     onMoveToTrash: (String) -> Unit,
     onOpenTrash: () -> Unit,
+    onToggleSound: () -> Unit,
 ) {
     Column(Modifier.screenContainer()) {
         ScreenHeader(
             title = stringResource(R.string.app_name),
-            trailing = { TrashButton(state.trashCount, onOpenTrash) },
+            trailing = {
+                Row(horizontalArrangement = Arrangement.spacedBy(HeaderButtonSpacing)) {
+                    SoundButton(state.soundEnabled, onToggleSound)
+                    TrashButton(state.trashCount, onOpenTrash)
+                }
+            },
         )
         CardGrid {
             item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(stringResource(R.string.gallery_my_drawings)) }
@@ -132,6 +142,16 @@ private fun ColoringPageCard(page: ColoringPage, onOpen: (String) -> Unit) {
     }
 }
 
+/** Sesleri açıp kapatır; seçim uygulama kapansa da hatırlanır. */
+@Composable
+private fun SoundButton(enabled: Boolean, onClick: () -> Unit) {
+    PanelButton(
+        selected = false,
+        description = stringResource(if (enabled) R.string.action_sound_off else R.string.action_sound_on),
+        onClick = onClick,
+    ) { EmojiIcon(if (enabled) SOUND_ON_EMOJI else SOUND_OFF_EMOJI) }
+}
+
 @Composable
 private fun TrashButton(count: Int, onClick: () -> Unit) {
     BadgedBox(badge = { if (count > 0) Badge { Text(count.toString()) } }) {
@@ -145,3 +165,6 @@ private fun TrashButton(count: Int, onClick: () -> Unit) {
 
 private const val NEW_DRAWING_EMOJI = "➕"
 private const val TRASH_EMOJI = "🗑️"
+private const val SOUND_ON_EMOJI = "🔊"
+private const val SOUND_OFF_EMOJI = "🔇"
+private val HeaderButtonSpacing = 16.dp

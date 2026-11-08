@@ -2,7 +2,6 @@ package dev.sezertanci.drawingworkshop.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +13,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -55,7 +53,7 @@ fun PanelButton(
                 color = if (selected) WorkshopColors.Selection else WorkshopColors.Outline,
                 shape = shape,
             )
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .clickableWithSound(enabled = enabled, onClick = onClick)
             .semantics {
                 contentDescription = description
                 this.selected = selected

@@ -37,6 +37,8 @@
     <string name="action_open_coloring_page">Boyama sayfasını aç</string>
 
     <string name="trash_title">Çöp kutusu</string>
+    <string name="action_sound_off">Sesleri kapat</string>
+    <string name="action_sound_on">Sesleri aç</string>
     <string name="trash_item">Çöp kutusundaki resim</string>
     <string name="action_restore">Geri getir</string>
     <string name="trash_hint">Buradaki resimler %1$d saat sonra kalıcı olarak silinir.</string>

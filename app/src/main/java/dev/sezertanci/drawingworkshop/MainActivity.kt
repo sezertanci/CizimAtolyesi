@@ -4,15 +4,22 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import dagger.hilt.android.AndroidEntryPoint
+import dev.sezertanci.drawingworkshop.domain.sound.SoundPlayer
+import dev.sezertanci.drawingworkshop.ui.components.LocalSoundPlayer
 import dev.sezertanci.drawingworkshop.ui.navigation.AppNavHost
 import dev.sezertanci.drawingworkshop.ui.theme.DrawingWorkshopTheme
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var soundPlayer: SoundPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +27,7 @@ class MainActivity : ComponentActivity() {
         hideSystemBars()
         setContent {
             DrawingWorkshopTheme {
-                AppNavHost()
+                CompositionLocalProvider(LocalSoundPlayer provides soundPlayer) { AppNavHost() }
             }
         }
     }

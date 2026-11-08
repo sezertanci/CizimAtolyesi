@@ -121,7 +121,7 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      yalnızca çizginin iki ucu yuvarlak). Seçiliyken boyut noktaları gökkuşağı renginde görünür.
      Ortak `toDirtyRegion` yardımcısı `StrokeBounds.kt` içinde. 48 birim testi geçiyor; tablette düz
      çizgi, sarmal, nokta ve geri alma denendi.
-   - **Çıkartmalar (tamamlandı, commit bekliyor):** emoji; geometrik şekiller ileride ayrıca
+   - **Çıkartmalar (commit edildi: `5a31921`):** emoji; geometrik şekiller ileride ayrıca
      eklenecek. Dokununca çıkartma önce düzenleme hâlinde konur: sürüklenerek taşınır, sağ alt
      tutamaçla büyütülüp küçültülür, ✓ ile resme işlenir, ✕ ile vazgeçilir. Çıkartmanın dışına
      dokunmak onu oraya taşır. Araç değişince, kayıtta ve dışa aktarmada açık çıkartma resme işlenir;
@@ -129,7 +129,13 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      çıkartma paneli görünür. `StickerEditor` / `StickerDraft` / `StickerCatalog` (`domain/sticker`),
      `StickerRenderer` (motor), ortak panel iskeleti `PanelColumn`. 59 birim testi geçiyor; tablette
      koyma, büyütme, emoji değiştirme, sürükleme, ✓, geri al ve araç değiştirme denendi.
-   - **Ses efektleri:** sesler özgün, programla üretilir. İlk açılışta açık gelir, istenirse kapatılır.
+   - **Ses efektleri (commit edildi):** sesler özgün, programla üretilir. İlk açılışta
+     açık gelir; galerideki 🔊/🔇 düğmesiyle kapatılır, seçim hatırlanır. Dört ses var: düğme dokunuşu,
+     kova doldurma, çıkartma yapışması ve galeriye kaydetme. `SoundSynth` notaları PCM'e çevirir,
+     `WavEncoder` WAV yapar, `SoundPoolPlayer` açılışta arka planda yükleyip çalar; ayar
+     `PreferencesSoundSettings` içinde. Düğmeler ortak `clickableWithSound` ile ses çıkarır. Sürekli
+     çizim sesi bilerek eklenmedi. 65 birim testi geçiyor; tablette düğme, kova ve çıkartma seslerinin
+     çaldığı ve kapatma seçiminin yeniden açılışta korunduğu doğrulandı.
    - **Simetri:** seçenekler sol–sağ, üst–alt ve nokta simetrisi (4 parça, 8 parça).
      Kova için "simetrik doldur / tek doldur" seçimi yalnızca simetri açıkken görünür.
    - **Açık soru (simetriye gelince sorulacak):** 4 ve 8 parçalı simetri ayna mı (kaleydoskop)

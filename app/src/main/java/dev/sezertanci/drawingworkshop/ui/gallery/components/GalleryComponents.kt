@@ -3,7 +3,6 @@ package dev.sezertanci.drawingworkshop.ui.gallery.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -29,12 +28,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.sezertanci.drawingworkshop.domain.drawing.Drawing
+import dev.sezertanci.drawingworkshop.ui.components.clickableWithSound
 import dev.sezertanci.drawingworkshop.ui.theme.WorkshopColors
 
 /** Küçük resmi okuyan fonksiyon; ekranlar ViewModel'deki yükleyiciyi verir. */
@@ -96,7 +95,7 @@ fun GalleryCard(
     onClick: (() -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val clickModifier = onClick?.let { Modifier.clickable(role = Role.Button, onClick = it) } ?: Modifier
+    val clickModifier = onClick?.let { Modifier.clickableWithSound(onClick = it) } ?: Modifier
     Box(
         modifier = modifier
             .fillMaxWidth()
