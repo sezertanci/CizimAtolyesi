@@ -51,11 +51,21 @@ class DefaultDrawingRepository @Inject constructor(
 
     override suspend fun restore(id: String) = dao.setDeletedAt(id, null)
 
+    /** Resim bu arada geri getirildiyse silinmez. */
+    override suspend fun deleteForever(id: String) {
+        if (dao.findById(id)?.deletedAt == null) return
+        deleteWithFiles(listOf(id))
+    }
+
+    override suspend fun emptyTrash() = deleteWithFiles(dao.findTrashedBefore(Long.MAX_VALUE))
+
+    override suspend fun purgeExpiredTrash() =
+        deleteWithFiles(dao.findTrashedBefore(TrashPolicy.expiryCutoff(clock.millis())))
+
     /** Önce dosyalar silinir; arada uygulama kapanırsa kayıt kalır ve bir sonraki temizlikte yeniden denenir. */
-    override suspend fun purgeExpiredTrash() {
-        val expired = dao.findTrashedBefore(TrashPolicy.expiryCutoff(clock.millis()))
-        if (expired.isEmpty()) return
-        expired.forEach { fileStore.delete(it) }
-        dao.deleteAll(expired)
+    private suspend fun deleteWithFiles(ids: List<String>) {
+        if (ids.isEmpty()) return
+        ids.forEach { fileStore.delete(it) }
+        dao.deleteAll(ids)
     }
 }

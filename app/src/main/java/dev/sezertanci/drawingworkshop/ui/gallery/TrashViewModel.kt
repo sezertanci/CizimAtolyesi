@@ -17,7 +17,7 @@ import javax.inject.Inject
 /** Çöp kutusundaki resim ve kalıcı silinmesine kalan saat. */
 data class TrashItem(val drawing: Drawing, val remainingHours: Int)
 
-/** Çöp kutusu: resimler buradan geri getirilir; süresi dolanlar ekran açılırken temizlenir. */
+/** Çöp kutusu: resimler buradan geri getirilir veya hemen silinir; süresi dolanlar ekran açılırken temizlenir. */
 @HiltViewModel
 class TrashViewModel @Inject constructor(
     private val repository: DrawingRepository,
@@ -36,6 +36,14 @@ class TrashViewModel @Inject constructor(
 
     fun restore(id: String) {
         viewModelScope.launch { repository.restore(id) }
+    }
+
+    fun deleteForever(id: String) {
+        viewModelScope.launch { repository.deleteForever(id) }
+    }
+
+    fun emptyTrash() {
+        viewModelScope.launch { repository.emptyTrash() }
     }
 
     suspend fun loadThumbnail(drawing: Drawing) = thumbnailLoader.load(drawing)

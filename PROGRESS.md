@@ -152,6 +152,12 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      (✅ / ❌; dışarı dokunmak "hayır" sayılır). Boya katmanını (çizgi, dolgu, işlenmiş çıkartma) ve
      düzenlenen çıkartmayı siler; boyama sayfasının çizgileri ve arka plan rengi kalır. Tek adımda
      geri alınır. Kod: `DrawingEngine.clear()`, `Canvas.clearPixels()`, `ClearConfirmDialog`.
+   - **Çöp kutusunda kalıcı silme (commit edildi, kullanıcı onayladı):** her kartın sol
+     üstünde ❌ düğmesi resmi sormadan, dosyalarıyla birlikte hemen siler (♻️ sağ üstte kalır).
+     Başlığın sağ üstündeki 🔥 düğmesi "Hepsi silinsin mi?" diye sorar ve çöp kutusunu boşaltır;
+     kutu boşken görünmez. Onay kutusu ortak oldu: `ui/components/ConfirmDialog` (🧹 de bunu kullanır).
+     Depoda `deleteForever` (resim bu arada geri getirildiyse silmez), `emptyTrash`; 24 saatlik
+     temizlikle birlikte ortak `deleteWithFiles` kullanılır. 81 birim testi geçiyor.
    - **Sıradaki adım:** 4. aşama bitti; yeni iş kullanıcıyla konuşularak belirlenir. Push yalnızca istenirse yapılır.
    - **İsteğe bağlı küçük düzeltme:** bazı emojiler (ör. kedinin bıyıkları) kare düzenleme
      çerçevesinden taşıyor; resme işleme doğru. Kullanıcı isterse yapılır.

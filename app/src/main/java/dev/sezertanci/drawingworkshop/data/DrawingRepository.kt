@@ -35,6 +35,12 @@ interface DrawingRepository {
 
     suspend fun restore(id: String)
 
+    /** Çöp kutusundaki resmi dosyalarıyla birlikte hemen ve kalıcı olarak siler. */
+    suspend fun deleteForever(id: String)
+
+    /** Çöp kutusundaki bütün resimleri dosyalarıyla birlikte kalıcı olarak siler. */
+    suspend fun emptyTrash()
+
     /** Çöp kutusunda 24 saati dolan resimleri dosyalarıyla birlikte kalıcı olarak siler. */
     suspend fun purgeExpiredTrash()
 }

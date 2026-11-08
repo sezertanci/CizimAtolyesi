@@ -22,6 +22,7 @@ import dev.sezertanci.drawingworkshop.R
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
 import dev.sezertanci.drawingworkshop.domain.stroke.RainbowCycle
+import dev.sezertanci.drawingworkshop.ui.components.ConfirmDialog
 import dev.sezertanci.drawingworkshop.ui.components.EmojiIcon
 import dev.sezertanci.drawingworkshop.ui.components.PanelButton
 import dev.sezertanci.drawingworkshop.ui.drawing.ExportStatus
@@ -92,7 +93,9 @@ fun ToolPanel(
         }
     }
     if (confirmingClear) {
-        ClearConfirmDialog(
+        ConfirmDialog(
+            emoji = CLEAR_EMOJI,
+            title = stringResource(R.string.clear_confirm_title),
             onConfirm = {
                 confirmingClear = false
                 actions.onClear()
@@ -128,3 +131,4 @@ private val ExportStatus.emoji: String
 private const val HOME_EMOJI = "🏠"
 private const val UNDO_EMOJI = "↩️"
 private const val REDO_EMOJI = "↪️"
+private const val CLEAR_EMOJI = "🧹"

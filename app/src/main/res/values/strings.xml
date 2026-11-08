@@ -30,8 +30,8 @@
     <string name="action_redo">Yinele</string>
     <string name="action_clear">Resmi temizle</string>
     <string name="clear_confirm_title">Resim temizlensin mi?</string>
-    <string name="clear_confirm_yes">Evet, temizle</string>
-    <string name="clear_confirm_no">Hayır, kalsın</string>
+    <string name="confirm_yes">Evet</string>
+    <string name="confirm_no">Hayır</string>
 
     <string name="color_target_stroke">Kalem rengi</string>
     <string name="color_target_background">Arka plan rengi</string>
@@ -54,6 +54,9 @@
     <string name="action_sound_on">Sesleri aç</string>
     <string name="trash_item">Çöp kutusundaki resim</string>
     <string name="action_restore">Geri getir</string>
+    <string name="action_delete_forever">Kalıcı olarak sil</string>
+    <string name="action_empty_trash">Çöp kutusunu boşalt</string>
+    <string name="empty_trash_confirm_title">Hepsi silinsin mi?</string>
     <string name="trash_hint">Buradaki resimler %1$d saat sonra kalıcı olarak silinir.</string>
     <string name="trash_empty">Çöp kutusu boş</string>
     <string name="trash_remaining_hours">⏳ %1$d saat</string>

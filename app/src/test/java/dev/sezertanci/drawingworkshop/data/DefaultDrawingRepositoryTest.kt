@@ -57,6 +57,39 @@ class DefaultDrawingRepositoryTest {
     }
 
     @Test
+    fun deleteForever_TrashedDrawing_DeletesRowAndFiles() = runBlocking {
+        dao.rows["trashed"] = entity("trashed", deletedAt = now)
+        dao.rows["other"] = entity("other", deletedAt = now)
+
+        repository.deleteForever("trashed")
+
+        assertEquals(setOf("other"), dao.rows.keys)
+        assertEquals(listOf("trashed"), fileStore.deleted)
+    }
+
+    @Test
+    fun deleteForever_RestoredDrawing_KeepsDrawing() = runBlocking {
+        dao.rows["a"] = entity("a", deletedAt = null)
+
+        repository.deleteForever("a")
+
+        assertEquals(setOf("a"), dao.rows.keys)
+        assertEquals(emptyList<String>(), fileStore.deleted)
+    }
+
+    @Test
+    fun emptyTrash_MixedDrawings_DeletesAllTrashedWithFiles() = runBlocking {
+        dao.rows["recent"] = entity("recent", deletedAt = now)
+        dao.rows["old"] = entity("old", deletedAt = now - TrashPolicy.RETENTION_MILLIS)
+        dao.rows["active"] = entity("active", deletedAt = null)
+
+        repository.emptyTrash()
+
+        assertEquals(setOf("active"), dao.rows.keys)
+        assertEquals(setOf("recent", "old"), fileStore.deleted.toSet())
+    }
+
+    @Test
     fun load_DrawingFromColoringPage_ReturnsTemplateId() = runBlocking {
         dao.rows["a"] = entity("a", deletedAt = null).copy(templateId = "cat")
 
