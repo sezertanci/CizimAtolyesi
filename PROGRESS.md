@@ -98,6 +98,11 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      altında). Çizgi katmanı kaydedilmez; açılışta sayfadan yeniden çizilir.
    - **Duvarlar:** Opaklığı 192 ve üstü olan çizgi pikselleri duvardır; daha yumuşak kenarlar
      doldurulur, böylece çizgi ile boya arasında boşluk kalmaz.
+   - **Fayton (`carriage`):** İlk sürüm ticari bir boyama kitabının sayfasından fotoğrafla çevrilmişti;
+     telif sorunu olmaması için diğer sayfalar gibi özgün bir çizimle değiştirildi (tavanında bavul,
+     fenerli, iki tekerlekli kutu biçimli fayton). Kimlik `carriage` aynı kaldı; tabletteki eski fayton
+     resimleri silindi. Tüm bölgelerin kapalı olduğu bilgisayarda bölge haritasıyla, tablette boya
+     kovasıyla denendi. Not: eski çizim git geçmişinde (`87358ca`) hâlâ duruyor.
 7. [ ] 4. Aşama: gökkuşağı fırçası, simetri modu, çıkartmalar, ses efektleri.
 
 > Her aşama onay alınmadan başlamaz.
