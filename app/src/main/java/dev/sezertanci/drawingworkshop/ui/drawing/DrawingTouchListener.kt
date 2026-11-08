@@ -2,7 +2,8 @@ package dev.sezertanci.drawingworkshop.ui.drawing
 
 /** Tuval görünümünün dokunma olaylarını ilettiği arayüz. Koordinatlar tuvalin piksel koordinatlarıdır. */
 interface DrawingTouchListener {
-    fun onTouchStart(x: Float, y: Float)
+    /** [zoom], görüntünün o anki büyütme oranıdır; fırça ekranda hep aynı kalınlıkta görünsün diye kullanılır. */
+    fun onTouchStart(x: Float, y: Float, zoom: Float)
 
     fun onTouchMove(x: Float, y: Float)
 

@@ -104,9 +104,10 @@ class DrawingEngine @Inject constructor(
         currentLineArt()?.let { canvas.drawBitmap(it.bitmap, 0f, 0f, null) }
     }
 
-    fun startStroke(x: Float, y: Float) {
+    /** [zoom] büyüdükçe çizgi resim üzerinde incelir; böylece ekranda aynı kalınlıkta görünür. */
+    fun startStroke(x: Float, y: Float, zoom: Float) {
         if (isFilling) return
-        activeStroke = strokeFactory.create(settings, backgroundColor)?.also { it.begin(x, y) }
+        activeStroke = strokeFactory.create(settings, backgroundColor, zoom)?.also { it.begin(x, y) }
         notifyChanged()
     }
 

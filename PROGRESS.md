@@ -104,7 +104,15 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      yuvarlak pencere, kemerli kapı, yıldızlar, uçları kıvrık şasi, kıvrık telli tekerlekler).
      Kimlik `carriage` aynı kaldı; tabletteki eski fayton resimleri silindi. Tüm bölgelerin kapalı
      olduğu bilgisayarda bölge haritasıyla, tablette boya kovasıyla denendi.
-7. [ ] 4. Aşama: gökkuşağı fırçası, simetri modu, çıkartmalar, ses efektleri.
+7. [x] Ek özellik: iki parmakla yakınlaştırma. Küçük bölgeler kovayla yanlış dolmasın diye eklendi.
+   Derleniyor, 42 birim testi geçiyor; tablette kullanıcı denedi, çalışıyor.
+   - Tuvalin kenarları değişmez, yalnızca içindeki görüntü 1–4 kat büyür. İki parmak açıp kapamak
+     büyütür, birlikte sürüklemek kaydırır; görüntü tuvalin kenarından dışarı kaymaz.
+   - Tek parmak her zaman çizer. Çizerken ikinci parmak konursa yarım çizgi iptal edilir.
+   - Fırça ekranda hep aynı kalınlıkta görünür; büyütülmüşken resim üzerinde daha ince çizer.
+   - **Kova artık parmak kalkınca, parmağın son durduğu yeri doldurur** (önceden değdiği an dolduruyordu).
+   - Büyütme kaydedilmez; sayfa her açılışta normal boyutta gelir.
+8. [ ] 4. Aşama: gökkuşağı fırçası, simetri modu, çıkartmalar, ses efektleri.
 
 > Her aşama onay alınmadan başlamaz.
 

@@ -14,38 +14,40 @@ class StrokeFactory @Inject constructor(
     private val crayonTextures: CrayonTextureCache,
     private val sprayScatter: SprayScatter,
 ) {
-    /** Boya kovası bir çizgi değil tek dokunuşluk bir işlem olduğundan `null` döner. */
-    fun create(settings: StrokeSettings, backgroundColor: Int): ActiveStroke? {
+    /**
+     * Boya kovası bir çizgi değil tek dokunuşluk bir işlem olduğundan `null` döner. Tüm ölçüler
+     * [zoom] oranına bölünür; görüntü büyütülmüşken çizgi ekranda yine aynı kalınlıkta görünür.
+     */
+    fun create(settings: StrokeSettings, backgroundColor: Int, zoom: Float): ActiveStroke? {
         val style = TOOL_STYLES[settings.tool] ?: return null
-        val width = density.toPx(settings.size.widthDp) * style.widthFactor
+        val scale = Scale(density, zoom)
+        val width = scale.toPx(settings.size.widthDp) * style.widthFactor
         return when (settings.tool) {
-            ToolType.SPRAY -> createSpray(settings.color, width)
-            ToolType.ERASER -> createEraser(backgroundColor, width)
-            else -> createPath(settings, width, style.alpha)
+            ToolType.SPRAY -> createSpray(settings.color, width, scale)
+            ToolType.ERASER -> createEraser(backgroundColor, width, scale)
+            else -> createPath(settings, width, style.alpha, scale)
         }
     }
 
-    private fun createPath(settings: StrokeSettings, width: Float, alpha: Int): ActiveStroke {
+    private fun createPath(settings: StrokeSettings, width: Float, alpha: Int, scale: Scale): ActiveStroke {
         val paint = strokePaint(settings.color, width, alpha)
         if (settings.tool == ToolType.CRAYON) paint.shader = crayonTextures.shaderFor(settings.color)
-        return PathStroke(paint, paint, minPointDistance())
+        return PathStroke(paint, paint, scale.toPx(MIN_POINT_DISTANCE_DP))
     }
 
     /** Önizlemede arka plan rengiyle boyar, boya katmanında ise pikselleri tamamen siler. */
-    private fun createEraser(backgroundColor: Int, width: Float): ActiveStroke {
+    private fun createEraser(backgroundColor: Int, width: Float, scale: Scale): ActiveStroke {
         val preview = strokePaint(backgroundColor, width, OPAQUE)
         val clear = strokePaint(backgroundColor, width, OPAQUE).apply {
             xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         }
-        return PathStroke(preview, clear, minPointDistance())
+        return PathStroke(preview, clear, scale.toPx(MIN_POINT_DISTANCE_DP))
     }
 
-    private fun createSpray(color: Int, radius: Float): ActiveStroke {
-        val dotPaint = strokePaint(color, density.toPx(SPRAY_DOT_DP), OPAQUE)
+    private fun createSpray(color: Int, radius: Float, scale: Scale): ActiveStroke {
+        val dotPaint = strokePaint(color, scale.toPx(SPRAY_DOT_DP), OPAQUE)
         return SprayStroke(dotPaint, radius, SPRAY_DOTS_PER_TOUCH, sprayScatter)
     }
-
-    private fun minPointDistance(): Float = density.toPx(MIN_POINT_DISTANCE_DP)
 
     private fun strokePaint(color: Int, width: Float, alpha: Int) = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         this.color = color
@@ -54,6 +56,11 @@ class StrokeFactory @Inject constructor(
         strokeWidth = width
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
+    }
+
+    /** dp ölçülerini, büyütme oranını hesaba katarak resmin pikseline çevirir. */
+    private class Scale(private val density: ScreenDensity, private val zoom: Float) {
+        fun toPx(dp: Float): Float = density.toPx(dp) / zoom
     }
 
     /** Aracın boyut katsayısı ve saydamlığı. */

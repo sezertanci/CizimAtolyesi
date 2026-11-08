@@ -1,5 +1,6 @@
 package dev.sezertanci.drawingworkshop.ui.drawing
 
+import android.graphics.PointF
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -57,6 +58,12 @@ class DrawingViewModel @Inject constructor(
     private val requestedTemplateId: String? = savedStateHandle[Routes.ARG_TEMPLATE_ID]
     private var templateId: String? = null
 
+    /**
+     * Boya kovası parmak kalkınca, parmağın son durduğu yeri doldurur. Böylece çocuk parmağını doğru
+     * yere kaydırabilir; büyütmek için ikinci parmak konursa doldurma yapılmaz.
+     */
+    private var pendingFill: PointF? = null
+
     val uiState: StateFlow<DrawingUiState> = combine(selection, engine.historyState) { state, history ->
         state.copy(canUndo = history.canUndo, canRedo = history.canRedo)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, selection.value)
@@ -99,23 +106,34 @@ class DrawingViewModel @Inject constructor(
         }
     }
 
-    override fun onTouchStart(x: Float, y: Float) {
+    override fun onTouchStart(x: Float, y: Float, zoom: Float) {
         val state = selection.value
         if (!state.isLoaded) return
         if (state.tool == ToolType.BUCKET) {
-            viewModelScope.launch { engine.fill(x, y, state.strokeColor) }
+            pendingFill = PointF(x, y)
         } else {
-            engine.startStroke(x, y)
+            engine.startStroke(x, y, zoom)
         }
     }
 
-    override fun onTouchMove(x: Float, y: Float) = engine.extendStroke(x, y)
+    override fun onTouchMove(x: Float, y: Float) {
+        val fillPoint = pendingFill
+        if (fillPoint != null) fillPoint.set(x, y) else engine.extendStroke(x, y)
+    }
 
     override fun onTouchBatchEnd() = engine.invalidate()
 
-    override fun onTouchEnd() = engine.endStroke()
+    override fun onTouchEnd() {
+        val fillPoint = pendingFill ?: return engine.endStroke()
+        pendingFill = null
+        val color = selection.value.strokeColor
+        viewModelScope.launch { engine.fill(fillPoint.x, fillPoint.y, color) }
+    }
 
-    override fun onTouchCancel() = engine.cancelStroke()
+    override fun onTouchCancel() {
+        pendingFill = null
+        engine.cancelStroke()
+    }
 
     /** Ekrandan çıkılırken son değişiklikler kaydedilir; kopya alındıktan sonra motor bırakılır. */
     override fun onCleared() {
