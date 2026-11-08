@@ -147,7 +147,7 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      (`SymmetryTransform`, `SymmetryMode`), `domain/geometry/PixelRect` (eski `FillBounds`),
      `SymmetryPainter`, `SymmetryGuides`, `SymmetryControls`. 78 birim testi geçiyor; tablette 8 parça
      çizim, tek adımda geri alma ve simetrik kova denendi.
-   - **Resmi temizleme (tablette denendi, kullanıcı onayı bekleniyor):** sol panelde ↩️ ↪️ altında 🧹
+   - **Resmi temizleme (commit edildi, kullanıcı tablette onayladı):** sol panelde ↩️ ↪️ altında 🧹
      düğmesi (🗑️ galeride kullanıldığı için seçilmedi). Basınca "Resim temizlensin mi?" kutusu açılır
      (✅ / ❌; dışarı dokunmak "hayır" sayılır). Boya katmanını (çizgi, dolgu, işlenmiş çıkartma) ve
      düzenlenen çıkartmayı siler; boyama sayfasının çizgileri ve arka plan rengi kalır. Tek adımda
