@@ -70,9 +70,9 @@ Tarih: 2026-11-08
 1. [x] S3–S6 sorularını tek tek sor ve cevapları bu dosyaya işle.
 2. [x] 1. Aşama planı onaylandı (geri al 5 adım, remote `git@github.com:sezertanci/CizimAtolyesi.git`).
 3. [x] Proje iskeleti, `.gitignore`, `.editorconfig`, `README.md`.
-4. [ ] 1. Aşama: kod yazıldı, derleniyor, 18 birim testi geçiyor. **Tablete yükleme bekliyor:** cihaz
-   `INSTALL_FAILED_USER_RESTRICTED` verdi; geliştirici seçeneklerinde "USB ile yükle" açılmalı veya
-   ekrandaki onay kabul edilmeli. Sonra tablette deneme ve logcat kontrolü yapılacak.
+4. [x] 1. Aşama: derleniyor, 18 birim testi geçiyor. Tablette (2560x1600) denendi: fırça, pastel, sprey,
+   kova, silgi, geri al, yinele ve arka plan rengi çalışıyor; çökme yok. Kare sürelerinin %90'ı 14 ms
+   altında. Not: tuval çok doluyken yoğun bir yük testi henüz yapılmadı.
 5. [ ] Sonraki aşamaları sırayla planla, onaylat ve uygula:
    - Kayıt, açma ve düzenleme.
    - Galeriye dışa aktarma.
