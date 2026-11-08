@@ -219,6 +219,17 @@ class DrawingEngine @Inject constructor(
         }
     }
 
+    /**
+     * Boya katmanını tümüyle siler; boyama sayfasının çizgileri ve arka plan rengi kalır. Düzenlenen
+     * çıkartma da kaldırılır. Tek adımda geri alınır.
+     */
+    fun clear() {
+        if (isFilling) return
+        cancelStroke()
+        stickerEditor.take()
+        commitToLayer(listOf(Rect(0, 0, surface.width, surface.height))) { it.clearPixels() }
+    }
+
     /** Düzenlenen bir çıkartma varsa geri alma önce onu kaldırır. */
     fun undo() {
         if (stickerEditor.take() != null) return notifyChanged()

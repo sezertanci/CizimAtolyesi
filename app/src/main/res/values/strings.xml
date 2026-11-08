@@ -28,6 +28,10 @@
 
     <string name="action_undo">Geri al</string>
     <string name="action_redo">Yinele</string>
+    <string name="action_clear">Resmi temizle</string>
+    <string name="clear_confirm_title">Resim temizlensin mi?</string>
+    <string name="clear_confirm_yes">Evet, temizle</string>
+    <string name="clear_confirm_no">Hayır, kalsın</string>
 
     <string name="color_target_stroke">Kalem rengi</string>
     <string name="color_target_background">Arka plan rengi</string>

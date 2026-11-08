@@ -8,6 +8,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -31,7 +35,7 @@ private val RainbowDotBrush = Brush.sweepGradient(
     (0..RainbowCycle.STEPS).map { Color(RainbowCycle.colorOf(it)) },
 )
 
-/** Panelin araç dışındaki düğmeleri: galeriye dönme, geri al / yinele ve galeriye aktarma. */
+/** Panelin araç dışındaki düğmeleri: galeriye dönme, geri al / yinele, temizleme ve galeriye aktarma. */
 class ToolPanelActions(
     val canUndo: Boolean,
     val canRedo: Boolean,
@@ -39,10 +43,11 @@ class ToolPanelActions(
     val onHome: () -> Unit,
     val onUndo: () -> Unit,
     val onRedo: () -> Unit,
+    val onClear: () -> Unit,
     val onExport: () -> Unit,
 )
 
-/** Soldaki kaydırılabilir araç paneli: galeri, araçlar, fırça boyutları, simetri, geri al, yinele ve aktarma. */
+/** Soldaki kaydırılabilir araç paneli: galeri, araçlar, fırça boyutları, simetri, geri al, yinele, temizle ve aktarma. */
 @Composable
 fun ToolPanel(
     selectedTool: ToolType,
@@ -54,6 +59,7 @@ fun ToolPanel(
     onSizeSelected: (BrushSize) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var confirmingClear by rememberSaveable { mutableStateOf(false) }
     val dotBrush = if (selectedTool == ToolType.RAINBOW) RainbowDotBrush else SolidColor(strokeColor)
     PanelColumn(width = PanelWidth, modifier = modifier) {
         item { ActionButton(HOME_EMOJI, R.string.action_home, onClick = actions.onHome) }
@@ -78,11 +84,21 @@ fun ToolPanel(
         item { PanelDivider() }
         item { ActionButton(UNDO_EMOJI, R.string.action_undo, actions.canUndo, actions.onUndo) }
         item { ActionButton(REDO_EMOJI, R.string.action_redo, actions.canRedo, actions.onRedo) }
+        item { ActionButton(CLEAR_EMOJI, R.string.action_clear) { confirmingClear = true } }
         item { PanelDivider() }
         item {
             val running = actions.exportStatus == ExportStatus.RUNNING
             ActionButton(actions.exportStatus.emoji, R.string.action_export, !running, actions.onExport)
         }
+    }
+    if (confirmingClear) {
+        ClearConfirmDialog(
+            onConfirm = {
+                confirmingClear = false
+                actions.onClear()
+            },
+            onDismiss = { confirmingClear = false },
+        )
     }
 }
 

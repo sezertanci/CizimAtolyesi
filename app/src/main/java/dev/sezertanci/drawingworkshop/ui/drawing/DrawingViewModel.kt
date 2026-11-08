@@ -112,6 +112,8 @@ class DrawingViewModel @Inject constructor(
 
     fun redo() = engine.redo()
 
+    fun clearDrawing() = engine.clear()
+
     /** Düzenlenen çıkartma kaybolmasın diye kayıttan önce resme işlenir. */
     fun saveNow() {
         engine.commitSticker()

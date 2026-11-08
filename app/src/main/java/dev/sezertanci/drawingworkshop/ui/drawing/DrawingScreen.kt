@@ -46,6 +46,7 @@ fun DrawingRoute(onHome: () -> Unit, viewModel: DrawingViewModel = hiltViewModel
             onHome = onHome,
             onUndo = viewModel::undo,
             onRedo = viewModel::redo,
+            onClear = viewModel::clearDrawing,
             onExport = viewModel::export,
         ),
         symmetry = SymmetryControls(

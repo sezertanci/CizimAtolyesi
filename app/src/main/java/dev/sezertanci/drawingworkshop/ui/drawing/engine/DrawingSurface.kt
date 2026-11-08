@@ -59,7 +59,7 @@ class DrawingSurface {
         val source = pending ?: return
         val target = canvas ?: return
         pending = null
-        target.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+        target.clearPixels()
         if (source.width == width && source.height == height) {
             target.drawBitmap(source, 0f, 0f, null)
         } else {
@@ -128,4 +128,9 @@ class DrawingSurface {
         bitmap = null
         canvas = null
     }
+}
+
+/** Tuvalin tüm piksellerini saydam yapar. */
+fun Canvas.clearPixels() {
+    drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
 }
