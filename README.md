@@ -22,7 +22,7 @@ sağda renk paneli, ortada tuval bulunur. Tuval dolu olsa bile akıcı çalışm
 
 ### Boyama sayfaları (3. aşama)
 
-- Galeride "Resimlerim"in altında 9 boyama sayfası bulunur: kedi, balık, ev, araba, çiçek, kelebek, dinozor, güneş, fayton
+- Galerinin üst satırında "Yeni resim" düğmesinin sağında, sola–sağa kaydırılan tek satırda 9 boyama sayfası bulunur; kaydedilen resimler bunun altında "Resimlerim" başlığıyla listelenir: kedi, balık, ev, araba, çiçek, kelebek, dinozor, güneş, fayton
 - Sayfaya dokununca o sayfadan yeni bir resim açılır; sayfanın kendisi değişmez
 - Resim ancak boyanınca kaydedilir; açılıp kapatılan sayfa galeride boş resim bırakmaz
 - Çizgiler her zaman en üstte durur: fırça çizgileri örtmez, silgi çizgileri silmez

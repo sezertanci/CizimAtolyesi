@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items as rowItems
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Text
@@ -33,11 +35,13 @@ import dev.sezertanci.drawingworkshop.ui.components.screenContainer
 import dev.sezertanci.drawingworkshop.ui.gallery.components.CardGrid
 import dev.sezertanci.drawingworkshop.ui.gallery.components.DrawingCard
 import dev.sezertanci.drawingworkshop.ui.gallery.components.GalleryCard
+import dev.sezertanci.drawingworkshop.ui.gallery.components.GridSpacing
 import dev.sezertanci.drawingworkshop.ui.gallery.components.LandscapeBackground
 import dev.sezertanci.drawingworkshop.ui.gallery.components.OverlayButtonSize
 import dev.sezertanci.drawingworkshop.ui.gallery.components.ScreenHeader
 import dev.sezertanci.drawingworkshop.ui.gallery.components.SectionTitle
 import dev.sezertanci.drawingworkshop.ui.gallery.components.ThumbnailSource
+import dev.sezertanci.drawingworkshop.ui.gallery.components.rowCardWidth
 
 /** Galerinin giriş noktası: ViewModel'i alır ve durumu ekrana bağlar. */
 @Composable
@@ -62,7 +66,7 @@ fun GalleryRoute(
 }
 
 /**
- * Galeri aynı ızgarada iki bölümden oluşur: "Resimlerim" ve altında "Boyama sayfaları". Bir sayfaya
+ * Galerinin üstünde "Yeni resim" kartı ve yanında kayan boyama sayfaları, altında "Resimlerim" bulunur. Bir sayfaya
  * dokunmak o sayfadan yeni bir resim açar; sayfanın kendisi değişmez.
  */
 @Composable
@@ -111,20 +115,33 @@ private fun GalleryContent(
             },
         )
         CardGrid {
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                StartRow(state.coloringPages, onNewDrawing, onOpenColoringPage)
+            }
             item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(stringResource(R.string.gallery_my_drawings)) }
-            item { NewDrawingCard(onNewDrawing) }
             items(state.drawings, key = Drawing::id) { drawing ->
                 MyDrawingCard(drawing, thumbnails, onOpenDrawing, onMoveToTrash)
             }
-            item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(stringResource(R.string.gallery_coloring_pages)) }
-            items(state.coloringPages, key = ColoringPage::id) { page -> ColoringPageCard(page, onOpenColoringPage) }
+        }
+    }
+}
+
+/** Üst satır: solda sabit "Yeni resim" kartı, sağında sola–sağa kaydırılan boyama sayfaları. */
+@Composable
+private fun StartRow(pages: List<ColoringPage>, onNewDrawing: () -> Unit, onOpenColoringPage: (String) -> Unit) {
+    Row(horizontalArrangement = Arrangement.spacedBy(GridSpacing)) {
+        NewDrawingCard(onNewDrawing, Modifier.rowCardWidth())
+        LazyRow(modifier = Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(GridSpacing)) {
+            rowItems(pages, key = ColoringPage::id) { page ->
+                ColoringPageCard(page, onOpenColoringPage, Modifier.rowCardWidth())
+            }
         }
     }
 }
 
 @Composable
-private fun NewDrawingCard(onClick: () -> Unit) {
-    GalleryCard(description = stringResource(R.string.action_new_drawing), onClick = onClick) {
+private fun NewDrawingCard(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    GalleryCard(description = stringResource(R.string.action_new_drawing), modifier = modifier, onClick = onClick) {
         Box(Modifier.align(Alignment.Center)) { EmojiIcon(NEW_DRAWING_EMOJI) }
     }
 }
@@ -153,9 +170,10 @@ private fun MyDrawingCard(
 }
 
 @Composable
-private fun ColoringPageCard(page: ColoringPage, onOpen: (String) -> Unit) {
+private fun ColoringPageCard(page: ColoringPage, onOpen: (String) -> Unit, modifier: Modifier = Modifier) {
     GalleryCard(
         description = stringResource(R.string.action_open_coloring_page),
+        modifier = modifier,
         background = Color(Palette.WHITE),
         onClick = { onOpen(page.id) },
     ) {

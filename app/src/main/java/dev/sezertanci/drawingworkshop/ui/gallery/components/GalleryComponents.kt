@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -40,7 +41,7 @@ import dev.sezertanci.drawingworkshop.ui.theme.WorkshopColors
 typealias ThumbnailSource = suspend (Drawing) -> ImageBitmap?
 
 private val CardMinWidth = 220.dp
-private val GridSpacing = 16.dp
+internal val GridSpacing = 16.dp
 private val CardShape = RoundedCornerShape(16.dp)
 private val CardBorder = 2.dp
 private val OverlayPadding = 6.dp
@@ -59,6 +60,9 @@ fun CardGrid(modifier: Modifier = Modifier, content: LazyGridScope.() -> Unit) {
         content = content,
     )
 }
+
+/** Yatay kayan satırdaki kartların sabit genişliği; ızgaradaki kartlarla aynı boyda görünür. */
+fun Modifier.rowCardWidth(): Modifier = width(CardMinWidth)
 
 /** Ekranın üst satırı: solda ve sağda düğmeler, ortada başlık. */
 @Composable
@@ -80,7 +84,7 @@ fun ScreenHeader(
     }
 }
 
-/** Izgarada tüm satırı kaplayan bölüm başlığı (ör. "Resimlerim", "Boyama sayfaları"). */
+/** Izgarada tüm satırı kaplayan bölüm başlığı (ör. "Resimlerim"). */
 @Composable
 fun SectionTitle(text: String) {
     Text(text = text, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
