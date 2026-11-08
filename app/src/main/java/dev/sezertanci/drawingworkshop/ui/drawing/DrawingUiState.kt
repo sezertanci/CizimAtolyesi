@@ -18,6 +18,8 @@ data class DrawingUiState(
     val colorTarget: ColorTarget = ColorTarget.STROKE,
     val canUndo: Boolean = false,
     val canRedo: Boolean = false,
+    val isLoaded: Boolean = false,
+    val exportStatus: ExportStatus = ExportStatus.IDLE,
 ) {
     /** Renk panelinde işaretli görünecek renk. */
     val selectedColor: Int get() = if (colorTarget == ColorTarget.STROKE) strokeColor else backgroundColor

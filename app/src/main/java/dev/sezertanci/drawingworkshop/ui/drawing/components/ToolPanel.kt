@@ -11,35 +11,45 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.sezertanci.drawingworkshop.R
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
+import dev.sezertanci.drawingworkshop.ui.components.EmojiIcon
+import dev.sezertanci.drawingworkshop.ui.components.PanelButton
+import dev.sezertanci.drawingworkshop.ui.drawing.ExportStatus
 
 private val PanelWidth = 88.dp
 private val PanelPadding = 12.dp
 private val ItemSpacing = 10.dp
-private val EmojiSize = 30.sp
+private val PanelDividerWidth = 56.dp
+private val PanelDividerThickness = 2.dp
 
-/** Soldaki kaydırılabilir araç paneli: araçlar, fırça boyutları, geri al ve yinele. */
+/** Panelin araç dışındaki düğmeleri: galeriye dönme, geri al / yinele ve galeriye aktarma. */
+class ToolPanelActions(
+    val canUndo: Boolean,
+    val canRedo: Boolean,
+    val exportStatus: ExportStatus,
+    val onHome: () -> Unit,
+    val onUndo: () -> Unit,
+    val onRedo: () -> Unit,
+    val onExport: () -> Unit,
+)
+
+/** Soldaki kaydırılabilir araç paneli: galeri, araçlar, fırça boyutları, geri al, yinele ve aktarma. */
 @Composable
 fun ToolPanel(
     selectedTool: ToolType,
     selectedSize: BrushSize,
     strokeColor: Color,
-    canUndo: Boolean,
-    canRedo: Boolean,
+    actions: ToolPanelActions,
     onToolSelected: (ToolType) -> Unit,
     onSizeSelected: (BrushSize) -> Unit,
-    onUndo: () -> Unit,
-    onRedo: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -48,6 +58,8 @@ fun ToolPanel(
         verticalArrangement = Arrangement.spacedBy(ItemSpacing),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        item { ActionButton(HOME_EMOJI, R.string.action_home, onClick = actions.onHome) }
+        item { PanelDivider() }
         items(ToolType.entries) { tool ->
             PanelButton(
                 selected = tool == selectedTool,
@@ -64,35 +76,39 @@ fun ToolPanel(
             ) { Box(Modifier.size(size.previewDiameter).background(strokeColor, CircleShape)) }
         }
         item { PanelDivider() }
+        item { ActionButton(UNDO_EMOJI, R.string.action_undo, actions.canUndo, actions.onUndo) }
+        item { ActionButton(REDO_EMOJI, R.string.action_redo, actions.canRedo, actions.onRedo) }
+        item { PanelDivider() }
         item {
-            PanelButton(
-                selected = false,
-                enabled = canUndo,
-                description = stringResource(R.string.action_undo),
-                onClick = onUndo,
-            ) { EmojiIcon(UNDO_EMOJI) }
-        }
-        item {
-            PanelButton(
-                selected = false,
-                enabled = canRedo,
-                description = stringResource(R.string.action_redo),
-                onClick = onRedo,
-            ) { EmojiIcon(REDO_EMOJI) }
+            val running = actions.exportStatus == ExportStatus.RUNNING
+            ActionButton(actions.exportStatus.emoji, R.string.action_export, !running, actions.onExport)
         }
     }
 }
 
 @Composable
-internal fun EmojiIcon(emoji: String) {
-    Text(text = emoji, fontSize = EmojiSize)
+private fun ActionButton(emoji: String, descriptionRes: Int, enabled: Boolean = true, onClick: () -> Unit) {
+    PanelButton(
+        selected = false,
+        enabled = enabled,
+        description = stringResource(descriptionRes),
+        onClick = onClick,
+    ) { EmojiIcon(emoji) }
 }
 
 @Composable
 internal fun PanelDivider() {
-    HorizontalDivider(modifier = Modifier.width(PanelDividerWidth), thickness = 2.dp)
+    HorizontalDivider(modifier = Modifier.width(PanelDividerWidth), thickness = PanelDividerThickness)
 }
 
-private val PanelDividerWidth = 56.dp
+private val ExportStatus.emoji: String
+    get() = when (this) {
+        ExportStatus.IDLE -> "📤"
+        ExportStatus.RUNNING -> "⏳"
+        ExportStatus.DONE -> "✅"
+        ExportStatus.FAILED -> "⚠️"
+    }
+
+private const val HOME_EMOJI = "🏠"
 private const val UNDO_EMOJI = "↩️"
 private const val REDO_EMOJI = "↪️"

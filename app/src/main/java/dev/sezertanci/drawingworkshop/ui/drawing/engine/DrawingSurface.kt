@@ -2,12 +2,15 @@ package dev.sezertanci.drawingworkshop.ui.drawing.engine
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
+import android.graphics.RectF
 import androidx.core.graphics.createBitmap
 import dev.sezertanci.drawingworkshop.domain.fill.FillBounds
+import dev.sezertanci.drawingworkshop.domain.geometry.fitCenter
 
 /**
  * Tuvalin boya katmanı: ekran dışında tutulan bir bitmap.
@@ -19,6 +22,8 @@ class DrawingSurface {
     private var bitmap: Bitmap? = null
     private var canvas: Canvas? = null
     private val replacePaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC) }
+    private val scalePaint = Paint(Paint.FILTER_BITMAP_FLAG)
+    private var pending: Bitmap? = null
 
     val width: Int get() = bitmap?.width ?: 0
     val height: Int get() = bitmap?.height ?: 0
@@ -34,6 +39,35 @@ class DrawingSurface {
         }
         bitmap = resized
         canvas = resizedCanvas
+        applyPending()
+    }
+
+    /**
+     * Kayıtlı boya katmanını yükler; tuval henüz boyutlanmadıysa boyut belli olunca uygulanır.
+     * Görüntü oranı korunarak tuvale sığdırılır. [source] bu sınıfa devredilir ve sonra serbest bırakılır.
+     */
+    fun load(source: Bitmap) {
+        pending?.recycle()
+        pending = source
+        applyPending()
+    }
+
+    /** Boya katmanının kopyası; kayıt ve dışa aktarma için. Serbest bırakmak çağırana aittir. */
+    fun copy(): Bitmap? = bitmap?.copy(Bitmap.Config.ARGB_8888, false)
+
+    private fun applyPending() {
+        val source = pending ?: return
+        val target = canvas ?: return
+        pending = null
+        target.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+        if (source.width == width && source.height == height) {
+            target.drawBitmap(source, 0f, 0f, null)
+        } else {
+            val bounds = fitCenter(source.width, source.height, width, height)
+            val destination = RectF(bounds.left, bounds.top, bounds.left + bounds.width, bounds.top + bounds.height)
+            target.drawBitmap(source, null, destination, scalePaint)
+        }
+        source.recycle()
     }
 
     fun drawTo(target: Canvas) {
@@ -81,6 +115,8 @@ class DrawingSurface {
     }
 
     fun release() {
+        pending?.recycle()
+        pending = null
         bitmap?.recycle()
         bitmap = null
         canvas = null

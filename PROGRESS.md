@@ -35,7 +35,7 @@ Tarih: 2026-11-08
 ## Teknik yaklaşım (onaylandı)
 
 - **Teknoloji ve mimari:**
-  - Kotlin, Jetpack Compose, Hilt (KSP), MVVM. Katmanlar şimdilik `ui`, `domain`, `di`; `data` kayıt aşamasında eklenecek.
+  - Kotlin, Jetpack Compose, Hilt (KSP), MVVM. Katmanlar `ui`, `domain`, `data`, `di`.
   - AGP 9.5.1 (yerleşik Kotlin), Gradle 9.8.2, compileSdk 37, targetSdk 36, minSdk 29.
   - Gradle 9.9.0 yerine 9.8.2 seçildi: 9.9.0 çok yeniydi ve indirme sunucusu o sırada hata veriyordu.
   - compileSdk 37: Compose 1.12 ve core 1.19 bunu istiyor; targetSdk 36 kaldı.
@@ -73,11 +73,23 @@ Tarih: 2026-11-08
 4. [x] 1. Aşama: derleniyor, 18 birim testi geçiyor. Tablette (2560x1600) denendi: fırça, pastel, sprey,
    kova, silgi, geri al, yinele ve arka plan rengi çalışıyor; çökme yok. Kare sürelerinin %90'ı 14 ms
    altında. Not: tuval çok doluyken yoğun bir yük testi henüz yapılmadı.
-5. [ ] Sonraki aşamaları sırayla planla, onaylat ve uygula:
-   - Kayıt, açma ve düzenleme.
-   - Galeriye dışa aktarma.
-   - Boyama sayfaları.
-   - Seçilen ek özellikler.
+5. [x] 2. Aşama: kayıt, galeri, çöp kutusu ve dışa aktarma. Derleniyor, 29 birim testi geçiyor.
+   Tablette denendi: yeni resim, otomatik kayıt, yeniden açma, dışa aktarma, çöp kutusuna atma,
+   geri getirme ve hızlı çift dokunuşta gezinme koruması çalışıyor; çökme yok.
+   - **Açılış ekranı galeridir.** Galeri bölümlerden oluşur: şimdilik "Resimlerim". Hazır boyama
+     sayfaları ileride ayrı bir bölüm olarak eklenecek; resim kaydında `templateId` alanı bunun için
+     ayrılmadı (YAGNI), bölüm yapısı ekranda hazır tutulur.
+   - **Resmin adı yok.** Galeride küçük resimler, en son düzenlenen en başta görünür.
+   - **Kayıt:** Room'da resim listesi (`id`, `updatedAt`, `deletedAt`, `backgroundColor`).
+     Boya katmanı şeffaf PNG, küçük resim ayrı PNG olarak iç depoda tutulur. Geçici dosyaya yazılıp
+     yeniden adlandırılır. Ana iş parçacığında yalnızca bitmap kopyası alınır, sıkıştırma IO'da yapılır.
+   - **Otomatik kayıt:** son değişiklikten 2 saniye sonra, galeriye dönerken ve uygulama arka plana
+     geçerken. Geri al geçmişi kaydedilmez.
+   - **Çöp kutusu:** Silinen resim çöp kutusuna gider, oradan geri getirilebilir. 24 saat sonra
+     kalıcı olarak silinir (galeri ve çöp kutusu ekranı açılırken temizlik yapılır).
+   - **Dışa aktarma:** Çizim ekranındaki 📤 düğmesi; PNG, MediaStore ile `Pictures/Çizim Atölyesi`
+     klasörüne, izin gerekmeden.
+6. [ ] Sonraki aşamalar: boyama sayfaları, seçilen ek özellikler.
 
 > Her aşama onay alınmadan başlamaz.
 

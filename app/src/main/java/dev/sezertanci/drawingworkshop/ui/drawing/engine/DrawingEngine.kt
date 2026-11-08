@@ -1,6 +1,8 @@
 package dev.sezertanci.drawingworkshop.ui.drawing.engine
 
+import android.graphics.Bitmap
 import android.graphics.Canvas
+import dagger.hilt.android.scopes.ViewModelScoped
 import dev.sezertanci.drawingworkshop.di.DefaultDispatcher
 import dev.sezertanci.drawingworkshop.domain.fill.FloodFiller
 import dev.sezertanci.drawingworkshop.domain.history.UndoRedoHistory
@@ -23,6 +25,7 @@ data class HistoryState(val canUndo: Boolean, val canRedo: Boolean)
  * Tüm metotlar ana iş parçacığından çağrılır. Yalnızca boya kovasının piksel hesabı arka planda
  * yapılır; bu sırada yeni çizgi ve geri alma kabul edilmez, böylece bitmap tutarlı kalır.
  */
+@ViewModelScoped
 class DrawingEngine @Inject constructor(
     private val strokeFactory: StrokeFactory,
     private val floodFiller: FloodFiller,
@@ -31,17 +34,23 @@ class DrawingEngine @Inject constructor(
     private val surface = DrawingSurface()
     private val history = UndoRedoHistory<RegionSnapshot>(UNDO_CAPACITY, RegionSnapshot::release)
     private val _historyState = MutableStateFlow(HistoryState(canUndo = false, canRedo = false))
+    private val _contentVersion = MutableStateFlow(0)
     private var activeStroke: ActiveStroke? = null
     private var isFilling = false
     private var onChanged: (() -> Unit)? = null
 
     val historyState: StateFlow<HistoryState> = _historyState.asStateFlow()
 
+    /** Resim her değiştiğinde artar (çizgi, doldurma, geri al, arka plan). Otomatik kayıt bunu izler. */
+    val contentVersion: StateFlow<Int> = _contentVersion.asStateFlow()
+
     var settings: StrokeSettings = StrokeSettings(ToolType.BRUSH, BrushSize.MEDIUM, Palette.RED)
 
     var backgroundColor: Int = Palette.WHITE
         set(value) {
+            if (field == value) return
             field = value
+            markContentChanged()
             notifyChanged()
         }
 
@@ -55,6 +64,21 @@ class DrawingEngine @Inject constructor(
         surface.resize(width, height)
         notifyChanged()
     }
+
+    /**
+     * Kayıtlı resmin boya katmanını yükler. Yalnızca açılışta, çizim başlamadan çağrılır; geçmiş
+     * temizlenir. [layer] motora devredilir.
+     */
+    fun load(layer: Bitmap) {
+        cancelStroke()
+        history.clear()
+        surface.load(layer)
+        publishHistory()
+        notifyChanged()
+    }
+
+    /** Boya katmanının kopyası; serbest bırakmak çağırana aittir. */
+    fun copyLayer(): Bitmap? = surface.copy()
 
     fun draw(canvas: Canvas) {
         canvas.drawColor(backgroundColor)
@@ -82,6 +106,7 @@ class DrawingEngine @Inject constructor(
         surface.snapshot(stroke.dirtyRegion())?.let { before ->
             history.record(before)
             surface.paint(stroke::commit)
+            markContentChanged()
         }
         publishHistory()
         notifyChanged()
@@ -106,6 +131,7 @@ class DrawingEngine @Inject constructor(
             if (surface.width != width || surface.height != height) return
             surface.snapshot(bounds.toRect())?.let(history::record)
             surface.writePixels(pixels, bounds)
+            markContentChanged()
             publishHistory()
             notifyChanged()
         } finally {
@@ -126,6 +152,7 @@ class DrawingEngine @Inject constructor(
     private fun applyHistory(action: () -> Boolean) {
         if (isFilling || activeStroke != null) return
         if (action()) {
+            markContentChanged()
             publishHistory()
             notifyChanged()
         }
@@ -133,6 +160,10 @@ class DrawingEngine @Inject constructor(
 
     private fun publishHistory() {
         _historyState.value = HistoryState(history.canUndo, history.canRedo)
+    }
+
+    private fun markContentChanged() {
+        _contentVersion.value += 1
     }
 
     private fun notifyChanged() {

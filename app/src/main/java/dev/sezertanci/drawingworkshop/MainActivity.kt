@@ -8,7 +8,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import dagger.hilt.android.AndroidEntryPoint
-import dev.sezertanci.drawingworkshop.ui.drawing.DrawingRoute
+import dev.sezertanci.drawingworkshop.ui.navigation.AppNavHost
 import dev.sezertanci.drawingworkshop.ui.theme.DrawingWorkshopTheme
 
 @AndroidEntryPoint
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         hideSystemBars()
         setContent {
             DrawingWorkshopTheme {
-                DrawingRoute()
+                AppNavHost()
             }
         }
     }
