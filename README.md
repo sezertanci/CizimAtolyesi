@@ -59,6 +59,38 @@ Bağlı cihaza yükleme:
 
 Windows'ta `./gradlew` yerine `gradlew.bat` kullanılabilir.
 
+## Yayın paketi (Google Play)
+
+Play'e `.aab` paketi yüklenir. Paket bir **yükleme anahtarıyla** imzalanır; asıl imzayı Play App Signing ile
+Google atar. Anahtar dosyası ve şifreleri repoya girmez (`.gitignore` içinde `*.jks`, `*.keystore`).
+
+1. Anahtar bir kez oluşturulur ve repo dışında, yedeklenen bir yerde saklanır. Şifreyi `keytool` sorar:
+
+   ```bash
+   keytool -genkeypair -v -keystore ~/keys/drawing-workshop-upload.jks -alias upload -keyalg RSA -keysize 4096 -validity 10000
+   ```
+
+2. Bilgiler kullanıcının `~/.gradle/gradle.properties` dosyasına yazılır (proje içindeki dosyaya değil):
+
+   ```properties
+   drawingWorkshopUploadStoreFile=C:/Users/<kullanıcı>/keys/drawing-workshop-upload.jks
+   drawingWorkshopUploadStorePassword=...
+   drawingWorkshopUploadKeyAlias=upload
+   drawingWorkshopUploadKeyPassword=...
+   ```
+
+   Aynı değerler `ORG_GRADLE_PROJECT_drawingWorkshopUploadStoreFile` gibi ortam değişkenleriyle de verilebilir.
+   Bilgiler yoksa paket imzasız üretilir ve Play kabul etmez.
+
+3. Paket üretilir: `app/build/outputs/bundle/release/app-release.aab`
+
+   ```bash
+   ./gradlew bundleRelease
+   ```
+
+Her yüklemede `app/build.gradle.kts` içindeki `versionCode` bir artırılır. Gizlilik politikası
+`store/drawing-workshop/privacy.html` dosyasıdır ve GitHub Pages'te yayınlanır.
+
 ## Boyama sayfalarını üretme
 
 Boyama sayfaları elle düzenlenen SVG kaynaklarından (`tools/coloring/pages/<id>.svg`) üretilir.

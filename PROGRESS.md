@@ -30,7 +30,7 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
 | S3 | Giriş yöntemi | **Yalnızca parmak** (stylus basınç desteği yok) |
 | S4 | Boyama sayfaları | **İkisi birden:** boya kovasıyla doldurma ve serbest boyama |
 | S5 | Ek özellikler | **Gökkuşağı fırçası, simetri modu, çıkartmalar, ses efektleri.** Ebeveyn kilidi yok. |
-| S6 | Proje klasörü | `C:\Users\Lenovo\Projeler\CizimAtolyesi` |
+| S6 | Proje klasörü | `C:\Users\Lenovo\Projeler\DrawingWorkshop` |
 
 ## Teknik yaklaşım (onaylandı)
 
@@ -68,7 +68,7 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
 ## Yapılacak işler
 
 1. [x] S3–S6 sorularını tek tek sor ve cevapları bu dosyaya işle.
-2. [x] 1. Aşama planı onaylandı (geri al 5 adım, remote `git@github.com:sezertanci/CizimAtolyesi.git`).
+2. [x] 1. Aşama planı onaylandı (geri al 5 adım, remote `git@github.com:sezertanci/DrawingWorkshop.git`).
 3. [x] Proje iskeleti, `.gitignore`, `.editorconfig`, `README.md`.
 4. [x] 1. Aşama: derleniyor, 18 birim testi geçiyor. Tablette (2560x1600) denendi: fırça, pastel, sprey,
    kova, silgi, geri al, yinele ve arka plan rengi çalışıyor; çökme yok. Kare sürelerinin %90'ı 14 ms
@@ -165,8 +165,20 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      denetim `tools/coloring/preview.html`. 15 sayfanın hiçbirinde çok küçük (300 pikselden küçük) bölge yok.
      Çizim kuralları: paralel kenarlar arası en az ~30 px, tüpler en az 28 px, göz parıltısı en az r10,
      küçük benek ve tırnaklar siyah dolgu, köşeler başka kenara yakın bitmez.
-   - **Sıradaki adım:** kullanıcı yeni sayfaları tablette dener ve onaylarsa commit edilir. Ardından yayın
-     hazırlığı: imzalama, AAB, gizlilik politikası. Push yalnızca istenirse yapılır.
+   - Boyama sayfaları commit edildi ve gönderildi (`6e3a55e`); çizim kuralları `tools/coloring/DRAWING_GUIDE.md` (`f4031b3`).
+   - **Yayın hazırlığı (commit edilmedi):**
+     - İmzalama: `app/build.gradle.kts` yükleme anahtarını `drawingWorkshopUpload*` Gradle özelliklerinden okur
+       (`~/.gradle/gradle.properties` veya `ORG_GRADLE_PROJECT_*`); yoksa paket imzasız çıkar. Ayrıntı README'de.
+     - `versionName` 1.0.0, `versionCode` 1.
+     - `bundleRelease` çalışıyor (AAB 3,6 MB). Küçültülmüş (R8) APK test anahtarıyla imzalanıp tablette
+       açıldı; galeri ve kayıtlı resimler yüklendi, çökme yok.
+     - Gizlilik politikası `store/drawing-workshop/privacy.html` (Türkçe + İngilizce). Hedef adres:
+       `https://sezertanci.github.io/drawing-workshop/privacy.html` (kullanıcı `sezertanci.github.io` adlı public
+       repoyu web arayüzünden açıp dosyayı koyacak).
+   - **Sıradaki adım:** kullanıcı `keytool` ile yükleme anahtarını oluşturur ve şifreleri
+     `~/.gradle/gradle.properties` dosyasına yazar; ardından imzalı `bundleRelease`. Sonra Play Console:
+     ekran görüntüleri (emülatör), mağaza metinleri, Aileler politikası beyanları, 12 kişiyle 14 gün kapalı test.
+     Push yalnızca istenirse yapılır.
    - **İsteğe bağlı küçük düzeltme:** bazı emojiler (ör. kedinin bıyıkları) kare düzenleme
      çerçevesinden taşıyor; resme işleme doğru. Kullanıcı isterse yapılır.
 

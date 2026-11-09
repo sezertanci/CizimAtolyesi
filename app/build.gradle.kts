@@ -6,6 +6,11 @@ plugins {
     alias(libs.plugins.room)
 }
 
+// Yükleme anahtarı bilgileri repoda tutulmaz; ~/.gradle/gradle.properties veya
+// ORG_GRADLE_PROJECT_<ad> ortam değişkenlerinden okunur. Yoksa sürüm paketi imzasız üretilir.
+fun uploadProperty(name: String): String? = providers.gradleProperty("drawingWorkshopUpload$name").orNull
+val uploadStoreFile = uploadProperty("StoreFile")
+
 android {
     namespace = "dev.sezertanci.drawingworkshop"
     compileSdk = 37
@@ -15,11 +20,23 @@ android {
         minSdk = 29
         targetSdk = 36
         versionCode = 1
-        versionName = "0.1.0"
+        versionName = "1.0.0"
+    }
+
+    signingConfigs {
+        if (uploadStoreFile != null) {
+            create("upload") {
+                storeFile = file(uploadStoreFile)
+                storePassword = uploadProperty("StorePassword")
+                keyAlias = uploadProperty("KeyAlias")
+                keyPassword = uploadProperty("KeyPassword")
+            }
+        }
     }
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.findByName("upload")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
