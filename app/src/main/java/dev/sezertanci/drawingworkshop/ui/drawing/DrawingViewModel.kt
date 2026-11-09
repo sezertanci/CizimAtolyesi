@@ -189,11 +189,12 @@ class DrawingViewModel @Inject constructor(
 
     private suspend fun loadDrawing() {
         val stored = repository.load(drawingId)
+        val pageId = (stored?.templateId ?: requestedTemplateId)?.takeIf { pageCatalog.find(it) != null }
+        engine.setContentSize(pageId?.let(lineArtFactory::artSize))
         stored?.let {
             it.layer?.let(engine::load)
             updateSelection { state -> state.copy(backgroundColor = it.backgroundColor) }
         }
-        val pageId = (stored?.templateId ?: requestedTemplateId)?.takeIf { pageCatalog.find(it) != null }
         pageId?.let { attachLineArt(it) }
         templateId = pageId
         autoSaver.start(drawingId, pageId, viewModelScope)

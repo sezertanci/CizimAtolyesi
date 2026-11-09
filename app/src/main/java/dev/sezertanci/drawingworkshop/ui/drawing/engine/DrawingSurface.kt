@@ -8,9 +8,10 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.RectF
+import android.util.Size
 import androidx.core.graphics.createBitmap
 import dev.sezertanci.drawingworkshop.domain.geometry.PixelRect
-import dev.sezertanci.drawingworkshop.domain.geometry.fitCenter
+import dev.sezertanci.drawingworkshop.domain.geometry.fitLayer
 
 /**
  * Tuvalin boya katmanı: ekran dışında tutulan bir bitmap.
@@ -28,23 +29,35 @@ class DrawingSurface {
     val width: Int get() = bitmap?.width ?: 0
     val height: Int get() = bitmap?.height ?: 0
 
-    /** Boyut değişirse yeni bitmap oluşturur ve eski çizimi sol üst köşeden aktarır. */
-    fun resize(newWidth: Int, newHeight: Int) {
-        if (newWidth <= 0 || newHeight <= 0 || (newWidth == width && newHeight == height)) return
+    /**
+     * Katmandaki içerik alanının (boyama sayfasının çizimi) en-boy boyutu. Katman başka boyuttaki bir
+     * tuvale aktarılırken bu alan çizgilerle hizalı kalacak şekilde ölçeklenir; `null` ise katmanın tamamı.
+     */
+    var contentSize: Size? = null
+
+    /**
+     * Boyut değişirse yeni bitmap oluşturur ve eski çizimi yeni tuvale hizalayarak aktarır. Eski çizim
+     * ölçeklendiyse `true` döner; o zaman eski koordinatlardaki geri al kayıtları geçersizdir.
+     */
+    fun resize(newWidth: Int, newHeight: Int): Boolean {
+        if (newWidth <= 0 || newHeight <= 0 || (newWidth == width && newHeight == height)) return false
+        val previous = bitmap
         val resized = createBitmap(newWidth, newHeight)
         val resizedCanvas = Canvas(resized)
-        bitmap?.let {
-            resizedCanvas.drawBitmap(it, 0f, 0f, null)
+        previous?.let {
+            resizedCanvas.drawAligned(it)
             it.recycle()
         }
         bitmap = resized
         canvas = resizedCanvas
         applyPending()
+        return previous != null
     }
 
     /**
      * Kayıtlı boya katmanını yükler; tuval henüz boyutlanmadıysa boyut belli olunca uygulanır.
-     * Görüntü oranı korunarak tuvale sığdırılır. [source] bu sınıfa devredilir ve sonra serbest bırakılır.
+     * Boyut farklıysa [contentSize] alanı çizgilerle hizalanarak yerleştirilir. [source] bu sınıfa
+     * devredilir ve sonra serbest bırakılır.
      */
     fun load(source: Bitmap) {
         pending?.recycle()
@@ -60,14 +73,20 @@ class DrawingSurface {
         val target = canvas ?: return
         pending = null
         target.clearPixels()
-        if (source.width == width && source.height == height) {
-            target.drawBitmap(source, 0f, 0f, null)
-        } else {
-            val bounds = fitCenter(source.width, source.height, width, height)
-            val destination = RectF(bounds.left, bounds.top, bounds.left + bounds.width, bounds.top + bounds.height)
-            target.drawBitmap(source, null, destination, scalePaint)
-        }
+        target.drawAligned(source)
         source.recycle()
+    }
+
+    /** [source] katmanını bu tuvalin boyutuna, içerik alanı çizgilerle hizalı kalacak şekilde çizer. */
+    private fun Canvas.drawAligned(source: Bitmap) {
+        if (source.width == this.width && source.height == this.height) {
+            drawBitmap(source, 0f, 0f, null)
+            return
+        }
+        val content = contentSize ?: Size(source.width, source.height)
+        val bounds = fitLayer(source.width, source.height, this.width, this.height, content.width, content.height)
+        val destination = RectF(bounds.left, bounds.top, bounds.left + bounds.width, bounds.top + bounds.height)
+        drawBitmap(source, null, destination, scalePaint)
     }
 
     fun drawTo(target: Canvas) {

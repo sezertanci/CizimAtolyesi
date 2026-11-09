@@ -19,4 +19,20 @@ class FitCenterTest {
     fun fitCenter_TallerTarget_CentersVertically() {
         assertEquals(ScaledBounds(0f, 50f, 400f, 300f), fitCenter(800, 600, 400, 400))
     }
+
+    @Test
+    fun fitLayer_NoContent_MatchesFitCenter() {
+        assertEquals(fitCenter(800, 600, 1000, 600), fitLayer(800, 600, 1000, 600))
+    }
+
+    @Test
+    fun fitLayer_WiderContent_AlignsContentAreas() {
+        // 2:1 içerik, 400x400 katmanda (0,100)-(400,300) alanında; 800x200 tuvalde (200,0)-(600,200) alanında.
+        assertEquals(ScaledBounds(200f, -100f, 400f, 400f), fitLayer(400, 400, 800, 200, 200, 100))
+    }
+
+    @Test
+    fun fitLayer_SameSize_KeepsLayerInPlace() {
+        assertEquals(ScaledBounds(0f, 0f, 400f, 300f), fitLayer(400, 300, 400, 300, 200, 100))
+    }
 }

@@ -91,9 +91,21 @@ class DrawingEngine @Inject constructor(
         onChanged = listener
     }
 
+    /**
+     * Boyama sayfası çiziminin en-boy boyutu; kayıtlı resim başka boyutta bir tuvalde açılınca boyanın
+     * çizgilerle hizalı kalması için kullanılır. Resim yüklenmeden önce verilir.
+     */
+    fun setContentSize(size: Size?) {
+        surface.contentSize = size
+    }
+
+    /** Eski çizim yeni boyuta ölçeklenirse geri al kayıtları eski koordinatlarda kaldığı için silinir. */
     fun resize(width: Int, height: Int) {
         cancelStroke()
-        surface.resize(width, height)
+        if (surface.resize(width, height)) {
+            history.clear()
+            publishHistory()
+        }
         refreshSymmetry()
         if (surface.width > 0) _canvasSize.value = Size(surface.width, surface.height)
         notifyChanged()

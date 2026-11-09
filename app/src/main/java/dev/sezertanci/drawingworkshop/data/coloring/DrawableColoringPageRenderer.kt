@@ -2,6 +2,8 @@ package dev.sezertanci.drawingworkshop.data.coloring
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.Drawable
+import android.util.Size
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.sezertanci.drawingworkshop.domain.geometry.fitCenter
 import javax.inject.Inject
@@ -17,8 +19,7 @@ class DrawableColoringPageRenderer @Inject constructor(
 ) : ColoringPageRenderer {
 
     override fun draw(templateId: String, canvas: Canvas, width: Int, height: Int) {
-        val page = catalog.find(templateId) ?: return
-        val drawable = context.getDrawable(page.art)?.mutate() ?: return
+        val drawable = drawable(templateId) ?: return
         val bounds = fitCenter(drawable.intrinsicWidth, drawable.intrinsicHeight, width, height)
         drawable.setBounds(
             bounds.left.roundToInt(),
@@ -27,5 +28,13 @@ class DrawableColoringPageRenderer @Inject constructor(
             (bounds.top + bounds.height).roundToInt(),
         )
         drawable.draw(canvas)
+    }
+
+    override fun artSize(templateId: String): Size? =
+        drawable(templateId)?.let { Size(it.intrinsicWidth, it.intrinsicHeight) }
+
+    private fun drawable(templateId: String): Drawable? {
+        val page = catalog.find(templateId) ?: return null
+        return context.getDrawable(page.art)?.mutate()
     }
 }
