@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gökyüzü -->
+  <circle cx="170" cy="150" r="62" fill="#fff"/>
+  <g transform="translate(170,150)" stroke-width="10">
+    <path d="M85,0 L118,0" transform="rotate(0)"/>
+    <path d="M85,0 L118,0" transform="rotate(45)"/>
+    <path d="M85,0 L118,0" transform="rotate(90)"/>
+    <path d="M85,0 L118,0" transform="rotate(135)"/>
+    <path d="M85,0 L118,0" transform="rotate(180)"/>
+    <path d="M85,0 L118,0" transform="rotate(225)"/>
+    <path d="M85,0 L118,0" transform="rotate(270)"/>
+    <path d="M85,0 L118,0" transform="rotate(315)"/>
+  </g>
+  <path d="M960,190 C915,190 910,130 960,125 C965,77 1032,67 1052,105 C1072,63 1148,73 1148,125 C1195,125 1195,190 1148,190 Z" fill="#fff"/>
+  <path stroke-width="8" d="M560,150 C575,130 595,130 610,150 C625,130 645,130 660,150 M700,95 C712,80 728,80 740,95 C752,80 768,80 780,95"/>
+
+  <!-- Yer ve çimen -->
+  <path d="M-20,800 L1420,800"/>
+  <path stroke-width="8" d="M80,900 C74,880 64,865 52,855 M80,900 C79,878 81,860 78,840 M80,900 C86,882 96,870 110,860 M640,930 C634,910 624,895 612,885 M640,930 C639,908 641,890 638,870 M640,930 C646,912 656,900 670,890 M1280,910 C1274,890 1264,875 1252,865 M1280,910 C1279,888 1281,870 1278,850 M1280,910 C1286,892 1296,880 1310,870"/>
+
+  <!-- Mantarlar -->
+  <path d="M160,800 L165,740 L215,740 L220,800 Z" fill="#fff"/>
+  <path id="cap1" d="M100,750 C100,650 280,650 280,750 Z" fill="#fff"/>
+  <circle cx="150" cy="715" r="13" fill="#000" stroke="none"/>
+  <circle cx="200" cy="690" r="13" fill="#000" stroke="none"/>
+  <circle cx="240" cy="725" r="13" fill="#000" stroke="none"/>
+  <path d="M330,800 L333,740 L365,740 L368,800 Z" fill="#fff"/>
+  <path d="M300,748 C300,685 410,685 410,748 Z" fill="#fff"/>
+  <circle cx="355" cy="718" r="11" fill="#000" stroke="none"/>
+
+  <!-- Uzak bacaklar ve kuyruk -->
+  <path d="M545,620 L545,795 C545,833 615,833 615,795 L615,620 Z" fill="#fff"/>
+  <path d="M960,620 L960,795 C960,833 1030,833 1030,795 L1030,620 Z" fill="#fff"/>
+  <path d="M400,600 L300,650 L410,660 Z" fill="#fff"/>
+
+  <!-- Boyun ve baş -->
+  <path d="M960,600 C1020,580 1060,560 1100,530" data-tube="84"/>
+  <ellipse cx="1160" cy="500" rx="85" ry="68" fill="#fff"/>
+  <path fill="#000" fill-rule="evenodd" stroke="none" d="M1156,478 A24,24 0 1,1 1204,478 A24,24 0 1,1 1156,478 Z M1172,468 A10,10 0 1,1 1192,468 A10,10 0 1,1 1172,468 Z"/>
+  <path stroke-width="9" d="M1170,528 C1190,542 1212,538 1226,522"/>
+
+  <!-- Kabuk -->
+  <path id="shell" d="M385,640 C390,430 560,330 700,330 C860,330 1005,430 1010,640 Z" fill="#fff"/>
+  <path data-clip="shell" stroke-width="10" d="M625,420 L775,420 L835,515 L775,610 L625,610 L565,515 Z M625,420 L570,320 M775,420 L830,320 M565,515 L370,515 M835,515 L1030,515 M625,610 L590,700 M775,610 L810,700"/>
+
+  <!-- Yakın bacaklar -->
+  <path d="M420,620 L420,795 C420,833 510,833 510,795 L510,620 Z" fill="#fff"/>
+  <path d="M830,620 L830,795 C830,833 920,833 920,795 L920,620 Z" fill="#fff"/>
+  <path stroke-width="8" d="M445,812 L445,795 M485,812 L485,795 M855,812 L855,795 M895,812 L895,795"/>
+
+  <!-- Kabuk kenarı -->
+  <path id="rim" d="M360,632 C360,612 378,600 400,600 L1000,600 C1025,600 1045,612 1045,634 C1045,658 1025,670 1000,670 L400,670 C378,670 360,655 360,632 Z" fill="#fff"/>
+  <path data-clip="rim" stroke-width="9" d="M480,590 L480,680 M600,590 L600,680 M720,590 L720,680 M840,590 L840,680 M960,590 L960,680"/>
+</svg>

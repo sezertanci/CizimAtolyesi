@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gece göğü: ay ve yıldızlar -->
+  <circle id="moon" cx="230" cy="160" r="85" fill="#fff"/>
+  <circle cx="200" cy="130" r="22" stroke-width="9"/>
+  <circle cx="262" cy="195" r="26" stroke-width="9"/>
+  <circle cx="255" cy="110" r="14" fill="#000" stroke="none"/>
+  <path d="M480.0,70.0 L490.6,95.4 L518.0,97.6 L497.1,115.6 L503.5,142.4 L480.0,128.0 L456.5,142.4 L462.9,115.6 L442.0,97.6 L469.4,95.4 Z" fill="#fff" stroke-width="10"/>
+  <path d="M820.0,50.0 L830.6,75.4 L858.0,77.6 L837.1,95.6 L843.5,122.4 L820.0,108.0 L796.5,122.4 L802.9,95.6 L782.0,77.6 L809.4,75.4 Z" fill="#fff" stroke-width="10"/>
+  <path d="M1050.0,160.0 L1060.6,185.4 L1088.0,187.6 L1067.1,205.6 L1073.5,232.4 L1050.0,218.0 L1026.5,232.4 L1032.9,205.6 L1012.0,187.6 L1039.4,185.4 Z" fill="#fff" stroke-width="10"/>
+  <path d="M1280.0,70.0 L1290.6,95.4 L1318.0,97.6 L1297.1,115.6 L1303.5,142.4 L1280.0,128.0 L1256.5,142.4 L1262.9,115.6 L1242.0,97.6 L1269.4,95.4 Z" fill="#fff" stroke-width="10"/>
+  <path d="M140.0,380.0 L150.6,405.4 L178.0,407.6 L157.1,425.6 L163.5,452.4 L140.0,438.0 L116.5,452.4 L122.9,425.6 L102.0,407.6 L129.4,405.4 Z" fill="#fff" stroke-width="10"/>
+
+  <!-- Tepe ve şato -->
+  <path d="M900,830 C1000,700 1250,680 1420,700"/>
+  <path d="M1265,700 L1265,520 L1365,520 L1365,700" fill="#fff"/>
+  <path d="M1245,530 L1315,420 L1385,530 Z" fill="#fff"/>
+  <path d="M1110,750 L1110,560 L1200,560 L1200,750" fill="#fff"/>
+  <path d="M1092,570 L1155,460 L1218,570 Z" fill="#fff"/>
+  <path d="M1155,460 L1155,410" stroke-width="8"/>
+  <path d="M1155,410 L1195,425 L1155,440 Z" fill="#000" stroke-width="6"/>
+  <path d="M1315,420 L1315,370" stroke-width="8"/>
+  <path d="M1315,370 L1355,385 L1315,400 Z" fill="#000" stroke-width="6"/>
+  <path d="M1135,660 L1135,630 C1135,605 1175,605 1175,630 L1175,660 Z" fill="#fff"/>
+  <path d="M1295,620 L1295,590 C1295,565 1335,565 1335,590 L1335,620 Z" fill="#fff"/>
+
+  <!-- Yol -->
+  <path d="M-20,830 C300,815 600,845 900,830"/>
+
+  <!-- Tekerlekler (balkabağının arkasında) -->
+  <circle id="w490" cx="490" cy="720" r="120" fill="#fff"/>
+  <path data-clip="w490" stroke-width="10" d="M490,720 L610.1,769.7 M490,720 L539.7,840.1 M490,720 L440.3,840.1 M490,720 L369.9,769.7 M490,720 L369.9,670.3 M490,720 L440.3,599.9 M490,720 L539.7,599.9 M490,720 L610.1,670.3"/>
+  <circle cx="490" cy="720" r="30" fill="#fff"/>
+  <circle id="w910" cx="910" cy="720" r="120" fill="#fff"/>
+  <path data-clip="w910" stroke-width="10" d="M910,720 L1030.1,769.7 M910,720 L959.7,840.1 M910,720 L860.3,840.1 M910,720 L789.9,769.7 M910,720 L789.9,670.3 M910,720 L860.3,599.9 M910,720 L959.7,599.9 M910,720 L1030.1,670.3"/>
+  <circle cx="910" cy="720" r="30" fill="#fff"/>
+
+  <!-- Balkabağı araba -->
+  <path id="pumpkin" d="M700,265 C800,240 950,270 965,420 C978,560 880,665 700,665 C520,665 422,560 435,420 C450,270 600,240 700,265 Z" fill="#fff"/>
+  <path data-clip="pumpkin" d="M665,285 C560,320 515,560 600,670 M735,285 C840,320 885,560 800,670"/>
+  <ellipse id="win" cx="700" cy="460" rx="92" ry="118" fill="#fff"/>
+  <path data-clip="win" stroke-width="10" d="M700,342 L700,578 M582,450 L818,450"/>
+  <path d="M440,470 C400,460 375,480 380,510 C385,535 415,540 425,520" stroke-width="10"/>
+  <path d="M960,470 C1000,460 1025,480 1020,510 C1015,535 985,540 975,520" stroke-width="10"/>
+
+  <!-- Taç -->
+  <path d="M630,295 L615,200 L662,240 L700,175 L738,240 L785,200 L770,295 C745,305 655,305 630,295 Z" fill="#fff"/>
+  <circle cx="615" cy="195" r="12" fill="#000" stroke="none"/>
+  <circle cx="700" cy="170" r="12" fill="#000" stroke="none"/>
+  <circle cx="785" cy="195" r="12" fill="#000" stroke="none"/>
+  <path d="M638,268 C670,276 730,276 762,268" stroke-width="9"/>
+</svg>

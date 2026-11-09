@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gökyüzü -->
+  <path d="M140,190 C95,190 90,130 140,125 C145,77 212,67 232,105 C252,63 328,73 328,125 C375,125 375,190 328,190 Z" fill="#fff"/>
+  <path d="M960,170 C925,170 920,122 960,118 C964,80 1016,72 1032,102 C1048,68 1108,76 1108,118 C1145,118 1145,170 1108,170 Z" fill="#fff"/>
+  <path stroke-width="8" d="M560,140 C575,120 595,120 610,140 C625,120 645,120 660,140 M690,90 C702,75 718,75 730,90 C742,75 758,75 770,90"/>
+
+  <!-- Yer ve çimen -->
+  <path d="M-20,870 L1420,870"/>
+  <path stroke-width="8" d="M620,960 C614,940 604,925 592,915 M620,960 C619,938 621,920 618,900 M620,960 C626,942 636,930 650,920 M1100,950 C1094,930 1084,915 1072,905 M1100,950 C1099,928 1101,910 1098,890 M1100,950 C1106,932 1116,920 1130,910"/>
+
+  <!-- Papatyalar -->
+  <path d="M130,700 L130,870" data-tube="30"/>
+  <ellipse cx="130" cy="666" rx="18" ry="30" transform="rotate(0,130,700)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="130" cy="666" rx="18" ry="30" transform="rotate(60,130,700)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="130" cy="666" rx="18" ry="30" transform="rotate(120,130,700)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="130" cy="666" rx="18" ry="30" transform="rotate(180,130,700)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="130" cy="666" rx="18" ry="30" transform="rotate(240,130,700)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="130" cy="666" rx="18" ry="30" transform="rotate(300,130,700)" fill="#fff" stroke-width="9"/>
+  <circle cx="130" cy="700" r="22" fill="#fff" stroke-width="9"/>
+  <path d="M250,770 L250,870" data-tube="30"/>
+  <ellipse cx="250" cy="736" rx="18" ry="30" transform="rotate(0,250,770)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="250" cy="736" rx="18" ry="30" transform="rotate(60,250,770)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="250" cy="736" rx="18" ry="30" transform="rotate(120,250,770)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="250" cy="736" rx="18" ry="30" transform="rotate(180,250,770)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="250" cy="736" rx="18" ry="30" transform="rotate(240,250,770)" fill="#fff" stroke-width="9"/>
+  <ellipse cx="250" cy="736" rx="18" ry="30" transform="rotate(300,250,770)" fill="#fff" stroke-width="9"/>
+  <circle cx="250" cy="770" r="22" fill="#fff" stroke-width="9"/>
+
+  <!-- Su damlaları -->
+  <path d="M1235,435 C1243,455 1259,470 1259,484 C1259,500 1211,500 1211,484 C1211,470 1227,455 1235,435 Z" fill="#fff" stroke-width="10"/>
+  <path d="M1290,505 C1298,525 1314,540 1314,554 C1314,570 1266,570 1266,554 C1266,540 1282,525 1290,505 Z" fill="#fff" stroke-width="10"/>
+  <path d="M1180,375 C1188,395 1204,410 1204,424 C1204,440 1156,440 1156,424 C1156,410 1172,395 1180,375 Z" fill="#fff" stroke-width="10"/>
+
+  <!-- Kuyruk -->
+  <path d="M390,560 C350,600 340,640 345,690" data-tube="30"/>
+  <path d="M345,680 C320,700 325,750 345,760 C365,750 370,700 345,680 Z" fill="#000" stroke="none"/>
+
+  <!-- Uzak bacaklar -->
+  <path d="M530,600 C530,720 522,790 522,846 Q522,870 546,870 L594,870 Q618,870 618,846 C618,790 610,720 610,600 Z" fill="#fff"/>
+  <path d="M820,560 C820,680 812,790 812,846 Q812,870 836,870 L874,870 Q898,870 898,846 C898,790 890,680 890,560 Z" fill="#fff"/>
+
+  <!-- Gövde -->
+  <ellipse cx="620" cy="560" rx="255" ry="185" fill="#fff"/>
+
+  <!-- Yakın bacaklar -->
+  <path d="M400,640 C400,760 392,790 392,846 Q392,870 416,870 L479,870 Q503,870 503,846 C503,790 495,760 495,640 Z" fill="#fff"/>
+  <path d="M690,640 C690,760 682,790 682,846 Q682,870 706,870 L769,870 Q793,870 793,846 C793,790 785,760 785,640 Z" fill="#fff"/>
+  <path fill="#000" stroke="none" d="M410,870 L410,858 C410,838 442,838 442,858 L442,870 Z M451,870 L451,858 C451,838 483,838 483,858 L483,870 Z M700,870 L700,858 C700,838 732,838 732,858 L732,870 Z M741,870 L741,858 C741,838 773,838 773,858 L773,870 Z"/>
+  <path stroke-width="8" d="M408,780 C430,792 465,792 487,780 M698,780 C720,792 755,792 777,780"/>
+
+  <!-- Hortum ve baş -->
+  <path id="trunk" d="M990,470 C1050,560 1080,650 1135,650 C1180,650 1200,610 1190,565" data-tube="72"/>
+  <path data-clip="trunk" stroke-width="8" d="M1120.5,594.1 L1053.8,654.5 M1133.6,604.7 L1104.1,689.8 M1142.2,603.7 L1185.1,682.8"/>
+  <circle cx="920" cy="430" r="130" fill="#fff"/>
+  <path fill="#000" fill-rule="evenodd" stroke="none" d="M944,405 A22,22 0 1,1 988,405 A22,22 0 1,1 944,405 Z M956,396 A10,10 0 1,1 976,396 A10,10 0 1,1 956,396 Z"/>
+  <path stroke-width="9" d="M985,505 C1000,520 1015,522 1030,515"/>
+
+  <!-- Kulak -->
+  <path id="ear" d="M860,320 C760,290 680,370 690,470 C700,570 790,600 880,548 C845,490 835,400 860,320 Z" fill="#fff"/>
+  <path stroke-width="9" d="M830,365 C770,365 735,425 745,480 C755,530 795,555 830,545"/>
+</svg>

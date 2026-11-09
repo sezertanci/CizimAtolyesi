@@ -158,7 +158,15 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      kutu boşken görünmez. Onay kutusu ortak oldu: `ui/components/ConfirmDialog` (🧹 de bunu kullanır).
      Depoda `deleteForever` (resim bu arada geri getirildiyse silmez), `emptyTrash`; 24 saatlik
      temizlikle birlikte ortak `deleteWithFiles` kullanılır. 81 birim testi geçiyor.
-   - **Sıradaki adım:** 4. aşama bitti; yeni iş kullanıcıyla konuşularak belirlenir. Push yalnızca istenirse yapılır.
+   - **Boyama sayfalarının yenilenmesi (commit edilmedi, tablette denenmeyi bekliyor):** 9 eski sayfa
+     yumuşak eğrilerle baştan çizildi (kimlikler aynı), 6 yeni sayfa eklendi: baykuş (`owl`),
+     kaplumbağa (`turtle`), roket (`rocket`), fil (`elephant`), yelkenli (`sailboat`), tavşan (`bunny`).
+     Kaynaklar `tools/coloring/pages/*.svg`, üretici `tools/coloring/build.py` (shapely + svgelements),
+     denetim `tools/coloring/preview.html`. 15 sayfanın hiçbirinde çok küçük (300 pikselden küçük) bölge yok.
+     Çizim kuralları: paralel kenarlar arası en az ~30 px, tüpler en az 28 px, göz parıltısı en az r10,
+     küçük benek ve tırnaklar siyah dolgu, köşeler başka kenara yakın bitmez.
+   - **Sıradaki adım:** kullanıcı yeni sayfaları tablette dener ve onaylarsa commit edilir. Ardından yayın
+     hazırlığı: imzalama, AAB, gizlilik politikası. Push yalnızca istenirse yapılır.
    - **İsteğe bağlı küçük düzeltme:** bazı emojiler (ör. kedinin bıyıkları) kare düzenleme
      çerçevesinden taşıyor; resme işleme doğru. Kullanıcı isterse yapılır.
 

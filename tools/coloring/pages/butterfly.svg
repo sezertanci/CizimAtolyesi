@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gökyüzü: güneş ve bulut -->
+  <circle cx="130" cy="120" r="55" fill="#fff"/>
+  <g transform="translate(130,120)" stroke-width="10">
+    <path d="M78,0 L108,0"/>
+    <path d="M78,0 L108,0" transform="rotate(45)"/>
+    <path d="M78,0 L108,0" transform="rotate(90)"/>
+    <path d="M78,0 L108,0" transform="rotate(135)"/>
+    <path d="M78,0 L108,0" transform="rotate(180)"/>
+    <path d="M78,0 L108,0" transform="rotate(225)"/>
+    <path d="M78,0 L108,0" transform="rotate(270)"/>
+    <path d="M78,0 L108,0" transform="rotate(315)"/>
+  </g>
+  <path d="M430,110 C395,110 392,62 430,58 C434,22 486,15 500,44 C516,12 574,20 574,58 C610,58 610,110 574,110 Z" fill="#fff"/>
+
+  <!-- Küçük kelebek -->
+  <g transform="translate(1260,95) rotate(15)">
+    <ellipse cx="-44" cy="-32" rx="46" ry="35" transform="rotate(-30,-44,-32)" fill="#fff"/>
+    <ellipse cx="44" cy="-32" rx="46" ry="35" transform="rotate(30,44,-32)" fill="#fff"/>
+    <ellipse cx="-32" cy="18" rx="34" ry="27" transform="rotate(40,-32,18)" fill="#fff"/>
+    <ellipse cx="32" cy="18" rx="34" ry="27" transform="rotate(-40,32,18)" fill="#fff"/>
+    <circle cx="-50" cy="-36" r="11" fill="#000" stroke="none"/>
+    <circle cx="50" cy="-36" r="11" fill="#000" stroke="none"/>
+    <path d="M0,-42 L0,46" data-tube="26"/>
+  </g>
+
+  <!-- Yer, çimen ve çiçekler -->
+  <path d="M-20,900 C300,880 500,915 700,900 C900,885 1100,915 1420,895"/>
+  <path stroke-width="8" d="M420,985 C414,965 404,950 392,940 M420,985 C419,963 421,945 418,925 M420,985 C426,967 436,955 450,945 M700,980 C694,960 684,945 672,935 M700,980 C699,958 701,940 698,920 M700,980 C706,962 716,950 730,940 M980,985 C974,965 964,950 952,940 M980,985 C979,963 981,945 978,925 M980,985 C986,967 996,955 1010,945"/>
+  <path d="M180,740 C174,810 186,850 180,898" data-tube="30"/>
+  <path d="M182,850 C215,815 250,808 285,812 C265,848 225,862 182,850 Z" fill="#fff"/>
+  <ellipse cx="180.0" cy="648.0" rx="30" ry="24" transform="rotate(-90.0,180.0,648.0)" fill="#fff"/>
+  <ellipse cx="216.8" cy="663.2" rx="30" ry="24" transform="rotate(-45.0,216.8,663.2)" fill="#fff"/>
+  <ellipse cx="232.0" cy="700.0" rx="30" ry="24" transform="rotate(0.0,232.0,700.0)" fill="#fff"/>
+  <ellipse cx="216.8" cy="736.8" rx="30" ry="24" transform="rotate(45.0,216.8,736.8)" fill="#fff"/>
+  <ellipse cx="180.0" cy="752.0" rx="30" ry="24" transform="rotate(90.0,180.0,752.0)" fill="#fff"/>
+  <ellipse cx="143.2" cy="736.8" rx="30" ry="24" transform="rotate(135.0,143.2,736.8)" fill="#fff"/>
+  <ellipse cx="128.0" cy="700.0" rx="30" ry="24" transform="rotate(180.0,128.0,700.0)" fill="#fff"/>
+  <ellipse cx="143.2" cy="663.2" rx="30" ry="24" transform="rotate(225.0,143.2,663.2)" fill="#fff"/>
+  <circle cx="180" cy="700" r="30" fill="#fff"/>
+  <path d="M1220,760 C1214,830 1226,870 1220,898" data-tube="30"/>
+  <path d="M1222,870 C1255,835 1290,828 1325,832 C1305,868 1265,882 1222,870 Z" fill="#fff"/>
+  <ellipse cx="1220.0" cy="668.0" rx="30" ry="24" transform="rotate(-90.0,1220.0,668.0)" fill="#fff"/>
+  <ellipse cx="1256.8" cy="683.2" rx="30" ry="24" transform="rotate(-45.0,1256.8,683.2)" fill="#fff"/>
+  <ellipse cx="1272.0" cy="720.0" rx="30" ry="24" transform="rotate(0.0,1272.0,720.0)" fill="#fff"/>
+  <ellipse cx="1256.8" cy="756.8" rx="30" ry="24" transform="rotate(45.0,1256.8,756.8)" fill="#fff"/>
+  <ellipse cx="1220.0" cy="772.0" rx="30" ry="24" transform="rotate(90.0,1220.0,772.0)" fill="#fff"/>
+  <ellipse cx="1183.2" cy="756.8" rx="30" ry="24" transform="rotate(135.0,1183.2,756.8)" fill="#fff"/>
+  <ellipse cx="1168.0" cy="720.0" rx="30" ry="24" transform="rotate(180.0,1168.0,720.0)" fill="#fff"/>
+  <ellipse cx="1183.2" cy="683.2" rx="30" ry="24" transform="rotate(225.0,1183.2,683.2)" fill="#fff"/>
+  <circle cx="1220" cy="720" r="30" fill="#fff"/>
+
+  <!-- Büyük kelebeğin kanatları (sağdaki soldakinin aynası) -->
+  <g id="wings">
+    <path id="up" d="M700,400 C610,230 440,130 310,170 C210,200 215,340 290,410 C360,470 540,480 700,450 Z" fill="#fff"/>
+    <path data-clip="up" stroke-width="10" d="M660,410 C580,300 460,230 360,240 C300,250 290,330 340,380 C400,430 540,440 660,425"/>
+    <circle cx="430" cy="300" r="50" fill="#fff"/>
+    <circle cx="430" cy="300" r="20" fill="#000" stroke="none"/>
+    <circle cx="560" cy="380" r="26" fill="#fff" stroke-width="10"/>
+    <path id="low" d="M700,440 C580,460 430,510 405,620 C385,715 470,770 565,735 C650,700 690,600 705,500 Z" fill="#fff"/>
+    <circle cx="530" cy="630" r="55" fill="#fff"/>
+    <circle cx="530" cy="630" r="24" fill="#fff" stroke-width="10"/>
+    <circle cx="460" cy="700" r="20" fill="#fff" stroke-width="10"/>
+  </g>
+  <use xlink:href="#wings" transform="matrix(-1,0,0,1,1400,0)"/>
+
+  <!-- Gövde, baş ve antenler -->
+  <path id="body" d="M700,330 L700,720" data-tube="50"/>
+  <path data-clip="body" stroke-width="10" d="M676,450 C690,460 710,460 724,450 M676,520 C690,530 710,530 724,520 M676,590 C690,600 710,600 724,590"/>
+  <path d="M680,262 C660,210 630,180 590,170 M720,262 C740,210 770,180 810,170" stroke-width="10"/>
+  <circle cx="588" cy="170" r="16" fill="#000" stroke="none"/>
+  <circle cx="812" cy="170" r="16" fill="#000" stroke="none"/>
+  <circle cx="700" cy="300" r="52" fill="#fff"/>
+  <path d="M668,298 A12,17 0 1,1 692,298 A12,17 0 1,1 668,298 Z M671,287 A6,6 0 1,1 683,287 A6,6 0 1,1 671,287 Z" fill="#000" fill-rule="evenodd" stroke="none"/>
+  <path d="M708,298 A12,17 0 1,1 732,298 A12,17 0 1,1 708,298 Z M711,287 A6,6 0 1,1 723,287 A6,6 0 1,1 711,287 Z" fill="#000" fill-rule="evenodd" stroke="none"/>
+  <path d="M680,325 C692,338 708,338 720,325" stroke-width="9"/>
+</svg>

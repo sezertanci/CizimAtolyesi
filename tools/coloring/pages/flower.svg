@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gökyüzü: güneş ve bulut -->
+  <circle cx="1270" cy="120" r="55" fill="#fff"/>
+  <g transform="translate(1270,120)" stroke-width="10">
+    <path d="M78,0 L108,0"/>
+    <path d="M78,0 L108,0" transform="rotate(45)"/>
+    <path d="M78,0 L108,0" transform="rotate(90)"/>
+    <path d="M78,0 L108,0" transform="rotate(135)"/>
+    <path d="M78,0 L108,0" transform="rotate(180)"/>
+    <path d="M78,0 L108,0" transform="rotate(225)"/>
+    <path d="M78,0 L108,0" transform="rotate(270)"/>
+    <path d="M78,0 L108,0" transform="rotate(315)"/>
+  </g>
+  <path d="M960,200 C915,200 910,140 960,135 C965,87 1032,77 1052,115 C1072,73 1148,83 1148,135 C1195,135 1195,200 1148,200 Z" fill="#fff"/>
+
+  <!-- Yer ve çimen -->
+  <path d="M-20,880 C300,860 500,895 700,880 C900,865 1100,895 1420,875"/>
+  <path stroke-width="8" d="M90,975 C84,955 74,940 62,930 M90,975 C89,953 91,935 88,915 M90,975 C96,957 106,945 120,935 M560,985 C554,965 544,950 532,940 M560,985 C559,963 561,945 558,925 M560,985 C566,967 576,955 590,945 M860,975 C854,955 844,940 832,930 M860,975 C859,953 861,935 858,915 M860,975 C866,957 876,945 890,935 M1340,970 C1334,950 1324,935 1312,925 M1340,970 C1339,948 1341,930 1338,910 M1340,970 C1346,952 1356,940 1370,930"/>
+
+  <!-- Büyük çiçeğin sapı ve yaprakları -->
+  <path d="M700,370 C688,520 715,700 700,878" data-tube="30"/>
+  <path id="leafL" d="M697,660 C640,590 555,585 485,620 C550,680 640,690 697,660 Z" fill="#fff"/>
+  <path data-clip="leafL" stroke-width="9" d="M697,660 C630,630 560,620 485,620"/>
+  <path id="leafR" d="M703,560 C760,490 845,485 915,520 C850,580 760,590 703,560 Z" fill="#fff"/>
+  <path data-clip="leafR" stroke-width="9" d="M703,560 C770,530 840,520 915,520"/>
+
+  <!-- Büyük çiçek: taç yapraklar ve gülen yüz -->
+  <ellipse cx="700.0" cy="172.0" rx="66" ry="46" transform="rotate(-90.0,700.0,172.0)" fill="#fff"/>
+  <ellipse cx="775.2" cy="196.4" rx="66" ry="46" transform="rotate(-54.0,775.2,196.4)" fill="#fff"/>
+  <ellipse cx="821.7" cy="260.4" rx="66" ry="46" transform="rotate(-18.0,821.7,260.4)" fill="#fff"/>
+  <ellipse cx="821.7" cy="339.6" rx="66" ry="46" transform="rotate(18.0,821.7,339.6)" fill="#fff"/>
+  <ellipse cx="775.2" cy="403.6" rx="66" ry="46" transform="rotate(54.0,775.2,403.6)" fill="#fff"/>
+  <ellipse cx="700.0" cy="428.0" rx="66" ry="46" transform="rotate(90.0,700.0,428.0)" fill="#fff"/>
+  <ellipse cx="624.8" cy="403.6" rx="66" ry="46" transform="rotate(126.0,624.8,403.6)" fill="#fff"/>
+  <ellipse cx="578.3" cy="339.6" rx="66" ry="46" transform="rotate(162.0,578.3,339.6)" fill="#fff"/>
+  <ellipse cx="578.3" cy="260.4" rx="66" ry="46" transform="rotate(198.0,578.3,260.4)" fill="#fff"/>
+  <ellipse cx="624.8" cy="196.4" rx="66" ry="46" transform="rotate(234.0,624.8,196.4)" fill="#fff"/>
+  <circle cx="700" cy="300" r="72" fill="#fff"/>
+  <ellipse cx="675" cy="285" rx="9" ry="14" fill="#000" stroke="none"/>
+  <ellipse cx="725" cy="285" rx="9" ry="14" fill="#000" stroke="none"/>
+  <path d="M668,322 C685,345 715,345 732,322" stroke-width="10"/>
+
+  <!-- Lale -->
+  <path d="M300,878 C306,800 294,720 300,640" data-tube="30"/>
+  <path id="tleaf" d="M302,820 C340,780 380,770 420,775 C400,815 350,835 302,820 Z" fill="#fff"/>
+  <path d="M250,600 C245,545 258,515 272,500 L300,540 L328,500 C342,515 355,545 350,600 C350,650 250,650 250,600 Z" fill="#fff"/>
+
+  <!-- Papatya -->
+  <path d="M1110,600 C1104,700 1116,790 1110,878" data-tube="30"/>
+  <path d="M1108,800 C1070,760 1030,752 990,758 C1010,798 1060,815 1108,800 Z" fill="#fff"/>
+  <ellipse cx="1110.0" cy="502.0" rx="32" ry="26" transform="rotate(-90.0,1110.0,502.0)" fill="#fff"/>
+  <ellipse cx="1151.0" cy="519.0" rx="32" ry="26" transform="rotate(-45.0,1151.0,519.0)" fill="#fff"/>
+  <ellipse cx="1168.0" cy="560.0" rx="32" ry="26" transform="rotate(0.0,1168.0,560.0)" fill="#fff"/>
+  <ellipse cx="1151.0" cy="601.0" rx="32" ry="26" transform="rotate(45.0,1151.0,601.0)" fill="#fff"/>
+  <ellipse cx="1110.0" cy="618.0" rx="32" ry="26" transform="rotate(90.0,1110.0,618.0)" fill="#fff"/>
+  <ellipse cx="1069.0" cy="601.0" rx="32" ry="26" transform="rotate(135.0,1069.0,601.0)" fill="#fff"/>
+  <ellipse cx="1052.0" cy="560.0" rx="32" ry="26" transform="rotate(180.0,1052.0,560.0)" fill="#fff"/>
+  <ellipse cx="1069.0" cy="519.0" rx="32" ry="26" transform="rotate(225.0,1069.0,519.0)" fill="#fff"/>
+  <circle cx="1110" cy="560" r="32" fill="#fff"/>
+
+  <!-- Arı ve uçuş izi -->
+  <path stroke-width="8" d="M370,280 L395,282 M420,290 L443,300 M465,315 L484,330"/>
+  <ellipse cx="282" cy="210" rx="26" ry="38" transform="rotate(-20,282,210)" fill="#fff" stroke-width="10"/>
+  <ellipse cx="318" cy="210" rx="26" ry="38" transform="rotate(20,318,210)" fill="#fff" stroke-width="10"/>
+  <path d="M250,270 L222,278 L248,286 Z" fill="#000" stroke-width="8"/>
+  <ellipse id="bee" cx="300" cy="270" rx="56" ry="38" fill="#fff"/>
+  <path data-clip="bee" stroke-width="12" d="M282,220 L282,320 M312,220 L312,320"/>
+  <circle cx="336" cy="260" r="8" fill="#000" stroke="none"/>
+  <path d="M330,283 C337,290 345,290 350,283" stroke-width="7"/>
+
+  <!-- Uğur böceği -->
+  <path d="M470,870 L455,855" stroke-width="8"/>
+  <circle cx="462" cy="878" r="16" fill="#000" stroke="none"/>
+  <circle id="lady" cx="505" cy="872" r="38" fill="#fff"/>
+  <path data-clip="lady" stroke-width="9" d="M505,830 L505,915"/>
+  <circle cx="487" cy="860" r="7" fill="#000" stroke="none"/>
+  <circle cx="490" cy="888" r="7" fill="#000" stroke="none"/>
+  <circle cx="523" cy="860" r="7" fill="#000" stroke="none"/>
+  <circle cx="520" cy="888" r="7" fill="#000" stroke="none"/>
+
+  <!-- Salyangoz -->
+  <path d="M1290,785 L1278,735 M1312,785 L1328,740" stroke-width="8"/>
+  <circle cx="1277" cy="732" r="10" fill="#000" stroke="none"/>
+  <circle cx="1330" cy="737" r="10" fill="#000" stroke="none"/>
+  <path d="M1140,888 L1300,888 C1330,888 1335,850 1325,810 C1318,780 1290,775 1285,805 C1280,835 1265,848 1235,850 L1160,852 C1135,854 1125,888 1140,888 Z" fill="#fff"/>
+  <circle cx="1215" cy="795" r="62" fill="#fff"/>
+  <path stroke-width="10" d="M1215,795 C1215,780 1235,780 1235,795 C1235,820 1195,820 1195,795 C1195,760 1255,760 1255,800"/>
+  <circle cx="1305" cy="815" r="5" fill="#000" stroke="none"/>
+</svg>

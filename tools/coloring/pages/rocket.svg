@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Yıldızlar -->
+  <path d="M110.0,56.0 L118.8,77.9 L142.3,79.5 L124.3,94.6 L130.0,117.5 L110.0,105.0 L90.0,117.5 L95.7,94.6 L77.7,79.5 L101.2,77.9 Z" fill="#fff" stroke-width="10"/>
+  <path d="M480.0,86.0 L488.8,107.9 L512.3,109.5 L494.3,124.6 L500.0,147.5 L480.0,135.0 L460.0,147.5 L465.7,124.6 L447.7,109.5 L471.2,107.9 Z" fill="#fff" stroke-width="10"/>
+  <path d="M950.0,56.0 L958.8,77.9 L982.3,79.5 L964.3,94.6 L970.0,117.5 L950.0,105.0 L930.0,117.5 L935.7,94.6 L917.7,79.5 L941.2,77.9 Z" fill="#fff" stroke-width="10"/>
+  <path d="M420.0,526.0 L428.8,547.9 L452.3,549.5 L434.3,564.6 L440.0,587.5 L420.0,575.0 L400.0,587.5 L405.7,564.6 L387.7,549.5 L411.2,547.9 Z" fill="#fff" stroke-width="10"/>
+  <path d="M1000.0,386.0 L1008.8,407.9 L1032.3,409.5 L1014.3,424.6 L1020.0,447.5 L1000.0,435.0 L980.0,447.5 L985.7,424.6 L967.7,409.5 L991.2,407.9 Z" fill="#fff" stroke-width="10"/>
+  <path d="M1300.0,366.0 L1308.8,387.9 L1332.3,389.5 L1314.3,404.6 L1320.0,427.5 L1300.0,415.0 L1280.0,427.5 L1285.7,404.6 L1267.7,389.5 L1291.2,387.9 Z" fill="#fff" stroke-width="10"/>
+  <path d="M120.0,606.0 L128.8,627.9 L152.3,629.5 L134.3,644.6 L140.0,667.5 L120.0,655.0 L100.0,667.5 L105.7,644.6 L87.7,629.5 L111.2,627.9 Z" fill="#fff" stroke-width="10"/>
+  <path d="M1290.0,836.0 L1298.8,857.9 L1322.3,859.5 L1304.3,874.6 L1310.0,897.5 L1290.0,885.0 L1270.0,897.5 L1275.7,874.6 L1257.7,859.5 L1281.2,857.9 Z" fill="#fff" stroke-width="10"/>
+  <path d="M110.0,846.0 L118.8,867.9 L142.3,869.5 L124.3,884.6 L130.0,907.5 L110.0,895.0 L90.0,907.5 L95.7,884.6 L77.7,869.5 L101.2,867.9 Z" fill="#fff" stroke-width="10"/>
+
+  <!-- Halkalı gezegen -->
+  <path fill="#fff" d="M60,300 A180,48 0 1,0 420,300 A180,48 0 1,0 60,300 Z M95,300 A145,28 0 1,0 385,300 A145,28 0 1,0 95,300 Z"/>
+  <circle id="planet" cx="240" cy="300" r="95" fill="#fff"/>
+  <path data-clip="planet" stroke-width="9" d="M150,250 C200,265 280,265 330,250"/>
+  <path fill="#fff" d="M60,300 A180,48 0 0,0 420,300 L385,300 A145,28 0 0,1 95,300 Z"/>
+
+  <!-- Ay -->
+  <circle cx="1200" cy="180" r="90" fill="#fff"/>
+  <circle cx="1165" cy="150" r="24" stroke-width="9"/>
+  <circle cx="1235" cy="215" r="28" stroke-width="9"/>
+  <circle cx="1230" cy="130" r="13" fill="#000" stroke="none"/>
+
+  <!-- Küçük çizgili gezegen -->
+  <circle id="small" cx="1130" cy="640" r="70" fill="#fff"/>
+  <path data-clip="small" stroke-width="9" d="M1050,610 C1100,625 1160,625 1210,610 M1050,670 C1100,685 1160,685 1210,670"/>
+
+  <!-- Alev -->
+  <path d="M630,750 C600,840 650,900 700,970 C750,900 800,840 770,750 Z" fill="#fff"/>
+  <path d="M665,770 C655,830 680,870 700,905 C720,870 745,830 735,770 Z" fill="#fff" stroke-width="10"/>
+
+  <!-- Duman bulutları -->
+  <circle cx="490" cy="985" r="55" fill="#fff"/>
+  <circle cx="910" cy="985" r="55" fill="#fff"/>
+  <circle cx="590" cy="965" r="62" fill="#fff"/>
+  <circle cx="810" cy="965" r="62" fill="#fff"/>
+  <circle cx="700" cy="990" r="60" fill="#fff"/>
+
+  <!-- Kanatlar -->
+  <g id="fin"><path d="M580,500 C480,550 445,650 455,770 L585,705 Z" fill="#fff"/></g>
+  <use xlink:href="#fin" transform="matrix(-1,0,0,1,1400,0)"/>
+
+  <!-- Egzoz -->
+  <path d="M615,700 L785,700 L755,765 L645,765 Z" fill="#fff"/>
+
+  <!-- Gövde -->
+  <path id="rocket" d="M700,90 C810,180 840,320 840,470 L840,710 L560,710 L560,470 C560,320 590,180 700,90 Z" fill="#fff"/>
+  <path data-clip="rocket" d="M585,300 C650,270 750,270 815,300 M550,640 L850,640"/>
+  <circle cx="625" cy="675" r="9" fill="#000" stroke="none"/>
+  <circle cx="700" cy="675" r="9" fill="#000" stroke="none"/>
+  <circle cx="775" cy="675" r="9" fill="#000" stroke="none"/>
+  <circle cx="700" cy="420" r="72" fill="#fff"/>
+  <path stroke-width="10" d="M655,405 C660,380 675,365 698,360"/>
+  <circle cx="700" cy="560" r="38" fill="#fff"/>
+</svg>

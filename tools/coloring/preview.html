@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Boyama sayfaları önizleme</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 16px; background: #f4f4f4; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(560px, 1fr)); gap: 16px; }
+  .card { background: #fff; border-radius: 8px; padding: 8px; }
+  .card h2 { font-size: 15px; margin: 0 0 6px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  img, canvas { width: 100%; border: 1px solid #ddd; background: #fff; }
+  .stats { font-size: 13px; margin-top: 4px; }
+  .bad { color: #c00; font-weight: 600; }
+</style>
+</head>
+<body>
+<p>Önce <code>python tools/coloring/build.py</code> çalıştırılır. Sol: uygulamadaki çizim. Sağ: boya kovası bölgeleri (her bölge ayrı renk; kırmızı = çok küçük, sarı = küçük).
+  Yalnızca bir sayfa için: <code>?page=cat</code></p>
+<div class="grid" id="grid"></div>
+<script type="module">
+// Uygulamadaki LineWalls.WALL_ALPHA ile aynı eşik.
+const WALL_ALPHA = 192;
+const WIDTH = 1400, HEIGHT = 1000;
+const TINY_AREA = 300, SMALL_AREA = 1500;
+
+async function listPages() {
+  const only = new URLSearchParams(location.search).get('page');
+  if (only) return only.split(',');
+  const html = await (await fetch('pages/')).text();
+  return [...html.matchAll(/href="([\w-]+)\.svg"/g)].map(m => m[1]);
+}
+
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+function labelRegions(alpha) {
+  const labels = new Int32Array(WIDTH * HEIGHT).fill(-1);
+  const areas = [];
+  const stack = [];
+  for (let start = 0; start < labels.length; start++) {
+    if (labels[start] !== -1 || alpha[start] >= WALL_ALPHA) continue;
+    const id = areas.length;
+    let area = 0;
+    labels[start] = id;
+    stack.push(start);
+    while (stack.length) {
+      const i = stack.pop();
+      area++;
+      const x = i % WIDTH;
+      for (const n of [x > 0 ? i - 1 : -1, x < WIDTH - 1 ? i + 1 : -1, i - WIDTH, i + WIDTH]) {
+        if (n >= 0 && n < labels.length && labels[n] === -1 && alpha[n] < WALL_ALPHA) {
+          labels[n] = id;
+          stack.push(n);
+        }
+      }
+    }
+    areas.push(area);
+  }
+  return { labels, areas };
+}
+
+function regionColor(id, area) {
+  if (area < TINY_AREA) return [230, 0, 0];
+  if (area < SMALL_AREA) return [255, 210, 0];
+  const h = (id * 137.508) % 360;
+  const c = 0.35, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = 0.6;
+  const [r, g, b] = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x]
+    : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x];
+  return [(r + m) * 255, (g + m) * 255, (b + m) * 255];
+}
+
+async function renderPage(name, grid) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `<h2>${name}</h2><div class="pair"><img src="out/${name}.svg?${Date.now()}"><canvas></canvas></div><div class="stats"></div>`;
+  grid.append(card);
+  const img = await loadImage(`out/${name}.svg?${Date.now()}`);
+  const canvas = card.querySelector('canvas');
+  canvas.width = WIDTH; canvas.height = HEIGHT;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, WIDTH, HEIGHT);
+  const data = ctx.getImageData(0, 0, WIDTH, HEIGHT);
+  const alpha = new Uint8ClampedArray(WIDTH * HEIGHT);
+  for (let i = 0; i < alpha.length; i++) alpha[i] = data.data[i * 4 + 3];
+  const { labels, areas } = labelRegions(alpha);
+  for (let i = 0; i < labels.length; i++) {
+    const [r, g, b] = labels[i] < 0 ? [0, 0, 0] : regionColor(labels[i], areas[labels[i]]);
+    data.data.set([r, g, b, 255], i * 4);
+  }
+  ctx.putImageData(data, 0, 0);
+  const tiny = areas.filter(a => a < TINY_AREA).length;
+  const small = areas.filter(a => a >= TINY_AREA && a < SMALL_AREA).length;
+  card.querySelector('.stats').innerHTML =
+    `Bölge: ${areas.length} · <span class="${tiny ? 'bad' : ''}">çok küçük: ${tiny}</span> · küçük: ${small}`;
+  const smallRegions = smallRegionBoxes(labels, areas);
+  window.regionStats = { ...(window.regionStats || {}), [name]: { regions: areas.length, tiny, small, smallRegions } };
+}
+
+// Küçük bölgelerin alanını ve sınır kutusunu (x1,y1,x2,y2) döndürür; düzeltilecek yeri bulmak için.
+function smallRegionBoxes(labels, areas) {
+  const boxes = new Map();
+  for (let i = 0; i < labels.length; i++) {
+    const id = labels[i];
+    if (id < 0 || areas[id] >= SMALL_AREA) continue;
+    const x = i % WIDTH, y = (i - x) / WIDTH;
+    const b = boxes.get(id);
+    if (!b) boxes.set(id, [x, y, x, y]);
+    else { b[0] = Math.min(b[0], x); b[1] = Math.min(b[1], y); b[2] = Math.max(b[2], x); b[3] = Math.max(b[3], y); }
+  }
+  return [...boxes].map(([id, box]) => ({ area: areas[id], box }));
+}
+
+const grid = document.getElementById('grid');
+for (const name of await listPages()) await renderPage(name, grid);
+window.previewDone = true;
+</script>
+</body>
+</html>

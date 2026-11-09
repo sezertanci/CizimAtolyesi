@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gökyüzü: yıldızlar ve hilal -->
+  <path d="M120.0,74.0 L129.4,97.1 L154.2,98.9 L135.2,114.9 L141.2,139.1 L120.0,126.0 L98.8,139.1 L104.8,114.9 L85.8,98.9 L110.6,97.1 Z" fill="#fff" stroke-width="10"/>
+  <path d="M420.0,44.0 L429.4,67.1 L454.2,68.9 L435.2,84.9 L441.2,109.1 L420.0,96.0 L398.8,109.1 L404.8,84.9 L385.8,68.9 L410.6,67.1 Z" fill="#fff" stroke-width="10"/>
+  <path d="M1000.0,54.0 L1009.4,77.1 L1034.2,78.9 L1015.2,94.9 L1021.2,119.1 L1000.0,106.0 L978.8,119.1 L984.8,94.9 L965.8,78.9 L990.6,77.1 Z" fill="#fff" stroke-width="10"/>
+  <path d="M980.0,294.0 L989.4,317.1 L1014.2,318.9 L995.2,334.9 L1001.2,359.1 L980.0,346.0 L958.8,359.1 L964.8,334.9 L945.8,318.9 L970.6,317.1 Z" fill="#fff" stroke-width="10"/>
+  <path d="M150.0,384.0 L159.4,407.1 L184.2,408.9 L165.2,424.9 L171.2,449.1 L150.0,436.0 L128.8,449.1 L134.8,424.9 L115.8,408.9 L140.6,407.1 Z" fill="#fff" stroke-width="10"/>
+  <path d="M260,190 C200,190 170,230 175,270 C150,275 140,320 175,330 L340,330 C370,325 365,280 335,275 C340,225 305,190 260,190 Z" fill="#fff"/>
+
+  <!-- Yapraklar (dalın arkasında) -->
+  <ellipse id="lf0" cx="230" cy="790" rx="62" ry="28" transform="rotate(-35,230,790)" fill="#fff"/>
+  <path data-clip="lf0" stroke-width="8" d="M160,790 L300,790" transform="rotate(-35,230,790)"/>
+  <ellipse id="lf1" cx="420" cy="890" rx="62" ry="28" transform="rotate(25,420,890)" fill="#fff"/>
+  <path data-clip="lf1" stroke-width="8" d="M350,890 L490,890" transform="rotate(25,420,890)"/>
+  <ellipse id="lf2" cx="1080" cy="700" rx="62" ry="28" transform="rotate(-30,1080,700)" fill="#fff"/>
+  <path data-clip="lf2" stroke-width="8" d="M1010,700 L1150,700" transform="rotate(-30,1080,700)"/>
+  <ellipse id="lf3" cx="1010" cy="850" rx="62" ry="28" transform="rotate(30,1010,850)" fill="#fff"/>
+  <path data-clip="lf3" stroke-width="8" d="M940,850 L1080,850" transform="rotate(30,1010,850)"/>
+
+  <!-- Dal -->
+  <path d="M60,880 C400,840 850,820 1290,700" data-tube="70"/>
+  <path d="M545,838 C470,800 430,780 380,775" data-tube="34"/>
+
+  <!-- Ağaç gövdesi ve kovuk -->
+  <path id="trunk" d="M1210,1020 C1230,700 1220,300 1240,-20 L1420,-20 L1420,1020 Z" fill="#fff"/>
+  <path data-clip="trunk" stroke-width="9" d="M1290,80 C1300,180 1280,260 1295,340 M1340,520 C1350,620 1330,700 1345,800 M1280,860 C1285,920 1275,960 1280,1000"/>
+  <ellipse cx="1320" cy="440" rx="38" ry="55" fill="#fff"/>
+
+  <!-- Kulak tüyleri -->
+  <g id="tuft"><path d="M615,330 C570,260 545,210 520,170 C580,185 630,220 660,265 Z" fill="#fff"/></g>
+  <use xlink:href="#tuft" transform="matrix(-1,0,0,1,1400,0)"/>
+
+  <!-- Gövde -->
+  <path id="owl" d="M700,240 C860,240 930,400 920,560 C912,700 830,810 700,810 C570,810 488,700 480,560 C470,400 540,240 700,240 Z" fill="#fff"/>
+  <ellipse id="belly" cx="700" cy="660" rx="150" ry="120" fill="#fff"/>
+  <path data-clip="belly" stroke-width="8" d="M620,620 C630,640 655,640 665,620 M690,620 C700,640 725,640 735,620 M760,620 C770,640 795,640 805,620 M655,680 C665,700 690,700 700,680 M725,680 C735,700 760,700 770,680 M690,740 C700,760 725,760 735,740"/>
+
+  <!-- Kanatlar -->
+  <g id="wing">
+    <path id="wg" d="M540,400 C450,470 430,640 545,735 C590,680 600,520 540,400 Z" fill="#fff"/>
+    <path data-clip="wg" stroke-width="8" d="M455,560 C490,575 515,600 535,640 M460,640 C490,655 510,680 525,715"/>
+  </g>
+  <use xlink:href="#wing" transform="matrix(-1,0,0,1,1400,0)"/>
+
+  <!-- Yüz, gözler ve gaga -->
+  <path d="M700,325 C645,285 540,295 535,400 C535,515 630,560 700,560 C770,560 865,515 865,400 C860,295 755,285 700,325 Z" fill="#fff"/>
+  <circle cx="620" cy="400" r="60" fill="#fff"/>
+  <circle cx="780" cy="400" r="60" fill="#fff"/>
+  <path fill="#000" fill-rule="evenodd" stroke="none" d="M588,400 A34,34 0 1,1 656,400 A34,34 0 1,1 588,400 Z M598,386 A12,12 0 1,1 622,386 A12,12 0 1,1 598,386 Z"/>
+  <path fill="#000" fill-rule="evenodd" stroke="none" d="M744,400 A34,34 0 1,1 812,400 A34,34 0 1,1 744,400 Z M754,386 A12,12 0 1,1 778,386 A12,12 0 1,1 754,386 Z"/>
+  <path d="M672,478 C690,468 710,468 728,478 L700,528 Z" fill="#fff"/>
+
+  <!-- Ayaklar -->
+  <g id="foot"><path d="M585,775 C580,815 605,825 615,800 C623,825 647,825 650,800 C657,822 683,815 675,775 Z" fill="#fff"/></g>
+  <use xlink:href="#foot" transform="matrix(-1,0,0,1,1400,0)"/>
+</svg>

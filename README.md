@@ -22,7 +22,7 @@ sağda renk paneli, ortada tuval bulunur. Tuval dolu olsa bile akıcı çalışm
 
 ### Boyama sayfaları (3. aşama)
 
-- Galerinin üst satırında "Yeni resim" düğmesinin sağında, sola–sağa kaydırılan tek satırda 9 boyama sayfası bulunur; kaydedilen resimler bunun altında "Resimlerim" başlığıyla listelenir: kedi, balık, ev, araba, çiçek, kelebek, dinozor, güneş, fayton
+- Galerinin üst satırında "Yeni resim" düğmesinin sağında, sola–sağa kaydırılan tek satırda 15 boyama sayfası bulunur; kaydedilen resimler bunun altında "Resimlerim" başlığıyla listelenir: kedi, balık, ev, araba, çiçek, kelebek, dinozor, güneş, fayton, baykuş, kaplumbağa, roket, fil, yelkenli, tavşan
 - Sayfaya dokununca o sayfadan yeni bir resim açılır; sayfanın kendisi değişmez
 - Resim ancak boyanınca kaydedilir; açılıp kapatılan sayfa galeride boş resim bırakmaz
 - Çizgiler her zaman en üstte durur: fırça çizgileri örtmez, silgi çizgileri silmez
@@ -58,6 +58,29 @@ Bağlı cihaza yükleme:
 ```
 
 Windows'ta `./gradlew` yerine `gradlew.bat` kullanılabilir.
+
+## Boyama sayfalarını üretme
+
+Boyama sayfaları elle düzenlenen SVG kaynaklarından (`tools/coloring/pages/<id>.svg`) üretilir.
+Betik, öndeki beyaz şekillerin arkasında kalan çizgileri kırpar ve sonucu Android vektörüne
+(`res/drawable/coloring_<id>.xml`) yazar. Kaynak biçiminin kuralları `tools/coloring/build.py` başında anlatılır.
+
+```bash
+pip install -r tools/coloring/requirements.txt
+python tools/coloring/build.py            # tüm sayfalar
+python tools/coloring/build.py cat fish   # yalnızca verilenler
+```
+
+Önizleme ve boya kovası bölge denetimi için `tools/coloring` klasöründe yerel bir sunucu açılır ve
+`preview.html` tarayıcıda açılır (`?page=cat` ile tek sayfa). Kırmızı bölgeler çok küçüktür; yeni
+sayfada çok küçük bölge kalmamalıdır.
+
+```bash
+cd tools/coloring && python -m http.server 8765
+```
+
+Yeni sayfa `data/coloring/BuiltInColoringPageCatalog.kt` listesine eklenir. Kayıtlar sayfa kimliğini
+sakladığı için var olan kimlikler değiştirilmez.
 
 ## Proje yapısı
 

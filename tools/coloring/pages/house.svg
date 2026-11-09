@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gökyüzü: güneş, bulut, kuşlar -->
+  <circle cx="130" cy="120" r="55" fill="#fff"/>
+  <g transform="translate(130,120)" stroke-width="10">
+    <path d="M78,0 L108,0"/>
+    <path d="M78,0 L108,0" transform="rotate(45)"/>
+    <path d="M78,0 L108,0" transform="rotate(90)"/>
+    <path d="M78,0 L108,0" transform="rotate(135)"/>
+    <path d="M78,0 L108,0" transform="rotate(180)"/>
+    <path d="M78,0 L108,0" transform="rotate(225)"/>
+    <path d="M78,0 L108,0" transform="rotate(270)"/>
+    <path d="M78,0 L108,0" transform="rotate(315)"/>
+  </g>
+  <path d="M1130,200 C1085,200 1080,140 1130,135 C1135,87 1202,77 1222,115 C1242,73 1318,83 1318,135 C1365,135 1365,200 1318,200 Z" fill="#fff"/>
+  <path stroke-width="9" d="M480,150 C495,130 515,130 530,150 C545,130 565,130 580,150 M590,100 C602,85 618,85 630,100 C642,85 658,85 670,100"/>
+
+  <!-- Duman -->
+  <circle cx="943" cy="137" r="40" fill="#fff"/>
+  <circle cx="911" cy="180" r="32" fill="#fff"/>
+  <circle cx="885" cy="215" r="26" fill="#fff"/>
+
+  <!-- Yer -->
+  <path d="M-20,830 C300,810 600,845 900,825 C1100,812 1250,835 1420,820"/>
+
+  <!-- Ağaçlar (sağdaki soldakinin aynası) -->
+  <g id="tree">
+    <path d="M200,840 L200,560 M200,640 L250,590" data-tube="50"/>
+    <path id="crown" d="M90,520 C40,500 50,420 100,410 C90,340 170,310 210,340 C240,290 330,310 330,370 C380,380 380,460 340,480 C350,530 290,560 250,535 C220,570 140,560 130,530 C110,540 95,535 90,520 Z" fill="#fff"/>
+    <circle cx="150" cy="440" r="24" fill="#fff" stroke-width="10"/>
+    <circle cx="260" cy="400" r="24" fill="#fff" stroke-width="10"/>
+    <circle cx="230" cy="490" r="24" fill="#fff" stroke-width="10"/>
+  </g>
+  <use xlink:href="#tree" transform="matrix(-1,0,0,1,1400,0)"/>
+
+  <!-- Baca (çatının arkasında) -->
+  <rect x="840" y="250" width="70" height="190" fill="#fff"/>
+  <rect x="825" y="225" width="100" height="36" rx="8" fill="#fff"/>
+
+  <!-- Ev gövdesi ve çatı -->
+  <rect x="430" y="470" width="540" height="365" fill="#fff"/>
+  <path id="roof" d="M370,495 L700,225 L1030,495 Z" fill="#fff"/>
+  <path data-clip="roof" stroke-width="10" d="M300,325 L1100,325 M300,410 L1100,410"/>
+  <circle id="attic" cx="700" cy="395" r="44" fill="#fff"/>
+  <path data-clip="attic" stroke-width="9" d="M700,340 L700,450 M640,395 L760,395"/>
+
+  <!-- Pencereler ve saksılar -->
+  <rect id="winL" x="490" y="555" width="120" height="120" rx="10" fill="#fff"/>
+  <path data-clip="winL" stroke-width="9" d="M550,550 L550,680 M485,615 L615,615"/>
+  <rect id="winR" x="790" y="555" width="120" height="120" rx="10" fill="#fff"/>
+  <path data-clip="winR" stroke-width="9" d="M850,550 L850,680 M785,615 L915,615"/>
+  <rect x="475" y="668" width="150" height="44" rx="8" fill="#fff"/>
+  <rect x="775" y="668" width="150" height="44" rx="8" fill="#fff"/>
+
+  <!-- Kapı ve yol -->
+  <path d="M645,835 L645,660 C645,595 755,595 755,660 L755,835" fill="#fff"/>
+  <circle cx="732" cy="745" r="9" fill="#000" stroke="none"/>
+  <path d="M645,835 C620,900 585,950 545,1010 M755,835 C780,900 815,950 855,1010"/>
+
+  <!-- Laleler -->
+  <path d="M300,940 C302,920 298,905 300,890" stroke-width="9"/>
+  <path d="M300,935 C275,935 250,920 245,895 C270,892 292,910 300,935 Z" fill="#fff" stroke-width="8"/>
+  <path d="M276,880 C276,840 288,830 300,846 C312,830 324,840 324,880 C324,896 276,896 276,880 Z" fill="#fff"/>
+  <path d="M390,965 C392,945 388,930 390,915" stroke-width="9"/>
+  <path d="M390,960 C415,960 440,945 445,920 C420,917 398,935 390,960 Z" fill="#fff" stroke-width="8"/>
+  <path d="M366,905 C366,865 378,855 390,871 C402,855 414,865 414,905 C414,921 366,921 366,905 Z" fill="#fff"/>
+  <path d="M1010,960 C1012,940 1008,925 1010,910" stroke-width="9"/>
+  <path d="M1010,955 C985,955 960,940 955,915 C980,912 1002,930 1010,955 Z" fill="#fff" stroke-width="8"/>
+  <path d="M986,900 C986,860 998,850 1010,866 C1022,850 1034,860 1034,900 C1034,916 986,916 986,900 Z" fill="#fff"/>
+  <path d="M1100,935 C1102,915 1098,900 1100,885" stroke-width="9"/>
+  <path d="M1100,930 C1125,930 1150,915 1155,890 C1130,887 1108,905 1100,930 Z" fill="#fff" stroke-width="8"/>
+  <path d="M1076,875 C1076,835 1088,825 1100,841 C1112,825 1124,835 1124,875 C1124,891 1076,891 1076,875 Z" fill="#fff"/>
+</svg>

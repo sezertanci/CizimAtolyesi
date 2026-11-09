@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Su yüzeyi ışıltısı -->
+  <path stroke-width="8" d="M60,70 C110,55 160,85 210,70 M520,60 C570,45 620,75 670,60 M880,85 C930,70 980,100 1030,85"/>
+
+  <!-- Yosunlar (kumun arkasında) -->
+  <path d="M100,920 C60,820 140,740 100,640 C70,560 120,500 100,430" data-tube="40"/>
+  <path d="M185,920 C215,850 160,790 190,720 C210,670 180,640 195,600" data-tube="32"/>
+  <path d="M1255,920 C1295,820 1215,740 1255,660 C1285,600 1245,550 1260,500" data-tube="40"/>
+
+  <!-- Denizanası -->
+  <g transform="translate(-50,-70)">
+  <path stroke-width="9" d="M190,250 C178,280 205,295 192,325 M230,255 C222,280 245,300 232,330 M270,255 C280,280 258,300 272,330 M310,250 C322,280 295,295 308,325"/>
+  <path d="M165,250 C160,150 340,150 335,250 C310,268 285,256 260,266 C235,256 210,268 185,256 Z" fill="#fff"/>
+  <circle cx="220" cy="210" r="9" fill="#000" stroke="none"/>
+  <circle cx="280" cy="210" r="9" fill="#000" stroke="none"/>
+  <path stroke-width="7" d="M235,232 C245,242 255,242 265,232"/>
+  </g>
+
+  <!-- Mercan -->
+  <path data-tube="32" d="M1110,900 C1105,830 1115,770 1100,700 M1107,810 C1145,790 1160,760 1165,715 M1103,745 C1075,725 1065,695 1068,660"/>
+
+  <!-- Kum, kabuk, deniz yıldızı, çakıllar -->
+  <path d="M-20,885 C200,850 420,905 700,878 C980,850 1200,905 1420,872 L1420,1020 L-20,1020 Z" fill="#fff"/>
+  <path id="shell" d="M320,965 C300,895 355,850 400,850 C445,850 500,895 480,965 C450,980 350,980 320,965 Z" fill="#fff"/>
+  <path data-clip="shell" stroke-width="8" d="M400,975 C380,920 370,880 365,845 M400,975 C420,920 430,880 435,845"/>
+  <path d="M960.0,877.0 L975.9,913.2 L1015.2,917.1 L985.7,943.3 L994.1,981.9 L960.0,962.0 L925.9,981.9 L934.3,943.3 L904.8,917.1 L944.1,913.2 Z" fill="#fff"/>
+  <ellipse cx="620" cy="945" rx="44" ry="20" fill="#fff"/>
+  <ellipse cx="1150" cy="950" rx="52" ry="22" fill="#fff"/>
+
+  <!-- Kabarcıklar -->
+  <circle cx="1000" cy="410" r="20" fill="#fff"/>
+  <circle cx="1030" cy="335" r="28" fill="#fff"/>
+  <circle cx="1000" cy="245" r="36" fill="#fff"/>
+  <path stroke-width="7" d="M1020,328 C1022,322 1026,318 1032,316 M988,232 C991,224 997,219 1005,217"/>
+
+  <!-- Küçük balık -->
+  <path id="ftail" d="M1215,220 C1250,182 1272,170 1292,165 C1280,200 1280,240 1292,275 C1272,270 1250,258 1215,220 Z" fill="#fff"/>
+  <ellipse id="small" cx="1150" cy="220" rx="78" ry="46" fill="#fff"/>
+  <path data-clip="small" stroke-width="9" d="M1170,160 C1150,190 1150,250 1170,280"/>
+  <circle cx="1105" cy="208" r="11" fill="#000" stroke="none"/>
+  <path stroke-width="7" d="M1076,232 C1084,240 1094,240 1100,234"/>
+
+  <!-- Büyük balık: önce yüzgeçler, sonra gövde -->
+  <path id="tail" d="M410,480 C340,400 270,340 205,322 C240,400 240,560 205,638 C270,620 340,560 410,480 Z" fill="#fff"/>
+  <path data-clip="tail" stroke-width="8" d="M400,480 L230,385 M400,480 L215,480 M400,480 L230,575"/>
+  <path d="M555,335 C585,225 705,195 810,235 C790,275 780,305 772,340 Z" fill="#fff"/>
+  <path d="M630,640 C650,715 715,738 765,728 C742,695 738,662 744,622 Z" fill="#fff"/>
+  <path id="body" d="M380,480 C420,330 620,280 780,325 C880,355 945,420 965,480 C945,540 880,605 780,635 C620,680 420,630 380,480 Z" fill="#fff"/>
+  <path data-clip="body" stroke-width="10" d="M560,290 C515,400 515,560 560,680 M690,285 C650,400 650,560 690,690"/>
+  <path stroke-width="10" d="M800,375 C770,430 770,530 800,585"/>
+  <path d="M705,505 C735,465 790,470 815,510 C790,548 735,548 705,505 Z" fill="#fff" stroke-width="10"/>
+
+  <!-- Göz ve ağız -->
+  <circle cx="870" cy="445" r="40" fill="#fff"/>
+  <path d="M854,450 A22,22 0 1,1 898,450 A22,22 0 1,1 854,450 Z M859,438 A11,11 0 1,1 881,438 A11,11 0 1,1 859,438 Z" fill="#000" fill-rule="evenodd" stroke="none"/>
+  <path stroke-width="9" d="M948,515 C930,532 910,536 892,528"/>
+</svg>

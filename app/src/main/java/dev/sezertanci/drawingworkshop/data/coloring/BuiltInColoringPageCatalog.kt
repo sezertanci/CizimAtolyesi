@@ -16,6 +16,12 @@ class BuiltInColoringPageCatalog @Inject constructor() : ColoringPageCatalog {
         ColoringPage("dinosaur", R.drawable.coloring_dinosaur),
         ColoringPage("sun", R.drawable.coloring_sun),
         ColoringPage("carriage", R.drawable.coloring_carriage),
+        ColoringPage("owl", R.drawable.coloring_owl),
+        ColoringPage("turtle", R.drawable.coloring_turtle),
+        ColoringPage("rocket", R.drawable.coloring_rocket),
+        ColoringPage("elephant", R.drawable.coloring_elephant),
+        ColoringPage("sailboat", R.drawable.coloring_sailboat),
+        ColoringPage("bunny", R.drawable.coloring_bunny),
     )
 
     private val byId = pages.associateBy(ColoringPage::id)

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gökyüzü: güneş, bulutlar, kuşlar -->
+  <circle cx="1250" cy="130" r="55" fill="#fff"/>
+  <g transform="translate(1250,130)" stroke-width="10">
+    <path d="M78,0 L108,0"/>
+    <path d="M78,0 L108,0" transform="rotate(45)"/>
+    <path d="M78,0 L108,0" transform="rotate(90)"/>
+    <path d="M78,0 L108,0" transform="rotate(135)"/>
+    <path d="M78,0 L108,0" transform="rotate(180)"/>
+    <path d="M78,0 L108,0" transform="rotate(225)"/>
+    <path d="M78,0 L108,0" transform="rotate(270)"/>
+    <path d="M78,0 L108,0" transform="rotate(315)"/>
+  </g>
+  <path d="M180,200 C135,200 130,140 180,135 C185,87 252,77 272,115 C292,73 368,83 368,135 C415,135 415,200 368,200 Z" fill="#fff"/>
+  <path d="M760,170 C730,170 726,128 760,125 C765,92 815,88 828,112 C845,88 895,96 893,128 C925,130 925,170 893,170 Z" fill="#fff"/>
+  <path stroke-width="9" d="M520,110 C535,90 555,90 570,110 C585,90 605,90 620,110 M1000,200 C1012,185 1028,185 1040,200 C1052,185 1068,185 1080,200"/>
+
+  <!-- Tepeler -->
+  <path d="M-20,560 C150,470 330,480 500,540 C650,590 760,600 900,540 C1040,480 1220,470 1420,560"/>
+
+  <!-- Ağaçlar -->
+  <path d="M120,815 L120,600" data-tube="40"/>
+  <circle cx="120" cy="545" r="75" fill="#fff"/>
+  <path d="M1290,815 L1290,620" data-tube="36"/>
+  <path d="M1290,450 C1340,520 1370,590 1350,630 C1335,655 1245,655 1230,630 C1210,590 1240,520 1290,450 Z" fill="#fff"/>
+
+  <!-- Yol -->
+  <path d="M-20,830 L1420,830"/>
+  <g fill="#fff">
+    <rect x="40" y="905" width="140" height="34" rx="17"/>
+    <rect x="300" y="905" width="140" height="34" rx="17"/>
+    <rect x="560" y="905" width="140" height="34" rx="17"/>
+    <rect x="820" y="905" width="140" height="34" rx="17"/>
+    <rect x="1080" y="905" width="140" height="34" rx="17"/>
+  </g>
+
+  <!-- Egzoz dumanı (tamponun arkasında) -->
+  <circle cx="215" cy="694" r="26" fill="#fff"/>
+  <circle cx="250" cy="712" r="20" fill="#fff"/>
+
+  <!-- Araba gövdesi, tamponlar ve lambalar -->
+  <path d="M300,720 L300,620 C300,585 320,570 360,565 L470,555 C510,470 560,420 640,415 L840,415 C900,415 940,450 980,550 L1090,565 C1130,572 1150,595 1150,640 L1150,720 C1150,745 1135,760 1110,760 L340,760 C315,760 300,745 300,720 Z" fill="#fff"/>
+  <rect x="290" y="585" width="40" height="50" rx="10" fill="#fff"/>
+  <rect x="1115" y="580" width="45" height="45" rx="14" fill="#fff"/>
+  <rect x="265" y="690" width="75" height="36" rx="18" fill="#fff"/>
+  <rect x="1110" y="690" width="75" height="36" rx="18" fill="#fff"/>
+
+  <!-- Tavandaki bavul -->
+  <path d="M710,332 C710,295 770,295 770,332" stroke-width="12"/>
+  <path id="bag" d="M660,418 L660,350 C660,338 668,330 680,330 L800,330 C812,330 820,338 820,350 L820,418 Z" fill="#fff"/>
+  <path data-clip="bag" stroke-width="10" d="M700,320 L700,430 M780,320 L780,430"/>
+
+  <!-- Camlar, kapı ve kulp -->
+  <path d="M525,545 C548,492 578,458 630,452 L690,452 L690,545 Z" fill="#fff"/>
+  <path d="M730,452 L830,452 C870,452 900,482 922,545 L730,545 Z" fill="#fff"/>
+  <path d="M710,548 L710,745"/>
+  <rect x="745" y="585" width="50" height="16" rx="8" fill="#000" stroke="none"/>
+
+  <!-- Tekerlekler -->
+  <g id="wheel">
+    <circle cx="450" cy="760" r="85" fill="#fff"/>
+    <circle cx="450" cy="760" r="40" fill="#fff"/>
+    <circle cx="450" cy="760" r="12" fill="#000" stroke="none"/>
+  </g>
+  <use xlink:href="#wheel" transform="translate(550,0)"/>
+</svg>

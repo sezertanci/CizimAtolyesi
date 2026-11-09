@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gökyüzü -->
+  <circle cx="160" cy="150" r="60" fill="#fff"/>
+  <g transform="translate(160,150)" stroke-width="10">
+    <path d="M80,0 L112,0" transform="rotate(0)"/>
+    <path d="M80,0 L112,0" transform="rotate(45)"/>
+    <path d="M80,0 L112,0" transform="rotate(90)"/>
+    <path d="M80,0 L112,0" transform="rotate(135)"/>
+    <path d="M80,0 L112,0" transform="rotate(180)"/>
+    <path d="M80,0 L112,0" transform="rotate(225)"/>
+    <path d="M80,0 L112,0" transform="rotate(270)"/>
+    <path d="M80,0 L112,0" transform="rotate(315)"/>
+  </g>
+  <path d="M960,180 C915,180 910,120 960,115 C965,67 1032,57 1052,95 C1072,53 1148,63 1148,115 C1195,115 1195,180 1148,180 Z" fill="#fff"/>
+  <path d="M360,120 C330,120 326,80 360,77 C364,45 408,38 422,64 C436,36 486,42 486,77 C516,77 516,120 486,120 Z" fill="#fff"/>
+  <path stroke-width="8" d="M1170,300 C1185,280 1205,280 1220,300 C1235,280 1255,280 1270,300 M1060,250 C1072,235 1088,235 1100,250 C1112,235 1128,235 1140,250"/>
+
+  <!-- Ada ve palmiye -->
+  <path d="M1150,650 C1170,620 1225,612 1260,640" data-tube="34"/>
+  <path d="M1040,700 C1110,615 1340,605 1420,655 L1420,700 Z" fill="#fff"/>
+  <path d="M1250,640 C1255,560 1240,500 1215,440" data-tube="36"/>
+  <g fill="#fff">
+    <path d="M1215,440 C1170,395 1105,395 1065,430 C1120,440 1170,455 1215,440 Z"/>
+    <path d="M1215,440 C1245,385 1305,370 1355,395 C1300,415 1260,430 1215,440 Z"/>
+    <path d="M1215,440 C1280,430 1330,465 1345,525 C1295,505 1255,480 1215,440 Z"/>
+  </g>
+  <circle cx="1215" cy="443" r="24" fill="#fff" stroke-width="10"/>
+
+  <!-- Deniz -->
+  <path d="M-40,700 C20,682 80,682 140,700 C200,682 260,682 320,700 C380,682 440,682 500,700 C560,682 620,682 680,700 C740,682 800,682 860,700 C920,682 980,682 1040,700"/>
+  <path stroke-width="9" d="M120,820 C145,802 175,802 200,820 C225,802 255,802 280,820 M1080,800 C1105,782 1135,782 1160,800 C1185,782 1215,782 1240,800 M420,930 C445,912 475,912 500,930 C525,912 555,912 580,930 M900,920 C925,902 955,902 980,920 C1005,902 1035,902 1060,920"/>
+
+  <!-- Zıplayan balık -->
+  <path d="M175,640 L130,690 L125,610 Z" fill="#fff"/>
+  <ellipse id="fishb" cx="240" cy="595" rx="80" ry="42" transform="rotate(-25,240,595)" fill="#fff"/>
+  <path data-clip="fishb" stroke-width="9" d="M260,520 C240,560 245,610 275,650"/>
+  <circle cx="290" cy="560" r="10" fill="#000" stroke="none"/>
+
+  <!-- Direk ve bayrak -->
+  <path d="M700,630 L700,100" data-tube="36"/>
+  <path d="M718,105 L830,135 L718,165 Z" fill="#fff"/>
+
+  <!-- Yelkenler -->
+  <path id="main" d="M700,168 C800,300 920,450 1000,600 L700,600 Z" fill="#fff"/>
+  <path data-clip="main" stroke-width="10" d="M690,350 C780,370 840,365 900,350 M690,480 C800,500 880,495 960,480"/>
+  <path id="jib" d="M700,168 C620,320 520,470 440,600 L700,600 Z" fill="#fff"/>
+  <path data-clip="jib" stroke-width="10" d="M710,420 C640,435 590,435 540,420"/>
+
+  <!-- Tekne -->
+  <path d="M370,640 L1030,640 C1000,745 935,775 860,775 L540,775 C465,775 400,745 370,640 Z" fill="#fff"/>
+  <circle cx="560" cy="705" r="25" fill="#fff"/>
+  <circle cx="700" cy="705" r="25" fill="#fff"/>
+  <circle cx="840" cy="705" r="25" fill="#fff"/>
+</svg>
