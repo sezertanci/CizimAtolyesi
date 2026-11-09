@@ -14,6 +14,7 @@ Kaynaklar `pages/<id>.svg` dosyalarıdır ve bir illüstrasyon gibi arkadan öne
   Tüp beyaz dolgulu bir şekil gibi davranır.
 - `data-clip="<id>"` verilen çizgiler yalnızca o kimlikli şeklin içinde kalır (pul, çizgi, desen).
 Çıktı `app/src/main/res/drawable/coloring_<id>.xml`; önizleme için düzleştirilmiş SVG `out/<id>.svg`.
+Ölçü kuralları ve sık yapılan hatalar için: DRAWING_GUIDE.md
 """
 
 from __future__ import annotations

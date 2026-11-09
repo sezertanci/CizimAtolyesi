@@ -63,7 +63,8 @@ Windows'ta `./gradlew` yerine `gradlew.bat` kullanılabilir.
 
 Boyama sayfaları elle düzenlenen SVG kaynaklarından (`tools/coloring/pages/<id>.svg`) üretilir.
 Betik, öndeki beyaz şekillerin arkasında kalan çizgileri kırpar ve sonucu Android vektörüne
-(`res/drawable/coloring_<id>.xml`) yazar. Kaynak biçiminin kuralları `tools/coloring/build.py` başında anlatılır.
+(`res/drawable/coloring_<id>.xml`) yazar. Kaynak biçimi, ölçü kuralları ve daha önce düzeltilen hatalar
+[`tools/coloring/DRAWING_GUIDE.md`](tools/coloring/DRAWING_GUIDE.md) dosyasındadır; yeni sayfaya başlamadan önce okunmalıdır.
 
 ```bash
 pip install -r tools/coloring/requirements.txt
