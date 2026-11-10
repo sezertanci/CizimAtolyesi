@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Keçeli kalem aracı: kapağı arkasına takılmış, keçe uçlu kalem. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Yatay çizilmiş kalem; fırça ve pastel boya emojileri gibi 45° eğilir -->
+    <group
+        android:pivotX="24"
+        android:pivotY="24"
+        android:rotation="-45"
+        android:scaleX="1.1"
+        android:scaleY="1.1">
+        <!-- Arkaya takılı kapak -->
+        <path
+            android:fillColor="#43A047"
+            android:pathData="M36,19.5 L42.5,19.5 Q45,19.5 45,22 L45,26 Q45,28.5 42.5,28.5 L36,28.5 Z" />
+        <path
+            android:fillColor="#2E7D32"
+            android:pathData="M36,26 L45,26 Q45,28.5 42.5,28.5 L36,28.5 Z" />
+        <!-- Kapak klipsi -->
+        <path
+            android:fillColor="#1B5E20"
+            android:pathData="M31,18.2 L42,18.2 Q43,18.2 43,19.2 L43,19.6 L31.5,19.6 Q31,19.6 31,19 Z" />
+        <!-- Gövde -->
+        <path
+            android:fillColor="#F5F5F5"
+            android:pathData="M14,20 L36,20 L36,28 L14,28 Z" />
+        <path
+            android:fillColor="#D5DCE0"
+            android:pathData="M14,26 L36,26 L36,28 L14,28 Z" />
+        <!-- Renkli etiket -->
+        <path
+            android:fillColor="#66BB6A"
+            android:pathData="M18,20 L31,20 L31,28 L18,28 Z" />
+        <path
+            android:fillColor="#4CAF50"
+            android:pathData="M18,26 L31,26 L31,28 L18,28 Z" />
+        <!-- Kapakla gövde arasındaki halka -->
+        <path
+            android:fillColor="#2E7D32"
+            android:pathData="M34.5,19.5 L36.5,19.5 L36.5,28.5 L34.5,28.5 Z" />
+        <!-- Uca doğru daralan tutma yeri -->
+        <path
+            android:fillColor="#B0BEC5"
+            android:pathData="M14,20 L14,28 L9,26 L9,22 Z" />
+        <path
+            android:fillColor="#90A4AE"
+            android:pathData="M14,26 L14,28 L9,26 L9,25 Z" />
+        <!-- Keçe uç -->
+        <path
+            android:fillColor="#43A047"
+            android:pathData="M9,22.3 L9,25.7 L5,25 Q3.2,24.5 3.3,24 Q3.4,23.5 5,23 Z" />
+        <path
+            android:fillColor="#2E7D32"
+            android:pathData="M9,24.3 L9,25.7 L5,25 Q3.2,24.5 3.3,24 Z" />
+        <!-- Parlama -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:fillAlpha="0.65"
+            android:pathData="M15,21 L44,21 L44,22 L15,22 Z" />
+    </group>
+</vector>

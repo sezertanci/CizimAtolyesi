@@ -1,25 +1,43 @@
 package dev.sezertanci.drawingworkshop.ui.drawing.components
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.sezertanci.drawingworkshop.R
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
+import dev.sezertanci.drawingworkshop.ui.components.DrawableIcon
+import dev.sezertanci.drawingworkshop.ui.components.EmojiIcon
 
-/** Araçların panelde görünen simgesi (emoji) ve erişilebilirlik etiketi. */
-val ToolType.emoji: String
+/** Aracın panelde görünen simgesi: uygun emojisi olmayan araçlar için çizim kullanılır. */
+sealed interface ToolIcon {
+    data class Emoji(val text: String) : ToolIcon
+    data class Drawable(@param:DrawableRes val res: Int) : ToolIcon
+}
+
+/** Araçların panelde görünen simgesi ve erişilebilirlik etiketi. */
+val ToolType.icon: ToolIcon
     get() = when (this) {
-        ToolType.PENCIL -> "✏️"
-        ToolType.BRUSH -> "🖌️"
-        ToolType.RAINBOW -> "🌈"
-        ToolType.MARKER -> "🖊️"
-        ToolType.CRAYON -> "🖍️"
-        ToolType.SPRAY -> "💨"
-        ToolType.ERASER -> "🧽"
-        ToolType.BUCKET -> "🪣"
-        ToolType.STICKER -> "🌟"
+        ToolType.PENCIL -> ToolIcon.Emoji("✏️")
+        ToolType.BRUSH -> ToolIcon.Emoji("🖌️")
+        ToolType.RAINBOW -> ToolIcon.Emoji("🌈")
+        ToolType.MARKER -> ToolIcon.Drawable(R.drawable.ic_tool_marker)
+        ToolType.CRAYON -> ToolIcon.Emoji("🖍️")
+        ToolType.SPRAY -> ToolIcon.Drawable(R.drawable.ic_tool_spray)
+        ToolType.ERASER -> ToolIcon.Drawable(R.drawable.ic_tool_eraser)
+        ToolType.BUCKET -> ToolIcon.Drawable(R.drawable.ic_tool_bucket)
+        ToolType.STICKER -> ToolIcon.Emoji("🐱")
     }
+
+@Composable
+fun ToolIconView(icon: ToolIcon) {
+    when (icon) {
+        is ToolIcon.Emoji -> EmojiIcon(icon.text)
+        is ToolIcon.Drawable -> DrawableIcon(icon.res)
+    }
+}
 
 @get:StringRes
 val ToolType.labelRes: Int

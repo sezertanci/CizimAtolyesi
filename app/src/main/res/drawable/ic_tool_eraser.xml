@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Silgi aracı: pembe uçlu, mavi kılıflı klasik silgi. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <group
+        android:pivotX="24"
+        android:pivotY="24"
+        android:rotation="-35">
+        <!-- Pembe uç: alt yüz (gölge) ve üst yüz -->
+        <path
+            android:fillColor="#EC407A"
+            android:pathData="M9,17 L20,17 L20,31 L9,31 Q6,31 6,28 L6,20 Q6,17 9,17 Z" />
+        <path
+            android:fillColor="#F8A5C2"
+            android:pathData="M9,17 L20,17 L20,27 L6,27 L6,20 Q6,17 9,17 Z" />
+        <!-- Mavi kılıf: alt yüz (gölge) ve üst yüz -->
+        <path
+            android:fillColor="#1E88E5"
+            android:pathData="M20,17 L39,17 Q42,17 42,20 L42,28 Q42,31 39,31 L20,31 Z" />
+        <path
+            android:fillColor="#64B5F6"
+            android:pathData="M20,17 L39,17 Q42,17 42,20 L42,27 L20,27 Z" />
+        <!-- Kılıf üzerindeki beyaz şerit -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:fillAlpha="0.85"
+            android:pathData="M25,17 L28,17 L28,31 L25,31 Z" />
+    </group>
+    <!-- Silgi kırıntıları -->
+    <path
+        android:fillColor="#F48FB1"
+        android:pathData="M8,41 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+    <path
+        android:fillColor="#F48FB1"
+        android:pathData="M13,44 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0" />
+    <path
+        android:fillColor="#F48FB1"
+        android:pathData="M4.5,45 m-1,0 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0" />
+</vector>

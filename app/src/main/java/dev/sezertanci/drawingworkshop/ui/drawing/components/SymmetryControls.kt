@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.sezertanci.drawingworkshop.R
 import dev.sezertanci.drawingworkshop.domain.symmetry.SymmetryMode
+import dev.sezertanci.drawingworkshop.ui.components.DrawableIcon
 import dev.sezertanci.drawingworkshop.ui.components.EmojiIcon
 import dev.sezertanci.drawingworkshop.ui.components.PanelButton
 import dev.sezertanci.drawingworkshop.ui.theme.WorkshopColors
@@ -68,7 +69,7 @@ internal fun LazyListScope.symmetryItems(controls: SymmetryControls) {
     }
 }
 
-/** Simetri kapalıyken ayna simgesi, açıkken seçili modun eksenleri görünür. Dokununca seçim kutusu açılır. */
+/** Simetri kapalıyken iki yarısı aynı kelebek simgesi, açıkken seçili modun eksenleri görünür. Dokununca seçim kutusu açılır. */
 @Composable
 private fun SymmetryMenuButton(mode: SymmetryMode, onModeSelected: (SymmetryMode) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
@@ -77,7 +78,7 @@ private fun SymmetryMenuButton(mode: SymmetryMode, onModeSelected: (SymmetryMode
             selected = mode != SymmetryMode.OFF,
             description = stringResource(R.string.symmetry_menu),
             onClick = { expanded = true },
-        ) { if (mode == SymmetryMode.OFF) EmojiIcon(MIRROR_EMOJI) else SymmetryIcon(mode) }
+        ) { if (mode == SymmetryMode.OFF) DrawableIcon(R.drawable.ic_symmetry) else SymmetryIcon(mode) }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             SymmetryMode.entries.forEach { option ->
                 PanelButton(
@@ -99,7 +100,7 @@ private fun SymmetryMenuButton(mode: SymmetryMode, onModeSelected: (SymmetryMode
 private fun FillChoiceButton(copies: Int, selected: Boolean, @StringRes descriptionRes: Int, onClick: () -> Unit) {
     PanelButton(selected = selected, description = stringResource(descriptionRes), onClick = onClick) {
         Box {
-            EmojiIcon(BUCKET_EMOJI)
+            DrawableIcon(R.drawable.ic_tool_bucket)
             Text(
                 text = "×$copies",
                 fontSize = BadgeSize,
@@ -143,6 +144,4 @@ private val SymmetryMode.labelRes: Int
         SymmetryMode.EIGHT -> R.string.symmetry_eight
     }
 
-private const val MIRROR_EMOJI = "🪞"
 private const val OFF_EMOJI = "🚫"
-private const val BUCKET_EMOJI = "🪣"

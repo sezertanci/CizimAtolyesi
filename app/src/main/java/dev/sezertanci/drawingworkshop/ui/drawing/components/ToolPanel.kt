@@ -74,7 +74,7 @@ fun ToolPanel(
                 selected = tool == selectedTool,
                 description = stringResource(tool.labelRes),
                 onClick = { onToolSelected(tool) },
-            ) { EmojiIcon(tool.emoji) }
+            ) { ToolIconView(tool.icon) }
         }
         item { PanelDivider() }
         items(BrushSize.entries) { size ->

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sprey aracı: püskürten sprey boya kutusu. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Gövde -->
+    <path
+        android:fillColor="#E53935"
+        android:pathData="M10,18 L28,18 L28,41 Q28,44 25,44 L13,44 Q10,44 10,41 Z" />
+    <!-- Alt kenar gölgesi -->
+    <path
+        android:fillColor="#B71C1C"
+        android:pathData="M10,40 L28,40 L28,41 Q28,44 25,44 L13,44 Q10,44 10,41 Z" />
+    <!-- Parlama -->
+    <path
+        android:fillColor="#EF7A76"
+        android:pathData="M12.5,19 L15,19 L15,39 L12.5,39 Z" />
+    <!-- Etiket -->
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M10,25 L28,25 L28,35 L10,35 Z" />
+    <path
+        android:fillColor="#42A5F5"
+        android:pathData="M19,30 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+    <!-- Omuz -->
+    <path
+        android:fillColor="#C62828"
+        android:pathData="M10,19 Q10,12 19,12 Q28,12 28,19 Z" />
+    <!-- Kapak ve püskürtme ucu -->
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M16,7 L22,7 L22,13 L16,13 Z" />
+    <path
+        android:fillColor="#616161"
+        android:pathData="M22,8 L25,8 L25,11 L22,11 Z" />
+    <!-- Püskürtülen boya damlacıkları -->
+    <path
+        android:fillColor="#EF5350"
+        android:pathData="M29.5,9.5 m-1.7,0 a1.7,1.7 0 1,0 3.4,0 a1.7,1.7 0 1,0 -3.4,0" />
+    <path
+        android:fillColor="#EF5350"
+        android:fillAlpha="0.85"
+        android:pathData="M33.5,6 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0" />
+    <path
+        android:fillColor="#EF5350"
+        android:fillAlpha="0.85"
+        android:pathData="M34,12.5 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0" />
+    <path
+        android:fillColor="#EF5350"
+        android:fillAlpha="0.7"
+        android:pathData="M38,9 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0" />
+    <path
+        android:fillColor="#EF5350"
+        android:fillAlpha="0.6"
+        android:pathData="M38.5,3.5 m-1,0 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0" />
+    <path
+        android:fillColor="#EF5350"
+        android:fillAlpha="0.6"
+        android:pathData="M39,15 m-1,0 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0" />
+    <path
+        android:fillColor="#EF5350"
+        android:fillAlpha="0.45"
+        android:pathData="M43,6.5 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" />
+    <path
+        android:fillColor="#EF5350"
+        android:fillAlpha="0.45"
+        android:pathData="M43,12 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" />
+</vector>

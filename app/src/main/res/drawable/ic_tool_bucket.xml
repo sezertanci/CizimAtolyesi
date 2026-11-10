@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Boya kovası aracı: eğilmiş, ağzından boya dökülen boya kutusu. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Yerdeki boya birikintisi -->
+    <path
+        android:fillColor="#1E88E5"
+        android:pathData="M25,41 A10,3.5 0 1,0 45,41 A10,3.5 0 1,0 25,41 Z" />
+    <!-- Dik çizilmiş kutu, dökülecek şekilde sağa eğilir -->
+    <group
+        android:pivotX="19"
+        android:pivotY="24"
+        android:rotation="45"
+        android:translateX="-3"
+        android:translateY="2">
+        <!-- Sap -->
+        <path
+            android:fillColor="#00000000"
+            android:pathData="M8,15 C8,2 30,2 30,15"
+            android:strokeWidth="2"
+            android:strokeColor="#616161" />
+        <!-- Metal gövde -->
+        <path
+            android:fillColor="#90A4AE"
+            android:pathData="M8,14 L8,34 A11,3 0 0,0 30,34 L30,14 Z" />
+        <!-- Parlama -->
+        <path
+            android:fillColor="#CFD8DC"
+            android:pathData="M11,20 L13,20 L13,36.5 L11,36 Z" />
+        <!-- Ağız kenarı ve boya yüzeyi -->
+        <path
+            android:fillColor="#ECEFF1"
+            android:pathData="M8,14 A11,3 0 1,0 30,14 A11,3 0 1,0 8,14 Z" />
+        <path
+            android:fillColor="#42A5F5"
+            android:pathData="M10,14 A9,2.2 0 1,0 28,14 A9,2.2 0 1,0 10,14 Z" />
+    </group>
+    <!-- Ağızdan dökülen boya akışı -->
+    <path
+        android:fillColor="#42A5F5"
+        android:pathData="M26.5,21 C34,20.5 38,26 38,33 L38,40 Q36,42 34,40 L34,33 C34,29.5 33,27.5 30.5,26.5 Z" />
+    <!-- Akışın kenarındaki parlama -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.5"
+        android:pathData="M31,22.5 C34.5,24 36.5,27.5 36.5,32 L35.5,32 C35.5,28 34,25.5 30.5,23.5 Z" />
+</vector>

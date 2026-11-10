@@ -1,5 +1,7 @@
 package dev.sezertanci.drawingworkshop.ui.components
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -13,6 +15,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -27,6 +30,7 @@ private val NormalBorder = 1.dp
 private const val DISABLED_ALPHA = 0.35f
 private val DefaultShape = RoundedCornerShape(16.dp)
 private val EmojiSize = 30.sp
+private val DrawableIconSize = 40.dp
 
 /** Panellerdeki tüm düğmelerin ortak görünümü: seçiliyse turuncu çerçeve, pasifse soluk. */
 @Composable
@@ -67,4 +71,10 @@ fun PanelButton(
 @Composable
 fun EmojiIcon(emoji: String) {
     Text(text = emoji, fontSize = EmojiSize)
+}
+
+/** Emojisi olmayan simgeler için çizim; boyutu emoji simgesiyle uyumludur. */
+@Composable
+fun DrawableIcon(@DrawableRes res: Int) {
+    Image(painter = painterResource(res), contentDescription = null, modifier = Modifier.size(DrawableIconSize))
 }
