@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import dev.sezertanci.drawingworkshop.R
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
-import dev.sezertanci.drawingworkshop.domain.stroke.RainbowHues
 import dev.sezertanci.drawingworkshop.ui.components.ConfirmDialog
 import dev.sezertanci.drawingworkshop.ui.components.EmojiIcon
 import dev.sezertanci.drawingworkshop.ui.components.PanelButton
@@ -35,15 +33,6 @@ private val PanelDividerThickness = 2.dp
 
 /** Boyut noktasının ince kenarı; beyaz gibi zeminle aynı renkler de görünür kalır. */
 private val SizeDotOutline = 1.dp
-
-/** Gökkuşağı fırçası seçiliyken boyut noktaları tek renk yerine gökkuşağı renkleriyle görünür. */
-private const val RAINBOW_DOT_COLOR_STOPS = 12
-
-private val RainbowDotBrush = Brush.sweepGradient(
-    (0..RAINBOW_DOT_COLOR_STOPS).map {
-        Color(RainbowHues.colorOf(it * RainbowHues.FULL_TURN_DEGREES / RAINBOW_DOT_COLOR_STOPS))
-    },
-)
 
 /** Boyut düğmeleri, onları kullanan çizim araçlarının hemen altında; kova ve çıkartma ayrı grupta durur. */
 private val SizedTools = ToolType.entries.filter { it.usesBrushSize }
@@ -67,6 +56,7 @@ fun ToolPanel(
     selectedTool: ToolType,
     selectedSize: BrushSize,
     strokeColor: Color,
+    drawsRainbow: Boolean,
     actions: ToolPanelActions,
     symmetry: SymmetryControls,
     silk: SilkStyleControls,
@@ -75,7 +65,8 @@ fun ToolPanel(
     modifier: Modifier = Modifier,
 ) {
     var confirmingClear by rememberSaveable { mutableStateOf(false) }
-    val dotBrush = if (selectedTool == ToolType.RAINBOW) RainbowDotBrush else SolidColor(strokeColor)
+    // Gökkuşağıyla çizilirken boyut noktaları da gökkuşağı renkleriyle görünür.
+    val dotBrush = if (drawsRainbow) RainbowBrush else SolidColor(strokeColor)
     PanelColumn(width = PanelWidth, modifier = modifier) {
         item { ActionButton(HOME_EMOJI, R.string.action_home, onClick = actions.onHome) }
         item { PanelDivider() }

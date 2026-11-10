@@ -22,7 +22,6 @@ val ToolType.icon: ToolIcon
     get() = when (this) {
         ToolType.PENCIL -> ToolIcon.Emoji("✏️")
         ToolType.BRUSH -> ToolIcon.Emoji("🖌️")
-        ToolType.RAINBOW -> ToolIcon.Emoji("🌈")
         ToolType.SILK -> ToolIcon.Drawable(R.drawable.ic_tool_silk)
         ToolType.MARKER -> ToolIcon.Drawable(R.drawable.ic_tool_marker)
         ToolType.CRAYON -> ToolIcon.Emoji("🖍️")
@@ -45,7 +44,6 @@ val ToolType.labelRes: Int
     get() = when (this) {
         ToolType.PENCIL -> R.string.tool_pencil
         ToolType.BRUSH -> R.string.tool_brush
-        ToolType.RAINBOW -> R.string.tool_rainbow
         ToolType.SILK -> R.string.tool_silk
         ToolType.MARKER -> R.string.tool_marker
         ToolType.CRAYON -> R.string.tool_crayon

@@ -5,6 +5,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.sezertanci.drawingworkshop.R
@@ -17,12 +18,14 @@ private val SwatchSize = 52.dp
 
 /**
  * Sağdaki kaydırılabilir renk paneli. Üstteki iki düğme, seçilen rengin kaleme mi yoksa tuvalin
- * arka planına mı uygulanacağını belirler.
+ * arka planına mı uygulanacağını belirler. Listenin başındaki gökkuşağı, onu destekleyen araçlarla
+ * kalemde seçilebilir; seçilemediği yerde soluk görünür.
  */
 @Composable
 fun ColorPanel(
     colorTarget: ColorTarget,
     selectedColor: Int,
+    rainbow: RainbowChoice,
     onColorTargetSelected: (ColorTarget) -> Unit,
     onColorSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -43,18 +46,36 @@ fun ColorPanel(
             ) { EmojiIcon(BACKGROUND_TARGET_EMOJI) }
         }
         item { PanelDivider() }
+        item {
+            PanelButton(
+                selected = rainbow.selected,
+                enabled = rainbow.available,
+                description = stringResource(R.string.color_rainbow),
+                onClick = rainbow.onSelected,
+                size = SwatchSize,
+                shape = CircleShape,
+                background = RainbowBrush,
+            ) {}
+        }
         items(Palette.colors) { color ->
             PanelButton(
-                selected = color == selectedColor,
+                selected = !rainbow.selected && color == selectedColor,
                 description = stringResource(R.string.color_swatch),
                 onClick = { onColorSelected(color) },
                 size = SwatchSize,
                 shape = CircleShape,
-                background = Color(color),
+                background = SolidColor(Color(color)),
             ) {}
         }
     }
 }
+
+/** Renk panelindeki gökkuşağının durumu ve seçilince yapılacak iş. */
+class RainbowChoice(
+    val selected: Boolean,
+    val available: Boolean,
+    val onSelected: () -> Unit,
+)
 
 private const val STROKE_TARGET_EMOJI = "🖌️"
 private const val BACKGROUND_TARGET_EMOJI = "🖼️"

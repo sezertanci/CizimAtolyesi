@@ -27,10 +27,13 @@ class StrokeFactory @Inject constructor(
         val scale = Scale(density, zoom)
         val width = scale.toPx(settings.size.widthDp) * style.widthFactor
         return when (settings.tool) {
-            ToolType.SPRAY -> createSpray(settings.color, width, scale)
+            ToolType.SPRAY -> createSpray(settings, width, scale)
             ToolType.ERASER -> createEraser(backgroundColor, width, scale)
-            ToolType.RAINBOW -> createRainbow(width, scale)
-            else -> createPath(settings, width, style.alpha, scale)
+            else -> if (settings.rainbow) {
+                createRainbow(width, style.alpha, scale)
+            } else {
+                createPath(settings, width, style.alpha, scale)
+            }
         }
     }
 
@@ -59,12 +62,21 @@ class StrokeFactory @Inject constructor(
             if (glows) xfermode = PorterDuffXfermode(PorterDuff.Mode.ADD)
         }
 
-    /** Renk panelindeki seçim kullanılmaz; renk çizgi boyunca kendiliğinden ve rastgele değişir. */
-    private fun createRainbow(width: Float, scale: Scale): ActiveStroke {
-        val hues = RainbowHues(scale.toPx(RAINBOW_LEG_DP))
+    /** Renk çizgi boyunca kendiliğinden ve rastgele değişir; aracın saydamlığı bütün çizgiye birden uygulanır. */
+    private fun createRainbow(width: Float, alpha: Int, scale: Scale): ActiveStroke {
+        val hues = rainbowHues(scale)
         val paint = strokePaint(hues.colorAt(0f), width, OPAQUE)
-        return RainbowStroke(paint, scale.toPx(MIN_POINT_DISTANCE_DP), scale.toPx(RAINBOW_SECTION_DP), hues)
+        val layerAlpha = alpha.takeIf { it < OPAQUE }
+        return RainbowStroke(
+            paint,
+            scale.toPx(MIN_POINT_DISTANCE_DP),
+            scale.toPx(RAINBOW_SECTION_DP),
+            hues,
+            layerAlpha,
+        )
     }
+
+    private fun rainbowHues(scale: Scale) = RainbowHues(scale.toPx(RAINBOW_LEG_DP))
 
     private fun createPath(settings: StrokeSettings, width: Float, alpha: Int, scale: Scale): ActiveStroke {
         val paint = strokePaint(settings.color, width, alpha)
@@ -81,9 +93,10 @@ class StrokeFactory @Inject constructor(
         return PathStroke(preview, clear, scale.toPx(MIN_POINT_DISTANCE_DP))
     }
 
-    private fun createSpray(color: Int, radius: Float, scale: Scale): ActiveStroke {
-        val dotPaint = strokePaint(color, scale.toPx(SPRAY_DOT_DP), OPAQUE)
-        return SprayStroke(dotPaint, radius, SPRAY_DOTS_PER_TOUCH, sprayScatter)
+    private fun createSpray(settings: StrokeSettings, radius: Float, scale: Scale): ActiveStroke {
+        val dotPaint = strokePaint(settings.color, scale.toPx(SPRAY_DOT_DP), OPAQUE)
+        val hues = if (settings.rainbow) rainbowHues(scale) else null
+        return SprayStroke(dotPaint, radius, SPRAY_DOTS_PER_TOUCH, sprayScatter, hues)
     }
 
     private fun strokePaint(color: Int, width: Float, alpha: Int) = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -109,7 +122,7 @@ class StrokeFactory @Inject constructor(
         const val SPRAY_DOT_DP = 1.5f
         const val SPRAY_DOTS_PER_TOUCH = 14
 
-        /** Gökkuşağı fırçasının bir hedef renkten sonrakine geçerken aldığı yol. */
+        /** Gökkuşağı renginin bir hedef renkten sonrakine geçerken aldığı yol. */
         const val RAINBOW_LEG_DP = 400f
 
         /** Gökkuşağı çizgisinin tek renk geçişiyle boyanan bölümlerinin uzunluğu. */
@@ -122,7 +135,6 @@ class StrokeFactory @Inject constructor(
         val TOOL_STYLES = mapOf(
             ToolType.PENCIL to ToolStyle(widthFactor = 0.35f, alpha = 230),
             ToolType.BRUSH to ToolStyle(widthFactor = 1f),
-            ToolType.RAINBOW to ToolStyle(widthFactor = 1f),
             ToolType.SILK to ToolStyle(widthFactor = 6f),
             ToolType.MARKER to ToolStyle(widthFactor = 1.3f, alpha = 170),
             ToolType.CRAYON to ToolStyle(widthFactor = 1.2f),

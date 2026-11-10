@@ -13,6 +13,8 @@ import dev.sezertanci.drawingworkshop.domain.stroke.StrokePoint
 import dev.sezertanci.drawingworkshop.domain.stroke.StrokeSmoother
 import dev.sezertanci.drawingworkshop.domain.stroke.divide
 import kotlin.math.hypot
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Rengi çizgi boyunca kendiliğinden ve rastgele değişen gökkuşağı çizgisi.
@@ -24,12 +26,16 @@ import kotlin.math.hypot
  * renge doğrusal geçişle boyanır. Bölümlerin uçları düz kesilir, böylece renkler arasında boncuk gibi
  * yuvarlak izler oluşmaz. Kıvrımlarda aralık kalmasın diye her bölüm, bir önceki bölümün son parçasını
  * aynı renklerle yeniden çizerek başlar. Çizginin yalnızca baş ve son ucu yuvarlatılır.
+ *
+ * Yarı saydam araçlarda ([layerAlpha] verilmişse) çizgi önce opak bir ara katmana çizilir ve katman bu
+ * saydamlıkla birleştirilir; böylece örtüşen bölümler ve çizginin kesiştiği yerler koyulaşmaz.
  */
 class RainbowStroke(
     private val paint: Paint,
     minPointDistance: Float,
     private val sectionLength: Float,
     private val hues: RainbowHues,
+    private val layerAlpha: Int? = null,
 ) : ActiveStroke {
     private val sections = ArrayList<Section>()
     private val smoother = StrokeSmoother(minPointDistance)
@@ -71,9 +77,14 @@ class RainbowStroke(
         val bounds = RectF()
         for (section in sections) {
             section.path.computeBounds(bounds, true)
-            total.union(bounds)
+            total.include(bounds)
         }
         return total.toDirtyRegion(paint.strokeWidth)
+    }
+
+    /** [RectF.union] sıfır genişlikli sınırları yok saydığından tam dikey veya yatay bölümler de böyle eklenir. */
+    private fun RectF.include(other: RectF) {
+        set(min(left, other.left), min(top, other.top), max(right, other.right), max(bottom, other.bottom))
     }
 
     private fun append(segment: QuadSegment) {
@@ -98,6 +109,7 @@ class RainbowStroke(
     }
 
     private fun drawSections(canvas: Canvas) {
+        layerAlpha?.let { canvas.saveLayerAlpha(RectF(dirtyRegion()), it) }
         for (section in sections) {
             section.applyTo(paint)
             canvas.drawPath(section.path, paint)
@@ -105,6 +117,7 @@ class RainbowStroke(
         paint.shader = null
         drawCap(canvas, startPoint, sections.first().startColor)
         drawCap(canvas, lastEnd, sections.last().endColor)
+        if (layerAlpha != null) canvas.restore()
     }
 
     private fun drawCap(canvas: Canvas, point: StrokePoint, color: Int) {

@@ -18,6 +18,9 @@ data class DrawingUiState(
     val brushSize: BrushSize = BrushSize.DEFAULT,
     val silkStyle: SilkStyle = SilkStyle(),
     val strokeColor: Int = Palette.RED,
+
+    /** Kalem için gökkuşağı seçildi mi; desteklemeyen araçlar bu sırada [strokeColor] kullanır. */
+    val rainbow: Boolean = false,
     val backgroundColor: Int = Palette.WHITE,
     val colorTarget: ColorTarget = ColorTarget.STROKE,
     val sticker: String = StickerCatalog.default,
@@ -32,4 +35,13 @@ data class DrawingUiState(
 ) {
     /** Renk panelinde işaretli görünecek renk. */
     val selectedColor: Int get() = if (colorTarget == ColorTarget.STROKE) strokeColor else backgroundColor
+
+    /** Seçili araç şu an gökkuşağıyla çiziyor mu. */
+    val drawsRainbow: Boolean get() = rainbow && tool.supportsRainbow
+
+    /** Gökkuşağı düğmesi yalnızca kalem rengi seçilirken ve araç destekliyorsa kullanılabilir. */
+    val isRainbowAvailable: Boolean get() = colorTarget == ColorTarget.STROKE && tool.supportsRainbow
+
+    /** Gökkuşağı düğmesi işaretli mi; işaretliyse düz renklerden hiçbiri işaretli görünmez. */
+    val isRainbowSelected: Boolean get() = isRainbowAvailable && rainbow
 }

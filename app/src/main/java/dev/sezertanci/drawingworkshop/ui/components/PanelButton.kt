@@ -13,7 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
@@ -42,7 +43,7 @@ fun PanelButton(
     enabled: Boolean = true,
     size: Dp = ButtonSize,
     shape: Shape = DefaultShape,
-    background: Color = if (selected) WorkshopColors.SelectionBackground else WorkshopColors.ItemBackground,
+    background: Brush = SolidColor(if (selected) WorkshopColors.SelectionBackground else WorkshopColors.ItemBackground),
     content: @Composable () -> Unit,
 ) {
     Box(

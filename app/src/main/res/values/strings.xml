@@ -4,7 +4,6 @@
 
     <string name="tool_pencil">Kurşun kalem</string>
     <string name="tool_brush">Fırça</string>
-    <string name="tool_rainbow">Gökkuşağı fırçası</string>
     <string name="tool_silk">İpek fırçası</string>
     <string name="silk_group_movement">Hareket</string>
     <string name="silk_group_tempo">Tempo</string>
@@ -50,6 +49,7 @@
     <string name="color_target_stroke">Kalem rengi</string>
     <string name="color_target_background">Arka plan rengi</string>
     <string name="color_swatch">Renk</string>
+    <string name="color_rainbow">Gökkuşağı</string>
 
     <string name="action_home">Galeriye dön</string>
     <string name="action_export">Cihaz galerisine aktar</string>

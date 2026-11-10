@@ -18,6 +18,7 @@ import dev.sezertanci.drawingworkshop.domain.model.ToolType
 import dev.sezertanci.drawingworkshop.domain.symmetry.SymmetryMode
 import dev.sezertanci.drawingworkshop.ui.components.screenContainer
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ColorPanel
+import dev.sezertanci.drawingworkshop.ui.drawing.components.RainbowChoice
 import dev.sezertanci.drawingworkshop.ui.drawing.components.StickerPanel
 import dev.sezertanci.drawingworkshop.ui.drawing.components.SilkStyleControls
 import dev.sezertanci.drawingworkshop.ui.drawing.components.SymmetryControls
@@ -62,6 +63,7 @@ fun DrawingRoute(onHome: () -> Unit, viewModel: DrawingViewModel = hiltViewModel
         onSizeSelected = viewModel::selectBrushSize,
         onColorTargetSelected = viewModel::selectColorTarget,
         onColorSelected = viewModel::selectColor,
+        onRainbowSelected = viewModel::selectRainbow,
         onStickerSelected = viewModel::selectSticker,
     )
 }
@@ -78,6 +80,7 @@ fun DrawingScreen(
     onSizeSelected: (BrushSize) -> Unit,
     onColorTargetSelected: (ColorTarget) -> Unit,
     onColorSelected: (Int) -> Unit,
+    onRainbowSelected: () -> Unit,
     onStickerSelected: (String) -> Unit,
 ) {
     Row(
@@ -87,6 +90,7 @@ fun DrawingScreen(
             selectedTool = state.tool,
             selectedSize = state.brushSize,
             strokeColor = Color(state.strokeColor),
+            drawsRainbow = state.drawsRainbow,
             actions = actions,
             symmetry = symmetry,
             silk = silk,
@@ -105,6 +109,7 @@ fun DrawingScreen(
             ColorPanel(
                 colorTarget = state.colorTarget,
                 selectedColor = state.selectedColor,
+                rainbow = RainbowChoice(state.isRainbowSelected, state.isRainbowAvailable, onRainbowSelected),
                 onColorTargetSelected = onColorTargetSelected,
                 onColorSelected = onColorSelected,
             )

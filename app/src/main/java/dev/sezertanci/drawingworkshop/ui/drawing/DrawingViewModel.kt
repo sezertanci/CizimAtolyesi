@@ -106,10 +106,12 @@ class DrawingViewModel @Inject constructor(
 
     fun selectColor(color: Int) = updateSelection {
         when (it.colorTarget) {
-            ColorTarget.STROKE -> it.copy(strokeColor = color)
+            ColorTarget.STROKE -> it.copy(strokeColor = color, rainbow = false)
             ColorTarget.BACKGROUND -> it.copy(backgroundColor = color)
         }
     }
+
+    fun selectRainbow() = updateSelection { if (it.isRainbowAvailable) it.copy(rainbow = true) else it }
 
     fun undo() = engine.undo()
 
@@ -231,7 +233,8 @@ class DrawingViewModel @Inject constructor(
     }
 
     private fun applyToEngine(state: DrawingUiState) {
-        engine.settings = StrokeSettings(state.tool, state.brushSize, state.strokeColor, state.silkStyle)
+        engine.settings =
+            StrokeSettings(state.tool, state.brushSize, state.strokeColor, state.silkStyle, state.drawsRainbow)
         engine.backgroundColor = state.backgroundColor
         engine.symmetry = state.symmetry
     }
