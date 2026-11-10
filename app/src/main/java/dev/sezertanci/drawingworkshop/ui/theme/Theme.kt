@@ -14,6 +14,9 @@ object WorkshopColors {
 
     /** Açılan menülerin koyu füme zemini; menünün panelden ayrı bir pencere olduğu kolayca anlaşılır. */
     val MenuBackground = Color(0xFF3C3F44)
+
+    /** Koyu menü zeminindeki başlıkların ve ayırıcı çizgilerin rengi. */
+    val MenuText = Color(0xFFE0E0E0)
 }
 
 private val colorScheme = lightColorScheme(primary = WorkshopColors.Selection)

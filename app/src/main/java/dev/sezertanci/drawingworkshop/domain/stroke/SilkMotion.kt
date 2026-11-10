@@ -1,26 +1,25 @@
 package dev.sezertanci.drawingworkshop.domain.stroke
 
-import kotlin.math.PI
 import kotlin.math.abs
-import kotlin.math.cos
+import kotlin.math.hypot
 import kotlin.math.min
-import kotlin.math.sin
+import kotlin.math.sqrt
 import kotlin.random.Random
 
 /**
  * İpek fırçasının tellerini hareket ettirir.
  *
- * Teller parmağın çevresinde, dönen ve boyu nefes alır gibi uzayıp kısalan bir dizi oluşturur. Her tel
+ * Tellerin parmağa göre nerede durmak istediğini seçili hareket biçimi ([SilkMovement]) belirler. Her tel
  * kendi hedefine bir yayla bağlıdır; bu yüzden parmağı gecikerek ve hafif sallanarak izler. Dizinin
  * uçlarındaki teller daha gevşek bağlıdır ve daha geride kalır, böylece şerit hareketin arkasında kıvrılır.
- * Parmak dursa da dizi dönmeyi sürdürür; teller [spread] çevresinden fazla uzaklaşmadan çizmeye devam eder.
  *
  * Hareket, ekranın kare hızından bağımsız olsun diye sabit zaman adımlarıyla ilerler.
  */
 class SilkMotion(
     val threadCount: Int,
-    private val spread: Float,
+    spread: Float,
     private val tuning: SilkTuning,
+    movement: SilkMovement,
     random: Random = Random.Default,
 ) {
     private val x = FloatArray(threadCount)
@@ -29,12 +28,16 @@ class SilkMotion(
     private val previousY = FloatArray(threadCount)
     private val velocityX = FloatArray(threadCount)
     private val velocityY = FloatArray(threadCount)
-    private val stiffness = FloatArray(threadCount) { stiffnessOf(it, random) }
-    private val spinSpeed = tuning.spinSpeed * if (random.nextBoolean()) 1f else -1f
-    private val phase = random.nextFloat() * FULL_TURN
-    private var angle = random.nextFloat() * FULL_TURN
+    private val offsets = FloatArray(threadCount * 2)
+    private val pattern = SilkPattern.create(movement, threadCount, spread, tuning, random)
+    private val stiffness = FloatArray(threadCount) { stiffnessOf(it, random) * pattern.grip }
+
+    /** Yaylar sıkılaşınca sallanma oranı aynı kalsın diye sürtünme, sıkılığın kareköküyle artar. */
+    private val damping = tuning.damping * sqrt(pattern.grip)
     private var targetX = 0f
     private var targetY = 0f
+    private var headingX = 1f
+    private var headingY = 0f
     private var pendingSeconds = 0f
 
     /** Çizginin başından beri geçen hareket süresi (saniye). */
@@ -51,10 +54,13 @@ class SilkMotion(
         y.fill(startY)
         previousX.fill(startX)
         previousY.fill(startY)
-        moveTo(startX, startY)
+        targetX = startX
+        targetY = startY
     }
 
+    /** Parmağın yeni yeri; hareket yönü de yumuşakça bu yöne döner. */
     fun moveTo(fingerX: Float, fingerY: Float) {
+        turnHeading(fingerX - targetX, fingerY - targetY)
         targetX = fingerX
         targetY = fingerY
     }
@@ -83,35 +89,36 @@ class SilkMotion(
 
     private fun step() {
         time += STEP_SECONDS
-        angle += spinSpeed * STEP_SECONDS * (1f + SPIN_SWAY * sin(time * SWAY_SPEED + phase))
-        val length = spread * (LENGTH_BASE + LENGTH_SWING * sin(time * BREATH_SPEED + phase))
-        val wobble = spread * tuning.wobbleShare
-        val alongX = cos(angle)
-        val alongY = sin(angle)
-        for (i in 0 until threadCount) {
-            val along = length * positionOf(i)
-            val across = wobble * sin(time * WOBBLE_SPEED + i * WOBBLE_STEP + phase)
-            pull(i, targetX + along * alongX - across * alongY, targetY + along * alongY + across * alongX)
-        }
+        pattern.place(time, headingX, headingY, offsets)
+        for (i in 0 until threadCount) pull(i, targetX + offsets[2 * i], targetY + offsets[2 * i + 1])
     }
 
     /** Teli yayla hedefe doğru çeker; sönümleme salınımın büyümesini önler. */
     private fun pull(i: Int, goalX: Float, goalY: Float) {
         previousX[i] = x[i]
         previousY[i] = y[i]
-        velocityX[i] += (stiffness[i] * (goalX - x[i]) - tuning.damping * velocityX[i]) * STEP_SECONDS
-        velocityY[i] += (stiffness[i] * (goalY - y[i]) - tuning.damping * velocityY[i]) * STEP_SECONDS
+        velocityX[i] += (stiffness[i] * (goalX - x[i]) - damping * velocityX[i]) * STEP_SECONDS
+        velocityY[i] += (stiffness[i] * (goalY - y[i]) - damping * velocityY[i]) * STEP_SECONDS
         x[i] += velocityX[i] * STEP_SECONDS
         y[i] += velocityY[i] * STEP_SECONDS
     }
 
-    /** Telin dizideki yeri: bir uçta -1, ortada 0, öbür uçta 1. */
-    private fun positionOf(thread: Int): Float = 2f * thread / (threadCount - 1) - 1f
+    /** Parmağın titremesi yönü sarsmasın diye yön, her harekette yeni yöne ancak biraz yaklaşır. */
+    private fun turnHeading(dx: Float, dy: Float) {
+        val distance = hypot(dx, dy)
+        if (distance == 0f) return
+        val turnedX = headingX + (dx / distance - headingX) * HEADING_FOLLOW
+        val turnedY = headingY + (dy / distance - headingY) * HEADING_FOLLOW
+        val length = hypot(turnedX, turnedY)
+        if (length == 0f) return
+        headingX = turnedX / length
+        headingY = turnedY / length
+    }
 
     /** Uçlardaki teller daha gevşektir; her çizgide küçük rastgele farklar teli canlı gösterir. */
     private fun stiffnessOf(thread: Int, random: Random): Float {
-        val looseness = 1f - EDGE_LOOSENESS * abs(positionOf(thread))
-        val variation = 1f + STIFFNESS_VARIATION * (random.nextFloat() * 2f - 1f)
+        val looseness = 1f - EDGE_LOOSENESS * abs(threadPosition(thread, threadCount))
+        val variation = 1f + STIFFNESS_VARIATION * random.nextSigned()
         return tuning.stiffness * looseness * variation
     }
 
@@ -122,21 +129,10 @@ class SilkMotion(
         /** Bir karede işlenen en uzun süre (saniye). */
         const val MAX_FRAME_SECONDS = 0.05f
 
-        private val FULL_TURN = (2 * PI).toFloat()
         private const val EDGE_LOOSENESS = 0.55f
         private const val STIFFNESS_VARIATION = 0.15f
 
-        /** Dönme hızının ne kadar ve hangi hızla dalgalandığı. */
-        private const val SPIN_SWAY = 0.6f
-        private const val SWAY_SPEED = 0.9f
-
-        /** Dizinin yarı boyu, [spread] değerinin bu oranları arasında uzayıp kısalır. */
-        private const val LENGTH_BASE = 0.65f
-        private const val LENGTH_SWING = 0.35f
-        private const val BREATH_SPEED = 1.7f
-
-        /** Tellerin dizi çizgisinden yana sapmasının hızı ve teller arasındaki faz farkı. */
-        private const val WOBBLE_SPEED = 5f
-        private const val WOBBLE_STEP = 0.9f
+        /** Hareket yönünün her parmak hareketinde yeni yöne ne kadar yaklaştığı. */
+        private const val HEADING_FOLLOW = 0.2f
     }
 }

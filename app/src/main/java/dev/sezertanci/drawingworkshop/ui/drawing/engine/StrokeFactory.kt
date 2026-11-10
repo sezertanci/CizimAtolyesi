@@ -36,18 +36,21 @@ class StrokeFactory @Inject constructor(
 
     /**
      * Kendiliğinden ilerleyen çizgiyi (ipek fırçası) oluşturur; diğer araçlar için `null` döner.
-     * Fırça boyutu şeridin genişliğini, seçili stil tellerin sayısını, hareketini ve saydamlığını belirler. Koyu zeminde renkler üst üste bindikçe toplanıp ışık
-     * saçar; açık zeminde ise yarı saydam katmanlar halinde koyulaşır.
+     * Fırça boyutu şeridin genişliğini belirler; seçili stil tellerin hareketini, temposunu, sayısını ve
+     * saydamlığını belirler. Koyu zeminde renkler üst üste bindikçe toplanıp ışık saçar; açık zeminde ise
+     * yarı saydam katmanlar halinde koyulaşır.
      */
     fun createLive(settings: StrokeSettings, backgroundColor: Int, zoom: Float): LiveStroke? {
         if (settings.tool != ToolType.SILK) return null
         val scale = Scale(density, zoom)
-        val spread = scale.toPx(settings.size.widthDp) * TOOL_STYLES.getValue(ToolType.SILK).widthFactor
-        val glows = Color.luminance(backgroundColor) < DARK_BACKGROUND_LUMINANCE
         val style = settings.silkStyle
-        val threadPaint = silkPaint(settings.color, scale.toPx(style.threadWidthDp), style.threadAlpha, glows)
-        val sheetPaint = silkPaint(settings.color, scale.toPx(SILK_SHEET_DP), style.sheetAlpha, glows)
-        val motion = SilkMotion(style.threadCount, spread, style.tuning)
+        val threads = style.threads
+        val spread = scale.toPx(settings.size.widthDp) * TOOL_STYLES.getValue(ToolType.SILK).widthFactor *
+            threads.spreadShare
+        val glows = Color.luminance(backgroundColor) < DARK_BACKGROUND_LUMINANCE
+        val threadPaint = silkPaint(settings.color, scale.toPx(threads.threadWidthDp), threads.threadAlpha, glows)
+        val sheetPaint = silkPaint(settings.color, scale.toPx(SILK_SHEET_DP), threads.sheetAlpha, glows)
+        val motion = SilkMotion(threads.threadCount, spread, style.tempo.tuning, style.movement)
         return SilkStroke(motion, threadPaint, sheetPaint, settings.color)
     }
 

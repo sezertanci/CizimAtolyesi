@@ -5,5 +5,5 @@ data class StrokeSettings(
     val tool: ToolType,
     val size: BrushSize,
     val color: Int,
-    val silkStyle: SilkStyle = SilkStyle.DEFAULT,
+    val silkStyle: SilkStyle = SilkStyle(),
 )

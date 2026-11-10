@@ -16,7 +16,7 @@ enum class ColorTarget {
 data class DrawingUiState(
     val tool: ToolType = ToolType.BRUSH,
     val brushSize: BrushSize = BrushSize.DEFAULT,
-    val silkStyle: SilkStyle = SilkStyle.DEFAULT,
+    val silkStyle: SilkStyle = SilkStyle(),
     val strokeColor: Int = Palette.RED,
     val backgroundColor: Int = Palette.WHITE,
     val colorTarget: ColorTarget = ColorTarget.STROKE,

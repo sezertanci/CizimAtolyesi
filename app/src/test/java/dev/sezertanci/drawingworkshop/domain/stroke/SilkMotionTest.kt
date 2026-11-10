@@ -1,6 +1,9 @@
 package dev.sezertanci.drawingworkshop.domain.stroke
 
 import dev.sezertanci.drawingworkshop.domain.model.SilkStyle
+import dev.sezertanci.drawingworkshop.domain.model.SilkTempo
+import dev.sezertanci.drawingworkshop.domain.model.SilkThreads
+import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.random.Random
 import org.junit.Assert.assertEquals
@@ -30,7 +33,7 @@ class SilkMotionTest {
     }
 
     @Test
-    fun advance_FingerStill_ThreadsStayNearFingerAndKeepMoving() = SilkStyle.entries.forEach { style ->
+    fun advance_FingerStill_ThreadsStayNearFingerAndKeepMoving() = allStyles.forEach { style ->
         val motion = createMotion(style)
         var travelled = 0f
 
@@ -47,7 +50,7 @@ class SilkMotionTest {
     }
 
     @Test
-    fun advance_FingerMoved_ThreadsFollowWithDelay() = SilkStyle.entries.forEach { style ->
+    fun advance_FingerMoved_ThreadsFollowWithDelay() = allStyles.forEach { style ->
         val motion = createMotion(style)
         motion.moveTo(FAR, FAR)
 
@@ -73,13 +76,37 @@ class SilkMotionTest {
         assertEquals(first.y(first.threadCount - 1), second.y(second.threadCount - 1), 0f)
     }
 
-    private fun createMotion(style: SilkStyle = SilkStyle.DEFAULT) =
-        SilkMotion(style.threadCount, SPREAD, style.tuning, Random(SEED)).apply { start(START, START) }
+    @Test
+    fun advance_ZigzagFingerStill_ThreadsSwingAcrossHeading() {
+        val motion = createMotion(SilkStyle(movement = SilkMovement.ZIGZAG))
+        motion.moveTo(START + NUDGE, START)
+        var alongSwing = 0f
+        var acrossSwing = 0f
+
+        repeat(FRAMES) {
+            motion.advance(FRAME) {
+                alongSwing = maxOf(alongSwing, abs(motion.x(0) - START - NUDGE))
+                acrossSwing = maxOf(acrossSwing, abs(motion.y(0) - START))
+            }
+        }
+
+        assertTrue(acrossSwing > SPREAD / 2f)
+        assertTrue(alongSwing < acrossSwing / 2f)
+    }
+
+    private fun createMotion(style: SilkStyle = SilkStyle()) =
+        SilkMotion(style.threads.threadCount, SPREAD, style.tempo.tuning, style.movement, Random(SEED))
+            .apply { start(START, START) }
 
     private fun distanceFrom(motion: SilkMotion, thread: Int, x: Float, y: Float) =
         hypot(motion.x(thread) - x, motion.y(thread) - y)
 
+    private val allStyles = SilkMovement.entries.flatMap { movement ->
+        SilkTempo.entries.flatMap { tempo -> SilkThreads.entries.map { SilkStyle(movement, tempo, it) } }
+    }
+
     private companion object {
+        const val NUDGE = 10f
         const val SPREAD = 50f
         const val START = 500f
         const val FAR = 900f

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sık ve kalın teller: birbirine yakın, parlak ve dolgun bir demet. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Demetin ipek tabakası -->
+    <path
+        android:fillColor="#CE93D8"
+        android:fillAlpha="0.45"
+        android:pathData="M4,18 C16,10 30,26 44,16 L44,30 C30,40 16,24 4,32 Z" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M4,19 C16,11 30,27 44,17 M4,31 C16,23 30,39 44,29"
+        android:strokeWidth="3"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#29B6F6"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M4,23 C16,15 30,31 44,21 M4,27 C16,19 30,35 44,25"
+        android:strokeWidth="3"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#7C4DFF"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M4,25 C16,17 30,33 44,23"
+        android:strokeWidth="3"
+        android:strokeAlpha="0.95"
+        android:strokeColor="#EC407A"
+        android:strokeLineCap="round" />
+    <!-- Parlak kenar -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M10,20 C18,15 24,20 30,23"
+        android:strokeWidth="1"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round" />
+    <!-- Pırıltı -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M38,36 Q38.5,38.5 41,39 Q38.5,39.5 38,42 Q37.5,39.5 35,39 Q37.5,38.5 38,36 Z" />
+</vector>

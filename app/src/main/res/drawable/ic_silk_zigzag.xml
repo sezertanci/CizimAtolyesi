@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Zikzak ipek hareketi: ileri geri savrulup kırık çizgiler çizen teller. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Mavi tel -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M4,18 L12,34 L20,14 L28,34 L36,14 L44,30"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#29B6F6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- Mor tel -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M4,22 L12,38 L20,18 L28,38 L36,18 L44,34"
+        android:strokeWidth="1.4"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#7C4DFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- Pembe tel -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M4,14 L12,30 L20,10 L28,30 L36,10 L44,26"
+        android:strokeWidth="1.8"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#EC407A"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- Pırıltı -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M40,4 Q40.5,6.5 43,7 Q40.5,7.5 40,10 Q39.5,7.5 37,7 Q39.5,6.5 40,4 Z" />
+</vector>

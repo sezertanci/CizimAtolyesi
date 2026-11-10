@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dönen ipek hareketi: parmağın çevresinde dönerek halkalar çizen teller. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Halkanın içindeki ipek tabakası -->
+    <path
+        android:fillColor="#CE93D8"
+        android:fillAlpha="0.3"
+        android:pathData="M24,6 A18,18 0 1,1 23.9,6 Z M24,14 A10,10 0 1,0 24.1,14 Z" />
+    <!-- Dış halka -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M24,6 A18,18 0 1,1 6,24"
+        android:strokeWidth="2.2"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#29B6F6"
+        android:strokeLineCap="round" />
+    <!-- Orta halka -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M38,24 A14,14 0 1,1 24,10"
+        android:strokeWidth="1.4"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#7C4DFF"
+        android:strokeLineCap="round" />
+    <!-- İç halka -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M24,14 A10,10 0 1,1 14,24"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#EC407A"
+        android:strokeLineCap="round" />
+    <!-- Dönüş oku -->
+    <path
+        android:fillColor="#29B6F6"
+        android:pathData="M6,24 L2.5,19.5 L9.5,19.5 Z" />
+    <!-- Pırıltı -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M24,20 Q24.5,23.5 28,24 Q24.5,24.5 24,28 Q23.5,24.5 20,24 Q23.5,23.5 24,20 Z" />
+</vector>
