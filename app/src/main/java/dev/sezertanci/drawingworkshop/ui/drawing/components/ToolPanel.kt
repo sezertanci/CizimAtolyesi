@@ -1,6 +1,7 @@
 package dev.sezertanci.drawingworkshop.ui.drawing.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -26,10 +27,14 @@ import dev.sezertanci.drawingworkshop.ui.components.ConfirmDialog
 import dev.sezertanci.drawingworkshop.ui.components.EmojiIcon
 import dev.sezertanci.drawingworkshop.ui.components.PanelButton
 import dev.sezertanci.drawingworkshop.ui.drawing.ExportStatus
+import dev.sezertanci.drawingworkshop.ui.theme.WorkshopColors
 
 private val PanelWidth = 88.dp
 private val PanelDividerWidth = 56.dp
 private val PanelDividerThickness = 2.dp
+
+/** Boyut noktasının ince kenarı; beyaz gibi zeminle aynı renkler de görünür kalır. */
+private val SizeDotOutline = 1.dp
 
 /** Gökkuşağı fırçası seçiliyken boyut noktaları tek renk yerine gökkuşağı renkleriyle görünür. */
 private const val RAINBOW_DOT_COLOR_STOPS = 12
@@ -88,7 +93,14 @@ fun ToolPanel(
                 selected = size == selectedSize,
                 description = stringResource(size.labelRes),
                 onClick = { onSizeSelected(size) },
-            ) { Box(Modifier.size(size.previewDiameter).background(dotBrush, CircleShape)) }
+            ) {
+                Box(
+                    Modifier
+                        .size(size.previewDiameter)
+                        .background(dotBrush, CircleShape)
+                        .border(SizeDotOutline, WorkshopColors.Outline, CircleShape),
+                )
+            }
         }
         item { PanelDivider() }
         items(UnsizedTools) { tool -> ToolButton(tool, tool == selectedTool) { onToolSelected(tool) } }
