@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import dev.sezertanci.drawingworkshop.R
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
-import dev.sezertanci.drawingworkshop.domain.stroke.RainbowCycle
+import dev.sezertanci.drawingworkshop.domain.stroke.RainbowHues
 import dev.sezertanci.drawingworkshop.ui.components.ConfirmDialog
 import dev.sezertanci.drawingworkshop.ui.components.EmojiIcon
 import dev.sezertanci.drawingworkshop.ui.components.PanelButton
@@ -32,8 +32,12 @@ private val PanelDividerWidth = 56.dp
 private val PanelDividerThickness = 2.dp
 
 /** Gökkuşağı fırçası seçiliyken boyut noktaları tek renk yerine gökkuşağı renkleriyle görünür. */
+private const val RAINBOW_DOT_COLOR_STOPS = 12
+
 private val RainbowDotBrush = Brush.sweepGradient(
-    (0..RainbowCycle.STEPS).map { Color(RainbowCycle.colorOf(it)) },
+    (0..RAINBOW_DOT_COLOR_STOPS).map {
+        Color(RainbowHues.colorOf(it * RainbowHues.FULL_TURN_DEGREES / RAINBOW_DOT_COLOR_STOPS))
+    },
 )
 
 /** Panelin araç dışındaki düğmeleri: galeriye dönme, geri al / yinele, temizleme ve galeriye aktarma. */
