@@ -17,7 +17,12 @@ import kotlin.random.Random
  *
  * Hareket, ekranın kare hızından bağımsız olsun diye sabit zaman adımlarıyla ilerler.
  */
-class SilkMotion(val threadCount: Int, private val spread: Float, random: Random = Random.Default) {
+class SilkMotion(
+    val threadCount: Int,
+    private val spread: Float,
+    private val tuning: SilkTuning,
+    random: Random = Random.Default,
+) {
     private val x = FloatArray(threadCount)
     private val y = FloatArray(threadCount)
     private val previousX = FloatArray(threadCount)
@@ -25,7 +30,7 @@ class SilkMotion(val threadCount: Int, private val spread: Float, random: Random
     private val velocityX = FloatArray(threadCount)
     private val velocityY = FloatArray(threadCount)
     private val stiffness = FloatArray(threadCount) { stiffnessOf(it, random) }
-    private val spinSpeed = SPIN_SPEED * if (random.nextBoolean()) 1f else -1f
+    private val spinSpeed = tuning.spinSpeed * if (random.nextBoolean()) 1f else -1f
     private val phase = random.nextFloat() * FULL_TURN
     private var angle = random.nextFloat() * FULL_TURN
     private var targetX = 0f
@@ -80,7 +85,7 @@ class SilkMotion(val threadCount: Int, private val spread: Float, random: Random
         time += STEP_SECONDS
         angle += spinSpeed * STEP_SECONDS * (1f + SPIN_SWAY * sin(time * SWAY_SPEED + phase))
         val length = spread * (LENGTH_BASE + LENGTH_SWING * sin(time * BREATH_SPEED + phase))
-        val wobble = spread * WOBBLE_SHARE
+        val wobble = spread * tuning.wobbleShare
         val alongX = cos(angle)
         val alongY = sin(angle)
         for (i in 0 until threadCount) {
@@ -94,8 +99,8 @@ class SilkMotion(val threadCount: Int, private val spread: Float, random: Random
     private fun pull(i: Int, goalX: Float, goalY: Float) {
         previousX[i] = x[i]
         previousY[i] = y[i]
-        velocityX[i] += (stiffness[i] * (goalX - x[i]) - DAMPING * velocityX[i]) * STEP_SECONDS
-        velocityY[i] += (stiffness[i] * (goalY - y[i]) - DAMPING * velocityY[i]) * STEP_SECONDS
+        velocityX[i] += (stiffness[i] * (goalX - x[i]) - tuning.damping * velocityX[i]) * STEP_SECONDS
+        velocityY[i] += (stiffness[i] * (goalY - y[i]) - tuning.damping * velocityY[i]) * STEP_SECONDS
         x[i] += velocityX[i] * STEP_SECONDS
         y[i] += velocityY[i] * STEP_SECONDS
     }
@@ -107,7 +112,7 @@ class SilkMotion(val threadCount: Int, private val spread: Float, random: Random
     private fun stiffnessOf(thread: Int, random: Random): Float {
         val looseness = 1f - EDGE_LOOSENESS * abs(positionOf(thread))
         val variation = 1f + STIFFNESS_VARIATION * (random.nextFloat() * 2f - 1f)
-        return BASE_STIFFNESS * looseness * variation
+        return tuning.stiffness * looseness * variation
     }
 
     companion object {
@@ -118,13 +123,10 @@ class SilkMotion(val threadCount: Int, private val spread: Float, random: Random
         const val MAX_FRAME_SECONDS = 0.05f
 
         private val FULL_TURN = (2 * PI).toFloat()
-        private const val BASE_STIFFNESS = 110f
-        private const val DAMPING = 11f
         private const val EDGE_LOOSENESS = 0.55f
         private const val STIFFNESS_VARIATION = 0.15f
 
-        /** Dizinin dönme hızı (radyan/saniye) ve bu hızın ne kadar dalgalandığı. */
-        private const val SPIN_SPEED = 2.4f
+        /** Dönme hızının ne kadar ve hangi hızla dalgalandığı. */
         private const val SPIN_SWAY = 0.6f
         private const val SWAY_SPEED = 0.9f
 
@@ -133,8 +135,7 @@ class SilkMotion(val threadCount: Int, private val spread: Float, random: Random
         private const val LENGTH_SWING = 0.35f
         private const val BREATH_SPEED = 1.7f
 
-        /** Tellerin dizi çizgisinden yana sapması. */
-        private const val WOBBLE_SHARE = 0.25f
+        /** Tellerin dizi çizgisinden yana sapmasının hızı ve teller arasındaki faz farkı. */
         private const val WOBBLE_SPEED = 5f
         private const val WOBBLE_STEP = 0.9f
     }

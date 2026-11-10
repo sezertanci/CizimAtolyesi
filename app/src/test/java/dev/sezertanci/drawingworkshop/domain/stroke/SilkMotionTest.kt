@@ -1,5 +1,6 @@
 package dev.sezertanci.drawingworkshop.domain.stroke
 
+import dev.sezertanci.drawingworkshop.domain.model.SilkStyle
 import kotlin.math.hypot
 import kotlin.random.Random
 import org.junit.Assert.assertEquals
@@ -29,8 +30,8 @@ class SilkMotionTest {
     }
 
     @Test
-    fun advance_FingerStill_ThreadsStayNearFingerAndKeepMoving() {
-        val motion = createMotion()
+    fun advance_FingerStill_ThreadsStayNearFingerAndKeepMoving() = SilkStyle.entries.forEach { style ->
+        val motion = createMotion(style)
         var travelled = 0f
 
         repeat(FRAMES) {
@@ -46,8 +47,8 @@ class SilkMotionTest {
     }
 
     @Test
-    fun advance_FingerMoved_ThreadsFollowWithDelay() {
-        val motion = createMotion()
+    fun advance_FingerMoved_ThreadsFollowWithDelay() = SilkStyle.entries.forEach { style ->
+        val motion = createMotion(style)
         motion.moveTo(FAR, FAR)
 
         motion.advance(FRAME) {}
@@ -69,16 +70,16 @@ class SilkMotionTest {
         }
 
         assertEquals(first.x(0), second.x(0), 0f)
-        assertEquals(first.y(THREADS - 1), second.y(THREADS - 1), 0f)
+        assertEquals(first.y(first.threadCount - 1), second.y(second.threadCount - 1), 0f)
     }
 
-    private fun createMotion() = SilkMotion(THREADS, SPREAD, Random(SEED)).apply { start(START, START) }
+    private fun createMotion(style: SilkStyle = SilkStyle.DEFAULT) =
+        SilkMotion(style.threadCount, SPREAD, style.tuning, Random(SEED)).apply { start(START, START) }
 
     private fun distanceFrom(motion: SilkMotion, thread: Int, x: Float, y: Float) =
         hypot(motion.x(thread) - x, motion.y(thread) - y)
 
     private companion object {
-        const val THREADS = 7
         const val SPREAD = 50f
         const val START = 500f
         const val FAR = 900f

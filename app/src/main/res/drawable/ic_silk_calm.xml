@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sakin ipek stili: az telli, düz ve sakin bir ipek şeridi. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Teller arasındaki ipek tabakası -->
+    <path
+        android:fillColor="#CE93D8"
+        android:fillAlpha="0.35"
+        android:pathData="M6,34 L34,6 L42,14 L14,42 Z" />
+    <!-- Kenar telleri -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M6,34 L34,6 M14,42 L42,14"
+        android:strokeWidth="2.2"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#29B6F6"
+        android:strokeLineCap="round" />
+    <!-- İç teller -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M8.7,36.7 L36.7,8.7 M11.3,39.3 L39.3,11.3"
+        android:strokeWidth="1.2"
+        android:strokeAlpha="0.8"
+        android:strokeColor="#7C4DFF"
+        android:strokeLineCap="round" />
+    <!-- Ortadaki pembe tel -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M10,38 L38,10"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#EC407A"
+        android:strokeLineCap="round" />
+    <!-- Parlak kenar -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M12,34 L30,16"
+        android:strokeWidth="0.9"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round" />
+    <!-- Pırıltılar -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M38,32 Q38.5,34.5 41,35 Q38.5,35.5 38,38 Q37.5,35.5 35,35 Q37.5,34.5 38,32 Z" />
+    <!-- Küçük pırıltı -->
+    <path
+        android:fillColor="#FF80AB"
+        android:pathData="M10,8 Q10.35,9.65 12,10 Q10.35,10.35 10,12 Q9.65,10.35 8,10 Q9.65,9.65 10,8 Z" />
+</vector>

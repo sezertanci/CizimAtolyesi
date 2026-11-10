@@ -3,10 +3,8 @@ package dev.sezertanci.drawingworkshop.ui.drawing.components
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,7 +32,6 @@ private val IconSize = 36.dp
 private val IconFrameWidth = 2.dp
 private val IconAxisWidth = 3.dp
 private val IconCornerRadius = 6.dp
-private val MenuItemPadding = 6.dp
 private val BadgeSize = 13.sp
 
 /** Araç panelindeki simetri seçimi ve kova seçiliyken simetrik / tek doldurma seçimi. */
@@ -79,19 +76,14 @@ private fun SymmetryMenuButton(mode: SymmetryMode, onModeSelected: (SymmetryMode
             description = stringResource(R.string.symmetry_menu),
             onClick = { expanded = true },
         ) { if (mode == SymmetryMode.OFF) DrawableIcon(R.drawable.ic_symmetry) else SymmetryIcon(mode) }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            SymmetryMode.entries.forEach { option ->
-                PanelButton(
-                    selected = option == mode,
-                    description = stringResource(option.labelRes),
-                    onClick = {
-                        expanded = false
-                        onModeSelected(option)
-                    },
-                    modifier = Modifier.padding(MenuItemPadding),
-                ) { if (option == SymmetryMode.OFF) EmojiIcon(OFF_EMOJI) else SymmetryIcon(option) }
-            }
-        }
+        ChoiceMenu(
+            expanded = expanded,
+            options = SymmetryMode.entries,
+            selected = mode,
+            labelOf = { it.labelRes },
+            onDismiss = { expanded = false },
+            onSelected = onModeSelected,
+        ) { if (it == SymmetryMode.OFF) EmojiIcon(OFF_EMOJI) else SymmetryIcon(it) }
     }
 }
 

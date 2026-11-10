@@ -9,6 +9,7 @@ import dev.sezertanci.drawingworkshop.data.DrawingRepository
 import dev.sezertanci.drawingworkshop.data.coloring.ColoringPageCatalog
 import dev.sezertanci.drawingworkshop.data.export.DrawingExporter
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
+import dev.sezertanci.drawingworkshop.domain.model.SilkStyle
 import dev.sezertanci.drawingworkshop.domain.model.StrokeSettings
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
 import dev.sezertanci.drawingworkshop.domain.sound.SoundEffect
@@ -93,6 +94,8 @@ class DrawingViewModel @Inject constructor(
     }
 
     fun selectBrushSize(size: BrushSize) = updateSelection { it.copy(brushSize = size) }
+
+    fun selectSilkStyle(style: SilkStyle) = updateSelection { it.copy(silkStyle = style) }
 
     /** Simetri kaydedilmez; her resim simetri kapalı açılır. */
     fun selectSymmetry(mode: SymmetryMode) = updateSelection { it.copy(symmetry = mode) }
@@ -228,7 +231,7 @@ class DrawingViewModel @Inject constructor(
     }
 
     private fun applyToEngine(state: DrawingUiState) {
-        engine.settings = StrokeSettings(state.tool, state.brushSize, state.strokeColor)
+        engine.settings = StrokeSettings(state.tool, state.brushSize, state.strokeColor, state.silkStyle)
         engine.backgroundColor = state.backgroundColor
         engine.symmetry = state.symmetry
     }

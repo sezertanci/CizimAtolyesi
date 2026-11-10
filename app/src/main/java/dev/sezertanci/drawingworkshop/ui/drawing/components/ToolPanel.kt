@@ -56,7 +56,7 @@ class ToolPanelActions(
     val onExport: () -> Unit,
 )
 
-/** Soldaki kaydırılabilir araç paneli: galeri, çizim araçları, fırça boyutları, kova ve çıkartma, simetri, geri al, yinele, temizle ve aktarma. */
+/** Soldaki kaydırılabilir araç paneli: galeri, çizim araçları (ipek stilleriyle), fırça boyutları, kova ve çıkartma, simetri, geri al, yinele, temizle ve aktarma. */
 @Composable
 fun ToolPanel(
     selectedTool: ToolType,
@@ -64,6 +64,7 @@ fun ToolPanel(
     strokeColor: Color,
     actions: ToolPanelActions,
     symmetry: SymmetryControls,
+    silk: SilkStyleControls,
     onToolSelected: (ToolType) -> Unit,
     onSizeSelected: (BrushSize) -> Unit,
     modifier: Modifier = Modifier,
@@ -73,7 +74,14 @@ fun ToolPanel(
     PanelColumn(width = PanelWidth, modifier = modifier) {
         item { ActionButton(HOME_EMOJI, R.string.action_home, onClick = actions.onHome) }
         item { PanelDivider() }
-        items(SizedTools) { tool -> ToolButton(tool, selectedTool, onToolSelected) }
+        items(SizedTools) { tool ->
+            val selected = tool == selectedTool
+            if (tool == ToolType.SILK) {
+                SilkToolButton(selected, silk) { onToolSelected(tool) }
+            } else {
+                ToolButton(tool, selected) { onToolSelected(tool) }
+            }
+        }
         item { PanelDivider() }
         items(BrushSize.entries) { size ->
             PanelButton(
@@ -83,7 +91,7 @@ fun ToolPanel(
             ) { Box(Modifier.size(size.previewDiameter).background(dotBrush, CircleShape)) }
         }
         item { PanelDivider() }
-        items(UnsizedTools) { tool -> ToolButton(tool, selectedTool, onToolSelected) }
+        items(UnsizedTools) { tool -> ToolButton(tool, tool == selectedTool) { onToolSelected(tool) } }
         item { PanelDivider() }
         symmetryItems(symmetry)
         item { PanelDivider() }
@@ -110,11 +118,11 @@ fun ToolPanel(
 }
 
 @Composable
-private fun ToolButton(tool: ToolType, selectedTool: ToolType, onToolSelected: (ToolType) -> Unit) {
+internal fun ToolButton(tool: ToolType, selected: Boolean, onClick: () -> Unit) {
     PanelButton(
-        selected = tool == selectedTool,
+        selected = selected,
         description = stringResource(tool.labelRes),
-        onClick = { onToolSelected(tool) },
+        onClick = onClick,
     ) { ToolIconView(tool.icon) }
 }
 

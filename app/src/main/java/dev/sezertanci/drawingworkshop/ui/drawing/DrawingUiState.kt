@@ -2,6 +2,7 @@ package dev.sezertanci.drawingworkshop.ui.drawing
 
 import dev.sezertanci.drawingworkshop.domain.model.BrushSize
 import dev.sezertanci.drawingworkshop.domain.model.Palette
+import dev.sezertanci.drawingworkshop.domain.model.SilkStyle
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
 import dev.sezertanci.drawingworkshop.domain.sticker.StickerCatalog
 import dev.sezertanci.drawingworkshop.domain.symmetry.SymmetryMode
@@ -15,6 +16,7 @@ enum class ColorTarget {
 data class DrawingUiState(
     val tool: ToolType = ToolType.BRUSH,
     val brushSize: BrushSize = BrushSize.DEFAULT,
+    val silkStyle: SilkStyle = SilkStyle.DEFAULT,
     val strokeColor: Int = Palette.RED,
     val backgroundColor: Int = Palette.WHITE,
     val colorTarget: ColorTarget = ColorTarget.STROKE,

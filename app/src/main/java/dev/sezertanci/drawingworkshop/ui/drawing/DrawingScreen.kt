@@ -19,6 +19,7 @@ import dev.sezertanci.drawingworkshop.domain.symmetry.SymmetryMode
 import dev.sezertanci.drawingworkshop.ui.components.screenContainer
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ColorPanel
 import dev.sezertanci.drawingworkshop.ui.drawing.components.StickerPanel
+import dev.sezertanci.drawingworkshop.ui.drawing.components.SilkStyleControls
 import dev.sezertanci.drawingworkshop.ui.drawing.components.SymmetryControls
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ToolPanel
 import dev.sezertanci.drawingworkshop.ui.drawing.components.ToolPanelActions
@@ -56,6 +57,7 @@ fun DrawingRoute(onHome: () -> Unit, viewModel: DrawingViewModel = hiltViewModel
             onModeSelected = viewModel::selectSymmetry,
             onSymmetricFillSelected = viewModel::selectSymmetricFill,
         ),
+        silk = SilkStyleControls(style = state.silkStyle, onStyleSelected = viewModel::selectSilkStyle),
         onToolSelected = viewModel::selectTool,
         onSizeSelected = viewModel::selectBrushSize,
         onColorTargetSelected = viewModel::selectColorTarget,
@@ -71,6 +73,7 @@ fun DrawingScreen(
     canvas: @Composable (Modifier) -> Unit,
     actions: ToolPanelActions,
     symmetry: SymmetryControls,
+    silk: SilkStyleControls,
     onToolSelected: (ToolType) -> Unit,
     onSizeSelected: (BrushSize) -> Unit,
     onColorTargetSelected: (ColorTarget) -> Unit,
@@ -86,6 +89,7 @@ fun DrawingScreen(
             strokeColor = Color(state.strokeColor),
             actions = actions,
             symmetry = symmetry,
+            silk = silk,
             onToolSelected = onToolSelected,
             onSizeSelected = onSizeSelected,
         )

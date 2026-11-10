@@ -6,6 +6,10 @@
     <string name="tool_brush">Fırça</string>
     <string name="tool_rainbow">Gökkuşağı fırçası</string>
     <string name="tool_silk">İpek fırçası</string>
+    <string name="silk_style_calm">Sakin ipek</string>
+    <string name="silk_style_wavy">Dalgalı ipek</string>
+    <string name="silk_style_storm">Fırtına ipek</string>
+    <string name="silk_style_tulle">Tül ipek</string>
     <string name="tool_marker">Keçeli kalem</string>
     <string name="tool_crayon">Pastel boya</string>
     <string name="tool_spray">Sprey</string>

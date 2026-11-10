@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fırtına ipek stili: birbirine dolanan, savrulan ipek sarmalları. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Sarmalın ortasındaki ipek tabakası -->
+    <path
+        android:fillColor="#CE93D8"
+        android:fillAlpha="0.3"
+        android:pathData="M24,24 m-12,0 a12,12 0 1,0 24,0 a12,12 0 1,0 -24,0" />
+    <!-- Mavi sarmal -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M24,24 C28,20 32,26 28,30 C22,36 14,28 18,20 C24,10 38,16 38,26 C38,40 20,44 12,36 C4,28 8,10 22,6"
+        android:strokeWidth="2.2"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#29B6F6"
+        android:strokeLineCap="round" />
+    <!-- Mor sarmal -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M24,24 C20,28 15,22 19,18 C25,12 34,20 31,28 C27,38 12,36 9,26 C6,16 16,6 28,6 C38,6 44,14 43,22"
+        android:strokeWidth="1.6"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#7C4DFF"
+        android:strokeLineCap="round" />
+    <!-- Pembe sarmal -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M22,22 C26,16 34,18 34,26 C34,34 24,38 18,33 C12,28 14,18 22,15 C30,12 42,18 44,30 C45,38 40,44 32,44"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#EC407A"
+        android:strokeLineCap="round" />
+    <!-- Savrulan teller -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M5,40 C10,34 6,30 12,26 M42,40 C38,42 36,38 40,36 M4,14 C8,8 6,6 10,4"
+        android:strokeWidth="0.8"
+        android:strokeAlpha="0.7"
+        android:strokeColor="#B388FF"
+        android:strokeLineCap="round" />
+    <!-- Parlak kenar -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,19 C23,15 29,17 30,22"
+        android:strokeWidth="0.9"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round" />
+    <!-- Pırıltılar -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M41,4 Q41.5,6.5 44,7 Q41.5,7.5 41,10 Q40.5,7.5 38,7 Q40.5,6.5 41,4 Z" />
+</vector>

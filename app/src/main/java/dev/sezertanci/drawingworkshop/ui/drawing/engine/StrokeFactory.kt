@@ -36,7 +36,7 @@ class StrokeFactory @Inject constructor(
 
     /**
      * Kendiliğinden ilerleyen çizgiyi (ipek fırçası) oluşturur; diğer araçlar için `null` döner.
-     * Fırça boyutu şeridin genişliğini belirler. Koyu zeminde renkler üst üste bindikçe toplanıp ışık
+     * Fırça boyutu şeridin genişliğini, seçili stil tellerin sayısını, hareketini ve saydamlığını belirler. Koyu zeminde renkler üst üste bindikçe toplanıp ışık
      * saçar; açık zeminde ise yarı saydam katmanlar halinde koyulaşır.
      */
     fun createLive(settings: StrokeSettings, backgroundColor: Int, zoom: Float): LiveStroke? {
@@ -44,9 +44,11 @@ class StrokeFactory @Inject constructor(
         val scale = Scale(density, zoom)
         val spread = scale.toPx(settings.size.widthDp) * TOOL_STYLES.getValue(ToolType.SILK).widthFactor
         val glows = Color.luminance(backgroundColor) < DARK_BACKGROUND_LUMINANCE
-        val threadPaint = silkPaint(settings.color, scale.toPx(SILK_THREAD_DP), SILK_THREAD_ALPHA, glows)
-        val sheetPaint = silkPaint(settings.color, scale.toPx(SILK_SHEET_DP), SILK_SHEET_ALPHA, glows)
-        return SilkStroke(SilkMotion(SILK_THREADS, spread), threadPaint, sheetPaint, settings.color)
+        val style = settings.silkStyle
+        val threadPaint = silkPaint(settings.color, scale.toPx(style.threadWidthDp), style.threadAlpha, glows)
+        val sheetPaint = silkPaint(settings.color, scale.toPx(SILK_SHEET_DP), style.sheetAlpha, glows)
+        val motion = SilkMotion(style.threadCount, spread, style.tuning)
+        return SilkStroke(motion, threadPaint, sheetPaint, settings.color)
     }
 
     private fun silkPaint(color: Int, width: Float, alpha: Int, glows: Boolean) =
@@ -112,11 +114,7 @@ class StrokeFactory @Inject constructor(
 
         /** Bu parlaklığın altındaki zeminler koyu sayılır; ipek orada ışık saçarak çizilir. */
         const val DARK_BACKGROUND_LUMINANCE = 0.4f
-        const val SILK_THREADS = 8
-        const val SILK_THREAD_DP = 1f
-        const val SILK_THREAD_ALPHA = 70
         const val SILK_SHEET_DP = 0.75f
-        const val SILK_SHEET_ALPHA = 28
 
         val TOOL_STYLES = mapOf(
             ToolType.PENCIL to ToolStyle(widthFactor = 0.35f, alpha = 230),
