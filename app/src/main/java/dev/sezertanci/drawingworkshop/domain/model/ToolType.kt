@@ -5,6 +5,7 @@ enum class ToolType {
     PENCIL,
     BRUSH,
     RAINBOW,
+    SILK,
     MARKER,
     CRAYON,
     SPRAY,

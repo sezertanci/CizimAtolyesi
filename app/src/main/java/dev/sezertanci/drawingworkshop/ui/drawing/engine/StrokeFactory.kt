@@ -1,11 +1,13 @@
 package dev.sezertanci.drawingworkshop.ui.drawing.engine
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import dev.sezertanci.drawingworkshop.domain.model.StrokeSettings
 import dev.sezertanci.drawingworkshop.domain.model.ToolType
 import dev.sezertanci.drawingworkshop.domain.stroke.RainbowHues
+import dev.sezertanci.drawingworkshop.domain.stroke.SilkMotion
 import dev.sezertanci.drawingworkshop.domain.stroke.SprayScatter
 import javax.inject.Inject
 
@@ -20,6 +22,7 @@ class StrokeFactory @Inject constructor(
      * [zoom] oranına bölünür; görüntü büyütülmüşken çizgi ekranda yine aynı kalınlıkta görünür.
      */
     fun create(settings: StrokeSettings, backgroundColor: Int, zoom: Float): ActiveStroke? {
+        if (settings.tool == ToolType.SILK) return null
         val style = TOOL_STYLES[settings.tool] ?: return null
         val scale = Scale(density, zoom)
         val width = scale.toPx(settings.size.widthDp) * style.widthFactor
@@ -30,6 +33,26 @@ class StrokeFactory @Inject constructor(
             else -> createPath(settings, width, style.alpha, scale)
         }
     }
+
+    /**
+     * Kendiliğinden ilerleyen çizgiyi (ipek fırçası) oluşturur; diğer araçlar için `null` döner.
+     * Fırça boyutu şeridin genişliğini belirler. Koyu zeminde renkler üst üste bindikçe toplanıp ışık
+     * saçar; açık zeminde ise yarı saydam katmanlar halinde koyulaşır.
+     */
+    fun createLive(settings: StrokeSettings, backgroundColor: Int, zoom: Float): LiveStroke? {
+        if (settings.tool != ToolType.SILK) return null
+        val scale = Scale(density, zoom)
+        val spread = scale.toPx(settings.size.widthDp) * TOOL_STYLES.getValue(ToolType.SILK).widthFactor
+        val glows = Color.luminance(backgroundColor) < DARK_BACKGROUND_LUMINANCE
+        val threadPaint = silkPaint(settings.color, scale.toPx(SILK_THREAD_DP), SILK_THREAD_ALPHA, glows)
+        val sheetPaint = silkPaint(settings.color, scale.toPx(SILK_SHEET_DP), SILK_SHEET_ALPHA, glows)
+        return SilkStroke(SilkMotion(SILK_THREADS, spread), threadPaint, sheetPaint, settings.color)
+    }
+
+    private fun silkPaint(color: Int, width: Float, alpha: Int, glows: Boolean) =
+        strokePaint(color, width, alpha).apply {
+            if (glows) xfermode = PorterDuffXfermode(PorterDuff.Mode.ADD)
+        }
 
     /** Renk panelindeki seçim kullanılmaz; renk çizgi boyunca kendiliğinden ve rastgele değişir. */
     private fun createRainbow(width: Float, scale: Scale): ActiveStroke {
@@ -87,10 +110,19 @@ class StrokeFactory @Inject constructor(
         /** Gökkuşağı çizgisinin tek renk geçişiyle boyanan bölümlerinin uzunluğu. */
         const val RAINBOW_SECTION_DP = 6f
 
+        /** Bu parlaklığın altındaki zeminler koyu sayılır; ipek orada ışık saçarak çizilir. */
+        const val DARK_BACKGROUND_LUMINANCE = 0.4f
+        const val SILK_THREADS = 8
+        const val SILK_THREAD_DP = 1f
+        const val SILK_THREAD_ALPHA = 70
+        const val SILK_SHEET_DP = 0.75f
+        const val SILK_SHEET_ALPHA = 28
+
         val TOOL_STYLES = mapOf(
             ToolType.PENCIL to ToolStyle(widthFactor = 0.35f, alpha = 230),
             ToolType.BRUSH to ToolStyle(widthFactor = 1f),
             ToolType.RAINBOW to ToolStyle(widthFactor = 1f),
+            ToolType.SILK to ToolStyle(widthFactor = 6f),
             ToolType.MARKER to ToolStyle(widthFactor = 1.3f, alpha = 170),
             ToolType.CRAYON to ToolStyle(widthFactor = 1.2f),
             ToolType.SPRAY to ToolStyle(widthFactor = 1.6f),

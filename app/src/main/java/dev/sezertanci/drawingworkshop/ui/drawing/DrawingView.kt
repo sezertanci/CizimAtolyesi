@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Outline
+import android.view.Choreographer
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewOutlineProvider
@@ -25,6 +26,8 @@ class DrawingView(context: Context) : View(context) {
     private val pinch = PinchTracker()
     private var mode = TouchMode.IDLE
     private var activePointerId = MotionEvent.INVALID_POINTER_ID
+    private val frameCallback = Choreographer.FrameCallback(::onFrame)
+    private var isFrameLoopRunning = false
 
     init {
         val cornerRadius = CORNER_RADIUS_DP * resources.displayMetrics.density
@@ -47,6 +50,7 @@ class DrawingView(context: Context) : View(context) {
     }
 
     override fun onDetachedFromWindow() {
+        stopFrameLoop()
         engine?.setOnChangedListener(null)
         super.onDetachedFromWindow()
     }
@@ -90,6 +94,27 @@ class DrawingView(context: Context) : View(context) {
         mode = TouchMode.DRAWING
         activePointerId = event.getPointerId(0)
         listener.onTouchStart(viewport.toCanvasX(event.x), viewport.toCanvasY(event.y), viewport.scale)
+        startFrameLoop()
+    }
+
+    /**
+     * Parmak dursa da ilerleyen çizgiler (ipek) için her ekran karesinde motor ilerletilir. Motor böyle
+     * bir çizgi olmadığını bildirince döngü kendiliğinden durur.
+     */
+    private fun startFrameLoop() {
+        if (isFrameLoopRunning) return
+        isFrameLoopRunning = true
+        Choreographer.getInstance().postFrameCallback(frameCallback)
+    }
+
+    private fun onFrame(frameTimeNanos: Long) {
+        isFrameLoopRunning = engine?.advanceFrame(frameTimeNanos) == true
+        if (isFrameLoopRunning) Choreographer.getInstance().postFrameCallback(frameCallback)
+    }
+
+    private fun stopFrameLoop() {
+        Choreographer.getInstance().removeFrameCallback(frameCallback)
+        isFrameLoopRunning = false
     }
 
     private fun startPinch(event: MotionEvent, listener: DrawingTouchListener) {

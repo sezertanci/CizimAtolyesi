@@ -105,7 +105,7 @@ class DrawingSurface {
     fun restore(change: LayerChange): LayerChange = LayerChange(change.snapshots.map(::restore))
 
     /** Verilen bölgenin kopyasını alır; bölge tuvalin dışındaysa `null` döner. */
-    private fun snapshot(region: Rect): RegionSnapshot? {
+    fun snapshot(region: Rect): RegionSnapshot? {
         val source = bitmap ?: return null
         val clipped = Rect(region)
         if (!clipped.intersect(0, 0, source.width, source.height)) return null

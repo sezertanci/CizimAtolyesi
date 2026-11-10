@@ -54,11 +54,13 @@ class DrawingEngine @Inject constructor(
     private val _contentVersion = MutableStateFlow(0)
     private val _canvasSize = MutableStateFlow<Size?>(null)
     private var activeStroke: ActiveStroke? = null
+    private var liveStroke: LiveStrokeSession? = null
     private var symmetryPainter = SymmetryPainter(SymmetryMode.OFF, 0, 0)
     private var strokeSymmetry = symmetryPainter
     private var lineArt: LineArt? = null
     private var isFilling = false
     private var onChanged: (() -> Unit)? = null
+    private val isStroking: Boolean get() = activeStroke != null || liveStroke != null
 
     val historyState: StateFlow<HistoryState> = _historyState.asStateFlow()
 
@@ -149,18 +151,36 @@ class DrawingEngine @Inject constructor(
     fun startStroke(x: Float, y: Float, zoom: Float) {
         if (isFilling) return
         strokeSymmetry = symmetryPainter
-        activeStroke = strokeFactory.create(settings, backgroundColor, zoom)?.also { it.begin(x, y) }
+        val live = strokeFactory.createLive(settings, backgroundColor, zoom)
+        if (live != null) {
+            live.begin(x, y)
+            liveStroke = LiveStrokeSession(live, strokeSymmetry, surface)
+        } else {
+            activeStroke = strokeFactory.create(settings, backgroundColor, zoom)?.also { it.begin(x, y) }
+        }
         notifyChanged()
     }
 
     fun extendStroke(x: Float, y: Float) {
         activeStroke?.extend(x, y)
+        liveStroke?.moveTo(x, y)
+    }
+
+    /**
+     * Görünüm her ekran karesinde çağırır. Kendiliğinden ilerleyen bir çizgi (ipek) sürüyorsa onu
+     * ilerletip `true` döner; görünüm de bir sonraki kareyi ister. Böyle bir çizgi yoksa `false` döner.
+     */
+    fun advanceFrame(frameTimeNanos: Long): Boolean {
+        val session = liveStroke ?: return false
+        if (session.advance(frameTimeNanos)) notifyChanged()
+        return true
     }
 
     /** Görünüm bir dokunma olayındaki tüm noktaları ekledikten sonra bir kez çağırır. */
     fun invalidate() = notifyChanged()
 
     fun endStroke() {
+        liveStroke?.let { return endLiveStroke(it) }
         val stroke = activeStroke ?: return
         activeStroke = null
         stroke.end()
@@ -169,8 +189,21 @@ class DrawingEngine @Inject constructor(
     }
 
     fun cancelStroke() {
-        if (activeStroke == null) return
+        if (!isStroking) return
         activeStroke = null
+        liveStroke?.cancel()
+        liveStroke = null
+        notifyChanged()
+    }
+
+    /** Çizgi katmana zaten işlendi; yalnızca geri al kaydı geçmişe eklenir. */
+    private fun endLiveStroke(session: LiveStrokeSession) {
+        liveStroke = null
+        session.finish()?.let {
+            history.record(it)
+            markContentChanged()
+        }
+        publishHistory()
         notifyChanged()
     }
 
@@ -260,7 +293,7 @@ class DrawingEngine @Inject constructor(
     }
 
     private fun applyHistory(action: () -> Boolean) {
-        if (isFilling || activeStroke != null) return
+        if (isFilling || isStroking) return
         if (action()) {
             markContentChanged()
             publishHistory()

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- İpek fırçası aracı: birbirine dolanan, renkleri hafifçe kayan parlak ipek şeritleri ve pırıltılar. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Şeritler arasındaki ince teller -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M5,33 C14,8 27,42 43,11 M5,37 C15,12 28,45 43,15 M6,40 C16,16 29,47 43,19"
+        android:strokeWidth="0.7"
+        android:strokeAlpha="0.55"
+        android:strokeColor="#B388FF"
+        android:strokeLineCap="round" />
+    <!-- Mavi şerit -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M6,42 C17,18 30,48 43,22"
+        android:strokeWidth="2.6"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#29B6F6"
+        android:strokeLineCap="round" />
+    <!-- Mor şerit -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M5,30 C13,4 26,38 43,7"
+        android:strokeWidth="2.6"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#7C4DFF"
+        android:strokeLineCap="round" />
+    <!-- Ortadaki pembe şerit, ötekilere dolanır -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M5,35 C16,14 22,40 30,26 C35,17 39,14 43,15"
+        android:strokeWidth="3.2"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#EC407A"
+        android:strokeLineCap="round" />
+    <!-- Şeritlerin parlak kenarları -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M8,32 C15,18 21,36 28,28 M31,24 C35,18 38,16 41,15.5"
+        android:strokeWidth="0.9"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round" />
+    <!-- Pırıltılar -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M13,6 Q13.6,9.4 17,10 Q13.6,10.6 13,14 Q12.4,10.6 9,10 Q12.4,9.4 13,6 Z M38,32 Q38.5,34.5 41,35 Q38.5,35.5 38,38 Q37.5,35.5 35,35 Q37.5,34.5 38,32 Z" />
+    <path
+        android:fillColor="#FF80AB"
+        android:pathData="M24,40 Q24.35,41.65 26,42 Q24.35,42.35 24,44 Q23.65,42.35 22,42 Q23.65,41.65 24,40 Z" />
+</vector>
