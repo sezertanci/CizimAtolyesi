@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="panel_background">#FFFFF4D6</color>
+    <color name="panel_background">#FFA4C2F4</color>
     <color name="launcher_background">#FFFFD54F</color>
     <color name="line_art">#FF000000</color>
 </resources>

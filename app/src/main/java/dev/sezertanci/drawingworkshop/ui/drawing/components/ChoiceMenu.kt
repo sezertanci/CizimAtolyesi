@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.sezertanci.drawingworkshop.ui.components.PanelButton
+import dev.sezertanci.drawingworkshop.ui.theme.WorkshopColors
 
 private val MenuItemPadding = 6.dp
 
@@ -21,7 +22,7 @@ internal fun <T> ChoiceMenu(
     onSelected: (T) -> Unit,
     icon: @Composable (T) -> Unit,
 ) {
-    DropdownMenu(expanded = expanded, onDismissRequest = onDismiss) {
+    DropdownMenu(expanded = expanded, onDismissRequest = onDismiss, containerColor = WorkshopColors.MenuBackground) {
         options.forEach { option ->
             PanelButton(
                 selected = option == selected,
