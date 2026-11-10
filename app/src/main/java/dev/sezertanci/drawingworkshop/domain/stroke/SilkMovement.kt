@@ -10,4 +10,7 @@ enum class SilkMovement {
 
     /** Teller hareket yönüne dik olarak ileri geri savrulur ve kırık çizgiler çizer. */
     ZIGZAG,
+
+    /** Teller duman gibi savrulan dar bir kurdele olur; parmak durunca parlak bir yumak örülür. */
+    SMOKE,
 }

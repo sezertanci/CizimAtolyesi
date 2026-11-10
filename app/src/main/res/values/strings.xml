@@ -12,6 +12,7 @@
     <string name="silk_movement_spin">Dönen ipek</string>
     <string name="silk_movement_flow">Akan ipek</string>
     <string name="silk_movement_zigzag">Zikzak ipek</string>
+    <string name="silk_movement_smoke">Duman ipek</string>
     <string name="silk_tempo_calm">Sakin</string>
     <string name="silk_tempo_wavy">Dalgalı</string>
     <string name="silk_tempo_storm">Fırtına</string>

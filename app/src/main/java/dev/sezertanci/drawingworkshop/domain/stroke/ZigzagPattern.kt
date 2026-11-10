@@ -21,7 +21,7 @@ internal class ZigzagPattern(
 
     override val grip = GRIP
 
-    override fun place(time: Float, headingX: Float, headingY: Float, offsets: FloatArray) {
+    override fun place(time: Float, stillSeconds: Float, headingX: Float, headingY: Float, offsets: FloatArray) {
         for (i in 0 until threadCount) {
             val position = threadPosition(i, threadCount)
             val lag = position * LAG_SHARE * tuning.wobbleShare

@@ -30,15 +30,19 @@ class SilkStroke(
     private val threadAlpha = threadPaint.alpha
     private val sheetAlpha = sheetPaint.alpha
 
-    // Her adım için: adımın zamanı, ardından her telin önceki ve şimdiki konumu (x, y, x, y).
+    // Her adım için: adımın zamanı ve parlaklığı, ardından her telin önceki ve şimdiki konumu (x, y, x, y).
     private val pending = FloatList()
     private val bounds = RectF()
     private val path = Path()
-    private val floatsPerStep = 1 + motion.threadCount * FLOATS_PER_THREAD
+    private val floatsPerStep = STEP_HEADER + motion.threadCount * FLOATS_PER_THREAD
 
     override fun begin(x: Float, y: Float) = motion.start(x, y)
 
     override fun moveTo(x: Float, y: Float) = motion.moveTo(x, y)
+
+    override fun release() = motion.release()
+
+    override val isFinished: Boolean get() = motion.isFinished
 
     override fun advance(seconds: Float): Rect? {
         pending.clear()
@@ -51,14 +55,15 @@ class SilkStroke(
     override fun drawPending(canvas: Canvas) {
         val values = pending.values
         for (start in 0 until pending.size step floatsPerStep) {
-            applyColor(values[start])
-            canvas.drawPath(threadsPath(values, start + 1), threadPaint)
-            canvas.drawPath(sheetPath(values, start + 1), sheetPaint)
+            applyColor(values[start], values[start + 1])
+            canvas.drawPath(threadsPath(values, start + STEP_HEADER), threadPaint)
+            canvas.drawPath(sheetPath(values, start + STEP_HEADER), sheetPaint)
         }
     }
 
     private fun recordStep() {
         pending.add(motion.time)
+        pending.add(motion.fade)
         for (i in 0 until motion.threadCount) {
             pending.add(motion.previousX(i))
             pending.add(motion.previousY(i))
@@ -103,20 +108,23 @@ class SilkStroke(
 
     private fun currentY(values: FloatArray, first: Int, thread: Int) = values[first + thread * FLOATS_PER_THREAD + 3]
 
-    /** Seçili rengin tonu, zamanla iki yana salınır. */
-    private fun applyColor(time: Float) {
+    /** Seçili rengin tonu zamanla iki yana salınır; parmak kalkınca saydamlık [fade] oranında azalır. */
+    private fun applyColor(time: Float, fade: Float) {
         baseHsv.copyInto(hsv)
         hsv[0] = (baseHsv[0] + HUE_SWING_DEGREES * sin(time * HUE_SPEED)).mod(FULL_TURN_DEGREES)
         val color = Color.HSVToColor(hsv)
         threadPaint.color = color
-        threadPaint.alpha = threadAlpha
+        threadPaint.alpha = (threadAlpha * fade).toInt()
         sheetPaint.color = color
-        sheetPaint.alpha = sheetAlpha
+        sheetPaint.alpha = (sheetAlpha * fade).toInt()
     }
 
     private companion object {
         const val HSV_SIZE = 3
         const val FLOATS_PER_THREAD = 4
+
+        /** Her adımın başındaki değer sayısı: zaman ve parlaklık. */
+        const val STEP_HEADER = 2
         const val FULL_TURN_DEGREES = 360f
 
         /** Tonun seçili renkten en fazla ne kadar kaydığı (derece) ve kayma hızı (radyan/saniye). */

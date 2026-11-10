@@ -21,7 +21,7 @@ internal class FlowPattern(
     private val acrossPhase = FloatArray(threadCount) { random.nextFloat() * FULL_TURN }
     private val rate = FloatArray(threadCount) { 1f + RATE_VARIATION * random.nextSigned() }
 
-    override fun place(time: Float, headingX: Float, headingY: Float, offsets: FloatArray) {
+    override fun place(time: Float, stillSeconds: Float, headingX: Float, headingY: Float, offsets: FloatArray) {
         val opening = (1f + sin(time * speed * FAN_SPEED + phase)) / 2f
         val fan = spread * (FAN_CLOSED + FAN_SWING * opening)
         for (i in 0 until threadCount) {

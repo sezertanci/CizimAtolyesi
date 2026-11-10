@@ -13,11 +13,12 @@ import kotlin.random.Random
  * kendi hedefine bir yayla bağlıdır; bu yüzden parmağı gecikerek ve hafif sallanarak izler. Dizinin
  * uçlarındaki teller daha gevşek bağlıdır ve daha geride kalır, böylece şerit hareketin arkasında kıvrılır.
  *
- * Hareket, ekranın kare hızından bağımsız olsun diye sabit zaman adımlarıyla ilerler.
+ * Hareket, ekranın kare hızından bağımsız olsun diye sabit zaman adımlarıyla ilerler. Parmak kalkınca
+ * teller bir süre daha hareket eder ve [fade] sıfıra inerek söner.
  */
 class SilkMotion(
     val threadCount: Int,
-    spread: Float,
+    private val spread: Float,
     private val tuning: SilkTuning,
     movement: SilkMovement,
     random: Random = Random.Default,
@@ -39,10 +40,21 @@ class SilkMotion(
     private var headingX = 1f
     private var headingY = 0f
     private var pendingSeconds = 0f
+    private var anchorX = 0f
+    private var anchorY = 0f
+    private var movedAt = 0f
+    private var releasedAt = NOT_RELEASED
 
     /** Çizginin başından beri geçen hareket süresi (saniye). */
     var time = 0f
         private set
+
+    /** Çizginin parlaklığı: parmak değerken 1, parmak kalkınca [TAIL_SECONDS] içinde 0'a iner. */
+    val fade: Float
+        get() = if (releasedAt == NOT_RELEASED) 1f else (1f - (time - releasedAt) / TAIL_SECONDS).coerceAtLeast(0f)
+
+    /** Parmak kalkmış ve teller tümüyle sönmüşse `true`. */
+    val isFinished: Boolean get() = fade == 0f
 
     init {
         require(threadCount >= 2) { "İpek en az iki telden oluşur." }
@@ -56,6 +68,8 @@ class SilkMotion(
         previousY.fill(startY)
         targetX = startX
         targetY = startY
+        anchorX = startX
+        anchorY = startY
     }
 
     /** Parmağın yeni yeri; hareket yönü de yumuşakça bu yöne döner. */
@@ -63,6 +77,16 @@ class SilkMotion(
         turnHeading(fingerX - targetX, fingerY - targetY)
         targetX = fingerX
         targetY = fingerY
+        if (hypot(fingerX - anchorX, fingerY - anchorY) > spread * STILL_SHARE) {
+            anchorX = fingerX
+            anchorY = fingerY
+            movedAt = time
+        }
+    }
+
+    /** Parmak kalktı; teller son yerinin çevresinde hareketi sürdürürken söner. */
+    fun release() {
+        if (releasedAt == NOT_RELEASED) releasedAt = time
     }
 
     /**
@@ -89,7 +113,7 @@ class SilkMotion(
 
     private fun step() {
         time += STEP_SECONDS
-        pattern.place(time, headingX, headingY, offsets)
+        pattern.place(time, time - movedAt, headingX, headingY, offsets)
         for (i in 0 until threadCount) pull(i, targetX + offsets[2 * i], targetY + offsets[2 * i + 1])
     }
 
@@ -134,5 +158,12 @@ class SilkMotion(
 
         /** Hareket yönünün her parmak hareketinde yeni yöne ne kadar yaklaştığı. */
         private const val HEADING_FOLLOW = 0.2f
+
+        /** Parmak kalktıktan sonra tellerin sönerek hareket ettiği süre (saniye). */
+        const val TAIL_SECONDS = 0.6f
+        private const val NOT_RELEASED = -1f
+
+        /** Parmak, yayılma genişliğinin bu oranından az kıpırdarsa durmuş sayılır. */
+        private const val STILL_SHARE = 0.1f
     }
 }

@@ -18,7 +18,7 @@ internal class SpinPattern(
     private val phase = random.nextFloat() * FULL_TURN
     private var angle = random.nextFloat() * FULL_TURN
 
-    override fun place(time: Float, headingX: Float, headingY: Float, offsets: FloatArray) {
+    override fun place(time: Float, stillSeconds: Float, headingX: Float, headingY: Float, offsets: FloatArray) {
         angle += spinSpeed * SilkMotion.STEP_SECONDS * (1f + SPIN_SWAY * sin(time * SWAY_SPEED + phase))
         val length = spread * (LENGTH_BASE + LENGTH_SWING * sin(time * BREATH_SPEED + phase))
         val wobble = spread * tuning.wobbleShare

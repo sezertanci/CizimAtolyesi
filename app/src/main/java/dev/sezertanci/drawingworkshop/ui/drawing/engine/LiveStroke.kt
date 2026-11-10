@@ -15,6 +15,12 @@ interface LiveStroke {
     /** Parmağın yeni konumu; çizgi bu noktaya doğru kendi hızıyla ilerler. */
     fun moveTo(x: Float, y: Float)
 
+    /** Parmak kalktı; çizgi bir süre daha ilerleyip sönerek biter. */
+    fun release()
+
+    /** [release] sonrasında çizgi tümüyle söndüyse `true`. */
+    val isFinished: Boolean
+
     /** Çizgiyi [seconds] kadar ilerletir ve yeni parçaların alanını döndürür; yeni parça yoksa `null`. */
     fun advance(seconds: Float): Rect?
 

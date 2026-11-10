@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Duman ipek hareketi: dar bir kurdeleden yükselip kıvrılan, ucunda parlak bir yumak oluşturan teller. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Yumağın ışığı -->
+    <path
+        android:fillColor="#CE93D8"
+        android:fillAlpha="0.35"
+        android:pathData="M30,4 C40,4 46,12 44,20 C42,26 34,26 30,22 C24,18 22,8 30,4 Z" />
+    <!-- Yükselen kurdele -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M12,44 C8,38 16,34 14,28 C12,22 20,20 24,16 C28,12 26,8 32,6"
+        android:strokeWidth="1.6"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#29B6F6"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M14,44 C11,38 19,35 17,29 C15,24 22,22 27,18 C33,14 30,10 38,8"
+        android:strokeWidth="1.6"
+        android:strokeAlpha="0.85"
+        android:strokeColor="#7C4DFF"
+        android:strokeLineCap="round" />
+    <!-- Yumağın kıvrımları -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M32,6 C42,6 44,16 38,20 C32,24 28,14 36,12 C40,11 42,16 38,18"
+        android:strokeWidth="1.8"
+        android:strokeAlpha="0.9"
+        android:strokeColor="#EC407A"
+        android:strokeLineCap="round" />
+    <!-- Parlak çekirdek -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.9"
+        android:pathData="M37,13 m-2.5,0 a2.5,2.5 0,1 1,5 0 a2.5,2.5 0,1 1,-5 0" />
+    <!-- Pırıltı -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M8,14 Q8.5,16.5 11,17 Q8.5,17.5 8,20 Q7.5,17.5 5,17 Q7.5,16.5 8,14 Z" />
+</vector>

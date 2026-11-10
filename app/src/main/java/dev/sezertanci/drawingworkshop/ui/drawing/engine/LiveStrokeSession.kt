@@ -17,7 +17,18 @@ class LiveStrokeSession(
     private val tiles = HashMap<Int, RegionSnapshot>()
     private var lastFrameNanos = NO_FRAME
 
+    /** Parmak kalktıysa `true`; çizgi sönerek sürer ve artık parmağı izlemez. */
+    var isReleased = false
+        private set
+
+    val isFinished: Boolean get() = stroke.isFinished
+
     fun moveTo(x: Float, y: Float) = stroke.moveTo(x, y)
+
+    fun release() {
+        isReleased = true
+        stroke.release()
+    }
 
     /** Ekran karesinin zamanına göre çizgiyi ilerletir; katmana yeni bir şey çizildiyse `true` döner. */
     fun advance(frameTimeNanos: Long): Boolean {

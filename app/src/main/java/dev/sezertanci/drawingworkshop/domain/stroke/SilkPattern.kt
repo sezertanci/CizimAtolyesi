@@ -10,9 +10,10 @@ internal interface SilkPattern {
 
     /**
      * Her hareket adımında bir kez çağrılır. Her telin parmağa göre hedef uzaklığını [offsets] dizisine
-     * x, y sırasıyla yazar. [headingX], [headingY] parmağın son hareket yönüdür (birim vektör).
+     * x, y sırasıyla yazar. [stillSeconds] parmağın ne kadar süredir yerinde durduğudur; [headingX],
+     * [headingY] parmağın son hareket yönüdür (birim vektör).
      */
-    fun place(time: Float, headingX: Float, headingY: Float, offsets: FloatArray)
+    fun place(time: Float, stillSeconds: Float, headingX: Float, headingY: Float, offsets: FloatArray)
 
     companion object {
         fun create(movement: SilkMovement, threadCount: Int, spread: Float, tuning: SilkTuning, random: Random) =
@@ -20,6 +21,7 @@ internal interface SilkPattern {
                 SilkMovement.SPIN -> SpinPattern(threadCount, spread, tuning, random)
                 SilkMovement.FLOW -> FlowPattern(threadCount, spread, tuning, random)
                 SilkMovement.ZIGZAG -> ZigzagPattern(threadCount, spread, tuning, random)
+                SilkMovement.SMOKE -> SmokePattern(threadCount, spread, tuning, random)
             }
     }
 }

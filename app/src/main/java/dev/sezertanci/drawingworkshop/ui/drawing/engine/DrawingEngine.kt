@@ -60,7 +60,7 @@ class DrawingEngine @Inject constructor(
     private var lineArt: LineArt? = null
     private var isFilling = false
     private var onChanged: (() -> Unit)? = null
-    private val isStroking: Boolean get() = activeStroke != null || liveStroke != null
+    private val isStroking: Boolean get() = activeStroke != null || liveStroke?.isReleased == false
 
     val historyState: StateFlow<HistoryState> = _historyState.asStateFlow()
 
@@ -150,6 +150,7 @@ class DrawingEngine @Inject constructor(
     /** [zoom] büyüdükçe çizgi resim üzerinde incelir; böylece ekranda aynı kalınlıkta görünür. */
     fun startStroke(x: Float, y: Float, zoom: Float) {
         if (isFilling) return
+        settleFadingStroke()
         strokeSymmetry = symmetryPainter
         val live = strokeFactory.createLive(settings, backgroundColor, zoom)
         if (live != null) {
@@ -167,20 +168,22 @@ class DrawingEngine @Inject constructor(
     }
 
     /**
-     * Görünüm her ekran karesinde çağırır. Kendiliğinden ilerleyen bir çizgi (ipek) sürüyorsa onu
-     * ilerletip `true` döner; görünüm de bir sonraki kareyi ister. Böyle bir çizgi yoksa `false` döner.
+     * Görünüm her ekran karesinde çağırır. Kendiliğinden ilerleyen veya sönen bir çizgi (ipek) varsa onu
+     * ilerletip `true` döner; görünüm de bir sonraki kareyi ister.
      */
     fun advanceFrame(frameTimeNanos: Long): Boolean {
         val session = liveStroke ?: return false
         if (session.advance(frameTimeNanos)) notifyChanged()
-        return true
+        if (session.isFinished) endLiveStroke(session)
+        return liveStroke != null
     }
 
     /** Görünüm bir dokunma olayındaki tüm noktaları ekledikten sonra bir kez çağırır. */
     fun invalidate() = notifyChanged()
 
+    /** Kendiliğinden ilerleyen çizgi hemen bitmez; sönmesi [advanceFrame] içinde tamamlanır. */
     fun endStroke() {
-        liveStroke?.let { return endLiveStroke(it) }
+        liveStroke?.let { return it.release() }
         val stroke = activeStroke ?: return
         activeStroke = null
         stroke.end()
@@ -188,12 +191,19 @@ class DrawingEngine @Inject constructor(
         commitToLayer(painter.regions(stroke.dirtyRegion())) { painter.drawCopies(it, stroke::commit) }
     }
 
+    /** Sönmekte olan çizgi iptal edilmez, tamamlanır. */
     fun cancelStroke() {
+        settleFadingStroke()
         if (!isStroking) return
         activeStroke = null
         liveStroke?.cancel()
         liveStroke = null
         notifyChanged()
+    }
+
+    /** Sönmekte olan çizgiyi hemen bitirir; yeni çizgi veya geri alma onunla karışmasın diye. */
+    private fun settleFadingStroke() {
+        liveStroke?.takeIf { it.isReleased }?.let(::endLiveStroke)
     }
 
     /** Çizgi katmana zaten işlendi; yalnızca geri al kaydı geçmişe eklenir. */
@@ -242,6 +252,7 @@ class DrawingEngine @Inject constructor(
      */
     suspend fun fill(x: Float, y: Float, color: Int, symmetric: Boolean): Boolean {
         if (isFilling) return false
+        settleFadingStroke()
         val width = surface.width
         val height = surface.height
         val seeds = if (symmetric) symmetryPainter.points(x, y) else listOf(Point(x.toInt(), y.toInt()))
@@ -294,6 +305,7 @@ class DrawingEngine @Inject constructor(
 
     private fun applyHistory(action: () -> Boolean) {
         if (isFilling || isStroking) return
+        settleFadingStroke()
         if (action()) {
             markContentChanged()
             publishHistory()

@@ -109,6 +109,7 @@ private val SilkMovement.labelRes: Int
         SilkMovement.SPIN -> R.string.silk_movement_spin
         SilkMovement.FLOW -> R.string.silk_movement_flow
         SilkMovement.ZIGZAG -> R.string.silk_movement_zigzag
+        SilkMovement.SMOKE -> R.string.silk_movement_smoke
     }
 
 @get:DrawableRes
@@ -117,6 +118,7 @@ private val SilkMovement.iconRes: Int
         SilkMovement.SPIN -> R.drawable.ic_silk_spin
         SilkMovement.FLOW -> R.drawable.ic_silk_flow
         SilkMovement.ZIGZAG -> R.drawable.ic_silk_zigzag
+        SilkMovement.SMOKE -> R.drawable.ic_silk_smoke
     }
 
 @get:StringRes

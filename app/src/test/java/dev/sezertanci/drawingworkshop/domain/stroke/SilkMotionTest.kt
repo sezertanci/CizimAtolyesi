@@ -41,7 +41,7 @@ class SilkMotionTest {
             motion.advance(FRAME) {
                 for (i in 0 until motion.threadCount) {
                     travelled += hypot(motion.x(i) - motion.previousX(i), motion.y(i) - motion.previousY(i))
-                    assertTrue(distanceFrom(motion, i, START, START) <= SPREAD * 2f)
+                    assertTrue(distanceFrom(motion, i, START, START) <= NEAR)
                 }
             }
         }
@@ -59,7 +59,7 @@ class SilkMotionTest {
         repeat(FRAMES) { motion.advance(FRAME) {} }
 
         assertTrue(afterOneFrame > SPREAD * 2f)
-        (0 until motion.threadCount).forEach { assertTrue(distanceFrom(motion, it, FAR, FAR) <= SPREAD * 2f) }
+        (0 until motion.threadCount).forEach { assertTrue(distanceFrom(motion, it, FAR, FAR) <= NEAR) }
     }
 
     @Test
@@ -94,6 +94,37 @@ class SilkMotionTest {
         assertTrue(alongSwing < acrossSwing / 2f)
     }
 
+    @Test
+    fun advance_SmokeFingerStill_WandersFartherOverTime() {
+        val motion = createMotion(SilkStyle(movement = SilkMovement.SMOKE))
+        var early = 0f
+        var late = 0f
+
+        repeat(LONG_FRAMES) { frame ->
+            motion.advance(FRAME) {
+                val reach = (0 until motion.threadCount).maxOf { distanceFrom(motion, it, START, START) }
+                if (frame < LONG_FRAMES / 4) early = maxOf(early, reach) else late = maxOf(late, reach)
+            }
+        }
+
+        assertTrue(late > early * 1.5f)
+    }
+
+    @Test
+    fun release_TailTime_FadesOutAndFinishes() {
+        val motion = createMotion()
+        repeat(FRAMES / 4) { motion.advance(FRAME) {} }
+        assertEquals(1f, motion.fade, 0f)
+
+        motion.release()
+        motion.advance(FRAME) {}
+        val fading = motion.fade
+        repeat((SilkMotion.TAIL_SECONDS / FRAME).toInt() + 1) { motion.advance(FRAME) {} }
+
+        assertTrue(fading in 0f..1f && fading < 1f)
+        assertTrue(motion.isFinished)
+    }
+
     private fun createMotion(style: SilkStyle = SilkStyle()) =
         SilkMotion(style.threads.threadCount, SPREAD, style.tempo.tuning, style.movement, Random(SEED))
             .apply { start(START, START) }
@@ -108,10 +139,14 @@ class SilkMotionTest {
     private companion object {
         const val NUDGE = 10f
         const val SPREAD = 50f
+
+        /** Tellerin parmaktan en fazla uzaklığı; duman yumağı yayılma genişliğinin birkaç katına ulaşır. */
+        const val NEAR = SPREAD * 8f
         const val START = 500f
         const val FAR = 900f
         const val SEED = 42
         const val FRAME = 1f / 60f
         const val FRAMES = 240
+        const val LONG_FRAMES = 480
     }
 }
