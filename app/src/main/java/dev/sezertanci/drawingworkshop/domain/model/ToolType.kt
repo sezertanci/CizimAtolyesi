@@ -11,4 +11,9 @@ enum class ToolType {
     ERASER,
     BUCKET,
     STICKER,
+    ;
+
+    /** Çizgi çizen araçlar fırça boyutunu kullanır; kova ve çıkartma kullanmaz. */
+    val usesBrushSize: Boolean
+        get() = this != BUCKET && this != STICKER
 }

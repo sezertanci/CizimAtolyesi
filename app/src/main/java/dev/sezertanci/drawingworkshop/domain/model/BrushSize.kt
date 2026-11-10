@@ -5,4 +5,10 @@ enum class BrushSize(val widthDp: Float) {
     SMALL(6f),
     MEDIUM(14f),
     LARGE(28f),
+    ;
+
+    companion object {
+        /** Yeni çizimde seçili gelen boyut. */
+        val DEFAULT = SMALL
+    }
 }

@@ -68,7 +68,7 @@ class DrawingEngine @Inject constructor(
     /** Resim her değiştiğinde artar (çizgi, doldurma, geri al, arka plan). Otomatik kayıt bunu izler. */
     val contentVersion: StateFlow<Int> = _contentVersion.asStateFlow()
 
-    var settings: StrokeSettings = StrokeSettings(ToolType.BRUSH, BrushSize.MEDIUM, Palette.RED)
+    var settings: StrokeSettings = StrokeSettings(ToolType.BRUSH, BrushSize.DEFAULT, Palette.RED)
 
     var symmetry: SymmetryMode = SymmetryMode.OFF
         set(value) {

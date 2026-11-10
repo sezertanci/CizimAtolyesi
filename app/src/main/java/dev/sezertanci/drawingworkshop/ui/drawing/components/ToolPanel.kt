@@ -40,6 +40,10 @@ private val RainbowDotBrush = Brush.sweepGradient(
     },
 )
 
+/** Boyut düğmeleri, onları kullanan çizim araçlarının hemen altında; kova ve çıkartma ayrı grupta durur. */
+private val SizedTools = ToolType.entries.filter { it.usesBrushSize }
+private val UnsizedTools = ToolType.entries.filterNot { it.usesBrushSize }
+
 /** Panelin araç dışındaki düğmeleri: galeriye dönme, geri al / yinele, temizleme ve galeriye aktarma. */
 class ToolPanelActions(
     val canUndo: Boolean,
@@ -52,7 +56,7 @@ class ToolPanelActions(
     val onExport: () -> Unit,
 )
 
-/** Soldaki kaydırılabilir araç paneli: galeri, araçlar, fırça boyutları, simetri, geri al, yinele, temizle ve aktarma. */
+/** Soldaki kaydırılabilir araç paneli: galeri, çizim araçları, fırça boyutları, kova ve çıkartma, simetri, geri al, yinele, temizle ve aktarma. */
 @Composable
 fun ToolPanel(
     selectedTool: ToolType,
@@ -69,13 +73,7 @@ fun ToolPanel(
     PanelColumn(width = PanelWidth, modifier = modifier) {
         item { ActionButton(HOME_EMOJI, R.string.action_home, onClick = actions.onHome) }
         item { PanelDivider() }
-        items(ToolType.entries) { tool ->
-            PanelButton(
-                selected = tool == selectedTool,
-                description = stringResource(tool.labelRes),
-                onClick = { onToolSelected(tool) },
-            ) { ToolIconView(tool.icon) }
-        }
+        items(SizedTools) { tool -> ToolButton(tool, selectedTool, onToolSelected) }
         item { PanelDivider() }
         items(BrushSize.entries) { size ->
             PanelButton(
@@ -84,6 +82,8 @@ fun ToolPanel(
                 onClick = { onSizeSelected(size) },
             ) { Box(Modifier.size(size.previewDiameter).background(dotBrush, CircleShape)) }
         }
+        item { PanelDivider() }
+        items(UnsizedTools) { tool -> ToolButton(tool, selectedTool, onToolSelected) }
         item { PanelDivider() }
         symmetryItems(symmetry)
         item { PanelDivider() }
@@ -107,6 +107,15 @@ fun ToolPanel(
             onDismiss = { confirmingClear = false },
         )
     }
+}
+
+@Composable
+private fun ToolButton(tool: ToolType, selectedTool: ToolType, onToolSelected: (ToolType) -> Unit) {
+    PanelButton(
+        selected = tool == selectedTool,
+        description = stringResource(tool.labelRes),
+        onClick = { onToolSelected(tool) },
+    ) { ToolIconView(tool.icon) }
 }
 
 @Composable
