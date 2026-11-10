@@ -19,9 +19,12 @@ class SaveRequest(
 /** Açılan resmin kayıtlı içeriği. Boya katmanı dosyası okunamazsa [layer] `null` olur. */
 class StoredDrawing(val backgroundColor: Int, val layer: Bitmap?, val templateId: String?)
 
+/** Galerinin şu ana kadar yüklenen kısmı; [hasMore] ise sırada başka resim olduğunu gösterir. */
+data class DrawingPage(val drawings: List<Drawing>, val hasMore: Boolean)
+
 interface DrawingRepository {
-    /** Galerideki resimler, en son düzenlenen başta. */
-    fun observeDrawings(): Flow<List<Drawing>>
+    /** Galerideki ilk [limit] resim, en son düzenlenen başta. */
+    fun observeDrawings(limit: Int): Flow<DrawingPage>
 
     /** Çöp kutusundaki resimler, en son atılan başta. */
     fun observeTrash(): Flow<List<Drawing>>

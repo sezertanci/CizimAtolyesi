@@ -7,10 +7,13 @@ import dev.sezertanci.drawingworkshop.data.local.DrawingEntity
 import dev.sezertanci.drawingworkshop.domain.drawing.TrashPolicy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.Clock
 import java.time.Instant
@@ -103,6 +106,37 @@ class DefaultDrawingRepositoryTest {
         assertNull(repository.load("missing"))
     }
 
+    @Test
+    fun observeDrawings_MoreThanLimit_ReturnsFirstPageNewestFirstWithHasMore() = runBlocking {
+        (1..5).forEach { dao.rows["d$it"] = entity("d$it", deletedAt = null).copy(updatedAt = it.toLong()) }
+
+        val page = repository.observeDrawings(limit = 3).first()
+
+        assertEquals(listOf("d5", "d4", "d3"), page.drawings.map { it.id })
+        assertTrue(page.hasMore)
+    }
+
+    @Test
+    fun observeDrawings_ExactlyLimit_ReturnsAllWithoutMore() = runBlocking {
+        (1..3).forEach { dao.rows["d$it"] = entity("d$it", deletedAt = null) }
+
+        val page = repository.observeDrawings(limit = 3).first()
+
+        assertEquals(3, page.drawings.size)
+        assertFalse(page.hasMore)
+    }
+
+    @Test
+    fun observeDrawings_TrashedDrawings_AreNotCountedAsMore() = runBlocking {
+        dao.rows["active"] = entity("active", deletedAt = null)
+        dao.rows["trashed"] = entity("trashed", deletedAt = now)
+
+        val page = repository.observeDrawings(limit = 1).first()
+
+        assertEquals(listOf("active"), page.drawings.map { it.id })
+        assertFalse(page.hasMore)
+    }
+
     private fun entity(id: String, deletedAt: Long?) = DrawingEntity(id, updatedAt = 0, deletedAt, backgroundColor = 0, templateId = null)
 }
 
@@ -110,7 +144,9 @@ private class FakeDrawingDao : DrawingDao {
     val rows = linkedMapOf<String, DrawingEntity>()
     private val changes = MutableStateFlow(0)
 
-    override fun observeActive(): Flow<List<DrawingEntity>> = changes.map { rows.values.filter { it.deletedAt == null } }
+    override fun observeActive(limit: Int): Flow<List<DrawingEntity>> = changes.map {
+        rows.values.filter { it.deletedAt == null }.sortedByDescending { it.updatedAt }.take(limit)
+    }
 
     override fun observeTrashed(): Flow<List<DrawingEntity>> = changes.map { rows.values.filter { it.deletedAt != null } }
 

@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -50,10 +52,15 @@ private const val CARD_ASPECT_RATIO = 1.4f
 
 /** Galeri ve çöp kutusunun ortak ızgarası: kartlar ekran genişliğine göre sütunlara dizilir. */
 @Composable
-fun CardGrid(modifier: Modifier = Modifier, content: LazyGridScope.() -> Unit) {
+fun CardGrid(
+    modifier: Modifier = Modifier,
+    state: LazyGridState = rememberLazyGridState(),
+    content: LazyGridScope.() -> Unit,
+) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(CardMinWidth),
         modifier = modifier,
+        state = state,
         contentPadding = PaddingValues(GridSpacing),
         horizontalArrangement = Arrangement.spacedBy(GridSpacing),
         verticalArrangement = Arrangement.spacedBy(GridSpacing),

@@ -9,13 +9,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items as rowItems
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,6 +47,8 @@ import dev.sezertanci.drawingworkshop.ui.gallery.components.ScreenHeader
 import dev.sezertanci.drawingworkshop.ui.gallery.components.SectionTitle
 import dev.sezertanci.drawingworkshop.ui.gallery.components.ThumbnailSource
 import dev.sezertanci.drawingworkshop.ui.gallery.components.rowCardWidth
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 
 /** Galerinin giriş noktası: ViewModel'i alır ve durumu ekrana bağlar. */
 @Composable
@@ -62,6 +69,7 @@ fun GalleryRoute(
         onMoveToTrash = viewModel::moveToTrash,
         onOpenTrash = onOpenTrash,
         onToggleSound = viewModel::toggleSound,
+        onLoadMore = viewModel::loadMoreDrawings,
     )
 }
 
@@ -79,10 +87,11 @@ fun GalleryScreen(
     onMoveToTrash: (String) -> Unit,
     onOpenTrash: () -> Unit,
     onToggleSound: () -> Unit,
+    onLoadMore: () -> Unit,
 ) {
     Box(Modifier.screenContainer()) {
         GalleryBackground()
-        GalleryContent(state, thumbnails, onNewDrawing, onOpenDrawing, onOpenColoringPage, onMoveToTrash, onOpenTrash, onToggleSound)
+        GalleryContent(state, thumbnails, onNewDrawing, onOpenDrawing, onOpenColoringPage, onMoveToTrash, onOpenTrash, onToggleSound, onLoadMore)
     }
 }
 
@@ -103,7 +112,10 @@ private fun GalleryContent(
     onMoveToTrash: (String) -> Unit,
     onOpenTrash: () -> Unit,
     onToggleSound: () -> Unit,
+    onLoadMore: () -> Unit,
 ) {
+    val gridState = rememberLazyGridState()
+    if (state.hasMoreDrawings) LoadMoreEffect(gridState, onLoadMore)
     Column(Modifier.fillMaxSize()) {
         ScreenHeader(
             title = stringResource(R.string.app_name),
@@ -114,7 +126,7 @@ private fun GalleryContent(
                 }
             },
         )
-        CardGrid {
+        CardGrid(state = gridState) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 StartRow(state.coloringPages, onNewDrawing, onOpenColoringPage)
             }
@@ -123,6 +135,25 @@ private fun GalleryContent(
                 MyDrawingCard(drawing, thumbnails, onOpenDrawing, onMoveToTrash)
             }
         }
+    }
+}
+
+/**
+ * Görünen son kart listenin sonuna yaklaştığında sonraki sayfayı ister. Yeni sayfa gelince öğe sayısı
+ * değiştiği için koşul yeniden değerlendirilir; ekran hâlâ dolmadıysa bir sonraki sayfa da istenir.
+ */
+@Composable
+private fun LoadMoreEffect(gridState: LazyGridState, onLoadMore: () -> Unit) {
+    val currentOnLoadMore by rememberUpdatedState(onLoadMore)
+    LaunchedEffect(gridState) {
+        snapshotFlow {
+            val info = gridState.layoutInfo
+            val lastVisible = info.visibleItemsInfo.lastOrNull()?.index ?: NO_VISIBLE_ITEM
+            GalleryPaging.isNearEnd(lastVisible, info.totalItemsCount) to info.totalItemsCount
+        }
+            .filter { (nearEnd, _) -> nearEnd }
+            .distinctUntilChanged()
+            .collect { currentOnLoadMore() }
     }
 }
 
@@ -207,6 +238,7 @@ private fun TrashButton(count: Int, onClick: () -> Unit) {
     }
 }
 
+private const val NO_VISIBLE_ITEM = -1
 private const val NEW_DRAWING_EMOJI = "➕"
 private const val TRASH_EMOJI = "🗑️"
 private const val SOUND_ON_EMOJI = "🔊"

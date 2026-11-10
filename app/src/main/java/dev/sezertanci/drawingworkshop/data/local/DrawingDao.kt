@@ -8,8 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DrawingDao {
-    @Query("SELECT * FROM drawings WHERE deletedAt IS NULL ORDER BY updatedAt DESC")
-    fun observeActive(): Flow<List<DrawingEntity>>
+    /** En son düzenlenen başta olmak üzere en fazla [limit] aktif resim. */
+    @Query("SELECT * FROM drawings WHERE deletedAt IS NULL ORDER BY updatedAt DESC LIMIT :limit")
+    fun observeActive(limit: Int): Flow<List<DrawingEntity>>
 
     @Query("SELECT * FROM drawings WHERE deletedAt IS NOT NULL ORDER BY deletedAt DESC")
     fun observeTrashed(): Flow<List<DrawingEntity>>

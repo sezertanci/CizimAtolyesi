@@ -17,7 +17,10 @@ class DefaultDrawingRepository @Inject constructor(
     private val clock: Clock,
 ) : DrawingRepository {
 
-    override fun observeDrawings(): Flow<List<Drawing>> = dao.observeActive().map { it.map(DrawingEntity::toDomain) }
+    /** Bir fazla satır istenir; o satır geldiyse sırada başka resim vardır ama listeye eklenmez. */
+    override fun observeDrawings(limit: Int): Flow<DrawingPage> = dao.observeActive(limit + 1).map { rows ->
+        DrawingPage(rows.take(limit).map(DrawingEntity::toDomain), hasMore = rows.size > limit)
+    }
 
     override fun observeTrash(): Flow<List<Drawing>> = dao.observeTrashed().map { it.map(DrawingEntity::toDomain) }
 
