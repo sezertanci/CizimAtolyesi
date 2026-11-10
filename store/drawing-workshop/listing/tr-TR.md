@@ -18,6 +18,12 @@ Resimler otomatik olarak kaydedilir ve her zaman galeride sizi bekler.
 
 Reklam, hesap ve uygulama içi satın alma yoktur. Kişisel veri toplanmaz, resimler yalnızca cihazda saklanır ve internet bağlantısı gerekmez.
 
+## Sürüm notu (1.1.0)
+
+- Araçların simgeleri yenilendi: sprey kutusu, silgi, boya kovası, keçeli kalem, kedi çıkartması ve kelebek simetri düğmesi.
+- Gökkuşağı fırçası renkler arasında daha yumuşak ve canlı geçiyor.
+- Boyut düğmeleri çizim araçlarının hemen altına taşındı; yeni resimler en ince boyutla başlıyor.
+
 ## Sürüm notu (1.0.0)
 
 Çizim Atölyesi'nin ilk sürümü.

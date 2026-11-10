@@ -18,6 +18,12 @@ Drawings are saved automatically and are always waiting in the gallery.
 
 No ads, no accounts and no in-app purchases. No personal data is collected, drawings stay on the device and no internet connection is needed.
 
+## Sürüm notu (1.1.0)
+
+- New tool icons: spray can, eraser, paint bucket, felt-tip pen, cat sticker and a butterfly symmetry button.
+- The rainbow brush now blends between colours more smoothly and vividly.
+- Size buttons moved right below the drawing tools; new drawings start with the thinnest size.
+
 ## Sürüm notu (1.0.0)
 
 First release of Drawing Workshop.
