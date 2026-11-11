@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bulutlar -->
+  <g id="cloudL">
+    <path d="M110,890 C50,890 50,810 120,810 C130,750 225,740 245,800 C305,780 345,850 295,890 Z" fill="#fff"/>
+  </g>
+  <use xlink:href="#cloudL" transform="matrix(-1,0,0,1,1400,0)"/>
+
+  <!-- Yıldızlar -->
+  <path d="M1290.0,110.0 L1303.3,141.1 L1337.0,143.8 L1311.3,165.9 L1319.1,198.7 L1290.0,181.0 L1260.9,198.7 L1268.7,165.9 L1243.0,143.8 L1276.7,141.1 Z" fill="#fff" stroke-width="10"/>
+  <path d="M1275.0,300.0 L1285.0,323.3 L1310.3,325.4 L1291.1,342.0 L1296.9,366.6 L1275.0,353.3 L1253.1,366.6 L1258.9,342.0 L1239.7,325.4 L1265.0,323.3 Z" fill="#000" stroke="none"/>
+
+  <!-- Kanatlar (sol yarı, sağa ayna olarak kopyalanır) -->
+  <g id="wingL">
+    <path d="M640,430 C560,230 400,130 290,200 C190,270 230,470 400,540 C500,580 600,560 650,500 Z" fill="#fff"/>
+    <path d="M650,500 C560,540 420,590 400,690 C385,780 520,800 620,700 C660,660 665,600 650,560 Z" fill="#fff"/>
+    <path stroke-width="9" d="M330,449 C282,421 302,387 330,411 C358,387 378,421 330,449 Z"/>
+    <path stroke-width="9" d="M470,529 C422,501 442,467 470,491 C498,467 518,501 470,529 Z"/>
+    <path stroke-width="9" d="M420,259 C372,231 392,197 420,221 C448,197 468,231 420,259 Z"/>
+    <path stroke-width="9" d="M500,732 C452,704 472,670 500,694 C528,670 548,704 500,732 Z"/>
+  </g>
+  <use xlink:href="#wingL" transform="matrix(-1,0,0,1,1400,0)"/>
+
+  <!-- Bacaklar ve ayakkabılar -->
+  <path data-tube="36" d="M660,800 L650,880"/>
+  <path data-tube="36" d="M740,800 L750,880"/>
+  <ellipse cx="640" cy="905" rx="42" ry="24" fill="#fff"/>
+  <ellipse cx="760" cy="905" rx="42" ry="24" fill="#fff"/>
+
+  <!-- Elbise -->
+  <path id="dress" d="M635,500 C632,570 560,700 535,785 C600,830 800,830 865,785 C840,700 768,570 765,500 Z" fill="#fff"/>
+  <path data-clip="dress" stroke-width="8" d="M690,590 C680,690 640,760 600,830 M710,590 C720,690 760,760 800,830"/>
+  <path d="M645,562 C680,580 720,580 755,562" stroke-width="9"/>
+  <circle cx="700" cy="640" r="10" fill="#000" stroke="none"/>
+
+  <path data-tube="46" d="M700,470 L700,520"/>
+  <!-- Kollar, el ve değnek -->
+  <path data-tube="40" d="M665,525 C610,525 545,485 490,430"/>
+  <path data-tube="28" d="M490,430 L150,190"/>
+  <circle cx="490" cy="430" r="32" fill="#fff"/>
+  <path data-tube="40" d="M735,525 C815,515 855,545 885,600"/>
+  <circle cx="890" cy="610" r="32" fill="#fff"/>
+  <path d="M115.0,105.0 L133.0,147.0 L178.6,150.6 L143.9,180.4 L154.5,224.9 L115.0,201.0 L75.5,224.9 L86.1,180.4 L51.4,150.6 L97.0,147.0 Z" fill="#fff" stroke-width="10"/>
+
+  <!-- Saç, topuz ve yüz -->
+  <circle cx="700" cy="205" r="50" fill="#fff"/>
+  <circle cx="700" cy="335" r="115" fill="#fff"/>
+  <ellipse cx="700" cy="375" rx="88" ry="105" fill="#fff"/>
+  <circle cx="665" cy="372" r="16" fill="#000" stroke="none"/>
+  <circle cx="735" cy="372" r="16" fill="#000" stroke="none"/>
+  <path d="M672,432 C690,449 710,449 728,432" stroke-width="9"/>
+</svg>

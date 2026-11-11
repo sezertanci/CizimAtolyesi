@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Balonlar -->
+  <ellipse cx="170" cy="190" rx="85" ry="105" fill="#fff"/>
+  <path d="M170,295 L150,560"/>
+  <ellipse cx="1050" cy="130" rx="85" ry="105" fill="#fff"/>
+  <path d="M1050,235 L1020,420"/>
+  <ellipse cx="1290" cy="400" rx="70" ry="88" fill="#fff"/>
+  <path d="M1290,488 L1270,640"/>
+
+  <!-- Bulutlar -->
+  <g transform="translate(-80,0)">
+  <path d="M380,150 C320,150 320,70 390,70 C400,10 495,0 515,60 C575,40 615,110 565,150 Z" fill="#fff"/>
+  </g>
+  <path d="M1150,640 C1100,640 1100,570 1160,570 C1170,520 1250,510 1265,560 C1315,545 1345,610 1300,640 Z" fill="#fff"/>
+
+  <!-- Tepe -->
+  <path d="M-20,880 C300,850 900,880 1420,850"/>
+
+  <!-- Tekerlekler -->
+  <circle id="wr" cx="430" cy="740" r="150" fill="#fff"/>
+  <circle cx="430" cy="740" r="108" stroke-width="8"/>
+  <circle id="wf" cx="980" cy="740" r="150" fill="#fff"/>
+  <circle cx="980" cy="740" r="108" stroke-width="8"/>
+
+  <!-- Çerçeve -->
+  <path data-tube="28" d="M430,740 L630,555 L880,560 L980,740 M880,560 L700,740 L430,740 M630,555 L700,740 M880,560 L900,500 M880,500 L930,500"/>
+  <circle cx="430" cy="740" r="28" fill="#fff"/>
+  <circle cx="980" cy="740" r="28" fill="#fff"/>
+  <circle cx="700" cy="740" r="30" fill="#fff"/>
+  <path d="M600,540 C610,515 680,515 690,540 Z" fill="#000"/>
+
+  <!-- Sepet ve köpek -->
+  <path d="M940,470 L1040,470 L1020,560 L960,560 Z" fill="#fff"/>
+  <circle cx="990" cy="420" r="45" fill="#fff"/>
+  <circle cx="975" cy="415" r="8" fill="#000" stroke="none"/>
+  <circle cx="1008" cy="415" r="8" fill="#000" stroke="none"/>
+
+  <!-- Bacak -->
+  <path data-tube="46" d="M650,520 L770,600 L735,730"/>
+  <ellipse cx="735" cy="745" rx="46" ry="24" fill="#fff"/>
+
+  <!-- Saç (arka) -->
+  <path d="M585,235 C575,55 865,55 855,235 C865,300 860,350 845,380 L595,380 C580,350 575,300 585,235 Z" fill="#fff"/>
+
+  <!-- Gövde ve etek -->
+  <path d="M640,340 C640,420 600,470 570,540 C640,580 740,575 800,540 C780,470 780,400 770,340 Z" fill="#fff"/>
+  <circle cx="640" cy="500" r="9" fill="#000" stroke="none"/>
+  <circle cx="700" cy="520" r="9" fill="#000" stroke="none"/>
+  <circle cx="755" cy="500" r="9" fill="#000" stroke="none"/>
+
+  <!-- Kol -->
+  <path data-tube="40" d="M690,380 C760,420 830,450 905,495"/>
+  <circle cx="905" cy="500" r="30" fill="#fff"/>
+
+  <!-- Yüz -->
+  <circle id="head" cx="720" cy="235" r="95" fill="#fff"/>
+  <ellipse cx="685" cy="255" rx="11" ry="15" fill="#000" stroke="none"/>
+  <ellipse cx="755" cy="255" rx="11" ry="15" fill="#000" stroke="none"/>
+  <path d="M666,224 C676,212 694,212 704,224 M736,224 C746,212 764,212 774,224" stroke-width="7"/>
+  <path d="M690,296 C705,314 735,314 750,296" stroke-width="9"/>
+  <!-- Fiyonk -->
+  <path d="M720,128 L672,98 L672,158 Z M720,128 L768,98 L768,158 Z" fill="#fff"/>
+  <circle cx="720" cy="128" r="10" fill="#000" stroke="none"/>
+</svg>

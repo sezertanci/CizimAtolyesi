@@ -166,6 +166,10 @@ Tarih: 2026-11-08 (3. aşama tamamlandı)
      Çizim kuralları: paralel kenarlar arası en az ~30 px, tüpler en az 28 px, göz parıltısı en az r10,
      küçük benek ve tırnaklar siyah dolgu, köşeler başka kenara yakın bitmez.
    - Boyama sayfaları commit edildi ve gönderildi (`6e3a55e`); çizim kuralları `tools/coloring/DRAWING_GUIDE.md` (`f4031b3`).
+   - **5 yeni boyama sayfası (commit edilmedi, tablette denenmeyi bekliyor):** kullanıcının verdiği boyama
+     kitabı fotoğraflarındaki konular (telif nedeniyle izlenmeden, özgün kompozisyonla) sıfırdan çizildi:
+     peri (`fairy`), kanatlı midilli (`pony`), bisikletli kız (`cyclist`), prenses (`princess`), balo
+     elbiseli prenses (`ballgown`). Toplam 20 sayfa; yeni sayfalarda çok küçük bölge yok.
    - **Yayın hazırlığı (commit edilmedi):**
      - İmzalama: `app/build.gradle.kts` yükleme anahtarını `drawingWorkshopUpload*` Gradle özelliklerinden okur
        (`~/.gradle/gradle.properties` veya `ORG_GRADLE_PROJECT_*`); yoksa paket imzasız çıkar. Ayrıntı README'de.
