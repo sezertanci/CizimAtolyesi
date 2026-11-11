@@ -18,6 +18,14 @@ Resimler otomatik olarak kaydedilir ve her zaman galeride sizi bekler.
 
 Reklam, hesap ve uygulama içi satın alma yoktur. Kişisel veri toplanmaz, resimler yalnızca cihazda saklanır ve internet bağlantısı gerekmez.
 
+## Sürüm notu (1.2.0)
+
+- Yeni ipek fırçası: ince teller parmağı duman gibi savrularak izler. Hazır stiller (Sakin, Dalgalı, Fırtına, Tül) ve hareket, tempo, tel seçimleri var.
+- Gökkuşağı artık renk panelinde bir renk; kalem, fırça, keçeli kalem ve spreyle kullanılabiliyor.
+- Zemin yumuşak maviye, açılan menüler koyu fümeye döndü.
+- Galeri çok sayıda resimde daha hızlı açılıyor.
+- Beyaz renk seçiliyken boyut noktalarının görünmemesi düzeltildi.
+
 ## Sürüm notu (1.1.0)
 
 - Araçların simgeleri yenilendi: sprey kutusu, silgi, boya kovası, keçeli kalem, kedi çıkartması ve kelebek simetri düğmesi.

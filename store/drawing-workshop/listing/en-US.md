@@ -18,6 +18,14 @@ Drawings are saved automatically and are always waiting in the gallery.
 
 No ads, no accounts and no in-app purchases. No personal data is collected, drawings stay on the device and no internet connection is needed.
 
+## Sürüm notu (1.2.0)
+
+- New silk brush: fine threads follow your finger, drifting like smoke. Comes with ready-made styles (Calm, Wavy, Storm, Tulle) and motion, tempo and thread options.
+- Rainbow is now a colour in the colour panel and works with the pencil, brush, felt-tip pen and spray.
+- Softer blue background and dark smoky drop-down menus.
+- The gallery opens faster when there are many drawings.
+- Fixed size dots being invisible while white was selected.
+
 ## Sürüm notu (1.1.0)
 
 - New tool icons: spray can, eraser, paint bucket, felt-tip pen, cat sticker and a butterfly symmetry button.
