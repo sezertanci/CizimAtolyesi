@@ -18,6 +18,10 @@ Resimler otomatik olarak kaydedilir ve her zaman galeride sizi bekler.
 
 Reklam, hesap ve uygulama içi satın alma yoktur. Kişisel veri toplanmaz, resimler yalnızca cihazda saklanır ve internet bağlantısı gerekmez.
 
+## Sürüm notu (1.3.1)
+
+- Yeni uygulama simgesi: gökkuşağı renkli çiçek ve boya fırçası.
+
 ## Sürüm notu (1.3.0)
 
 - Beş yeni boyama sayfası: peri, kanatlı midilli, bisikletli kız, prenses ve balo elbiseli prenses.
