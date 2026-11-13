@@ -28,6 +28,12 @@ class BuiltInColoringPageCatalog @Inject constructor() : ColoringPageCatalog {
         ColoringPage("cyclist", R.drawable.coloring_cyclist),
         ColoringPage("princess", R.drawable.coloring_princess),
         ColoringPage("ballgown", R.drawable.coloring_ballgown),
+        ColoringPage("unicorn", R.drawable.coloring_unicorn),
+        ColoringPage("dog", R.drawable.coloring_dog),
+        ColoringPage("castle", R.drawable.coloring_castle),
+        ColoringPage("firetruck", R.drawable.coloring_firetruck),
+        ColoringPage("train", R.drawable.coloring_train),
+        ColoringPage("mandala", R.drawable.coloring_mandala),
     )
 
     /** Yeniden eskiye sıralı; yeni eklenen sayfalar galeride ilk sırada görünür. */

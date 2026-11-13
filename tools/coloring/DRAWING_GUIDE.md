@@ -105,6 +105,21 @@ Bu tablo, mevcut sayfalarda yapılan her düzeltmeyi kaydeder. Benzer bir şekil
 - **Ana nesne + sahne.** Ortada büyük ve net bir kahraman (sayfanın yaklaşık yarısı), çevresinde boyanacak
   2–4 sahne öğesi: gökyüzü (güneş, bulut, yıldız, ay), zemin (çimen, çiçek, mantar), küçük yardımcı
   nesneler (kuş, balık, kelebek).
+- **Kahraman büyük olur.** Ana nesne sayfanın en az yarısını kaplar; üstte ya da yanlarda geniş boş alan
+  kalmaz. Boş kalan yer büyütmeyle ya da konuya uygun bir sahne öğesiyle doldurulur.
+- **Her sayfa kendi sahnesini taşır; şablon tekrarlanmaz.** Galeride yan yana durduklarında sayfalar
+  birbirinin kopyası gibi görünmemelidir. Yeni sayfaya başlamadan önce son eklenen 5–6 sayfa
+  (`preview.html`) açılıp bakılır ve şunlar onlardan farklı seçilir:
+  - **Arka plan konuya göre seçilir:** kaleye tepe ve kıvrılan yol, trene dağ ve tünel, itfaiyeye istasyon
+    binası, köpeğe bahçe çiti. "Güneş + iki bulut" her sayfanın varsayılan gökyüzü değildir.
+  - **Güneş** ancak sahneye bir şey katıyorsa kullanılır. Kullanılacaksa biçimi (yüzlü, yarım, dalgalı
+    ışınlı) ve yeri önceki sayfalardan farklı olur; aynı 8 ışınlı güneş üst üste sayfalarda yer almaz.
+  - **Zemin** her zaman düz yatay çizgi olmaz: tepe, yamaç, yol, su kıyısı, çimenli eğri, kaldırım gibi
+    biçimler dönüşümlü kullanılır. Ana nesne her sayfada aynı yükseklikte, en altta durmaz.
+  - **Yerleşim** değiştirilir: ortada tek nesne, çapraz hareket, yakın plan, nesnenin bir yapının önünde
+    ya da içinden çıkması gibi.
+  - Aynı yardımcı şekil (bulut, ağaç, çalı) kopyalanıp başka sayfaya taşınmaz; her sayfada yeniden ve
+    farklı biçimde çizilir.
 - **Bölge sayısı 25–70 arası.** Daha azı sıkıcı, daha fazlası küçük çocuk için yorucu olur.
 - **Desen için `data-clip`.** Pul, şerit, dilim, kırışıklık gibi ayrıntılar desen çizgisiyle eklenir ve
   şekle kırpılır. Desen çizgileri arasında da ≥ 30 px boşluk bırakılır.
@@ -119,6 +134,7 @@ Bu tablo, mevcut sayfalarda yapılan her düzeltmeyi kaydeder. Benzer bir şekil
 - [ ] Örtmesi gereken her şekil `fill="#fff"` ve `Z` ile kapalı.
 - [ ] Zemine basan parçaların alt kenarı zeminle çakışıyor.
 - [ ] Ayna için yalnızca `matrix(-1,0,0,1,1400,0)` kullanıldı.
+- [ ] Sayfa son eklenen sayfalarla yan yana karşılaştırıldı: gökyüzü, zemin ve yerleşim onlardan farklı.
 - [ ] Önizlemede **çok küçük: 0**. Küçük bölgelerin her biri bilerek bırakıldı (ör. göz parıltısı).
 - [ ] Sol taraftaki çizimde kutu gibi duran, kopuk ya da üst üste binmiş çizgi yok.
 - [ ] Sayfa kataloğa eklendi; README'deki sayfa listesi güncellendi.

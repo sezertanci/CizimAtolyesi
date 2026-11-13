@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Kuşlar -->
+  <path stroke-width="10" d="M60,130 C80,105 100,105 115,130 C130,105 150,105 170,130"/>
+  <path stroke-width="10" d="M1250,150 C1265,132 1280,132 1290,150 C1300,132 1315,132 1330,150"/>
+
+  <!-- İtfaiye istasyonu -->
+  <path d="M220,920 L220,250 L1180,250 L1180,920 Z" fill="#fff"/>
+  <path d="M180,265 L700,70 L1220,265 Z" fill="#fff"/>
+  <circle cx="700" cy="185" r="48" fill="#fff"/>
+  <circle cx="700" cy="185" r="16" fill="#000" stroke="none"/>
+  <path d="M270,385 L270,325 C270,280 360,280 360,325 L360,385 Z" fill="#fff"/>
+  <path d="M430,385 L430,325 C430,280 520,280 520,325 L520,385 Z" fill="#fff"/>
+  <path d="M880,385 L880,325 C880,280 970,280 970,325 L970,385 Z" fill="#fff"/>
+  <path d="M1040,385 L1040,325 C1040,280 1130,280 1130,325 L1130,385 Z" fill="#fff"/>
+  <rect x="560" y="300" width="280" height="85" rx="14" fill="#fff"/>
+
+  <!-- Kaldırım ve yol -->
+  <path d="M-20,920 L1420,920"/>
+  <rect x="-30" y="955" width="90" height="20" rx="6" fill="#000" stroke="none"/>
+  <rect x="150" y="955" width="90" height="20" rx="6" fill="#000" stroke="none"/>
+  <rect x="330" y="955" width="90" height="20" rx="6" fill="#000" stroke="none"/>
+  <rect x="510" y="955" width="90" height="20" rx="6" fill="#000" stroke="none"/>
+  <rect x="690" y="955" width="90" height="20" rx="6" fill="#000" stroke="none"/>
+  <rect x="870" y="955" width="90" height="20" rx="6" fill="#000" stroke="none"/>
+  <rect x="1050" y="955" width="90" height="20" rx="6" fill="#000" stroke="none"/>
+  <rect x="1230" y="955" width="90" height="20" rx="6" fill="#000" stroke="none"/>
+  <rect x="1410" y="955" width="90" height="20" rx="6" fill="#000" stroke="none"/>
+
+  <!-- İtfaiye aracı (büyütülmüş) -->
+  <g transform="matrix(1.12,0,0,1.12,-100.8,-55.6)" stroke-width="10.7">
+    <!-- Arka gövde ve merdiven -->
+    <rect x="200" y="520" width="640" height="260" rx="16" fill="#fff"/>
+    <rect id="ladder" x="230" y="455" width="640" height="65" rx="10" fill="#fff"/>
+    <path data-clip="ladder" stroke-width="10" d="M310,455 L310,520 M390,455 L390,520 M470,455 L470,520 M550,455 L550,520 M630,455 L630,520 M710,455 L710,520 M790,455 L790,520"/>
+    <rect x="240" y="560" width="160" height="140" rx="14" fill="#fff"/>
+    <rect x="430" y="560" width="160" height="140" rx="14" fill="#fff"/>
+    <rect x="620" y="560" width="170" height="140" rx="14" fill="#fff"/>
+
+    <!-- Kabin -->
+    <path d="M900,470 L900,445 C900,420 965,420 965,445 L965,470 Z" fill="#fff"/>
+    <path d="M830,780 L830,470 L1020,470 C1080,470 1110,520 1130,580 L1180,595 C1200,600 1205,615 1205,635 L1205,780 Z" fill="#fff"/>
+    <path d="M865,580 L865,510 L1010,510 C1045,510 1068,540 1080,580 Z" fill="#fff"/>
+    <rect x="865" y="610" width="150" height="100" rx="14" fill="#fff"/>
+    <ellipse cx="1170" cy="650" rx="16" ry="22" fill="#000" stroke="none"/>
+
+    <!-- Şerit ve tampon -->
+    <path d="M200,730 L1205,730 L1205,770 L200,770 Z" fill="#fff"/>
+    <rect x="1150" y="745" width="80" height="50" rx="14" fill="#fff"/>
+
+    <!-- Tekerlekler -->
+    <circle cx="400" cy="805" r="75" fill="#fff"/>
+    <circle cx="400" cy="805" r="32" fill="#fff"/>
+    <circle cx="1020" cy="805" r="75" fill="#fff"/>
+    <circle cx="1020" cy="805" r="32" fill="#fff"/>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Kuşlar -->
+  <path stroke-width="10" d="M110,120 C130,95 150,95 165,120 C180,95 200,95 220,120"/>
+  <path stroke-width="10" d="M1180,110 C1195,92 1210,92 1220,110 C1230,92 1245,92 1260,110"/>
+  <path stroke-width="10" d="M1250,190 C1265,172 1280,172 1290,190 C1300,172 1315,172 1330,190"/>
+
+  <!-- Karlı dağlar -->
+  <path id="mountains" d="M-20,600 L170,330 L320,490 L360,450 L360,1010 L-20,1010 Z M1420,600 L1230,330 L1080,490 L1040,450 L1040,1010 L1420,1010 Z" fill="#fff"/>
+  <path data-clip="mountains" stroke-width="10" d="M90,445 C120,470 140,420 170,455 C200,420 220,465 250,415 M1310,445 C1280,470 1260,420 1230,455 C1200,420 1180,465 1150,415"/>
+
+  <!-- Ana bina ve bayrağı -->
+  <path d="M700,380 L700,235"/>
+  <path d="M700,240 C740,220 775,265 825,245 L825,310 C775,330 740,285 700,305 Z" fill="#fff"/>
+  <path d="M500,880 L500,380 L544,380 L544,420 L589,420 L589,380 L633,380 L633,420 L678,420 L678,380 L722,380 L722,420 L767,420 L767,380 L811,380 L811,420 L856,420 L856,380 L900,380 L900,880 Z" fill="#fff"/>
+  <path d="M620,880 L620,725 C620,625 780,625 780,725 L780,880 Z" fill="#fff"/>
+  <path stroke-width="10" d="M673,655 L673,880 M727,655 L727,880"/>
+  <circle cx="700" cy="525" r="45" fill="#fff"/>
+  <g id="keepWindow">
+    <path d="M545,560 L545,500 C545,465 590,465 590,500 L590,560 Z" fill="#000" stroke="none"/>
+    <rect x="532" y="610" width="70" height="42" rx="12" fill="#fff"/>
+  </g>
+  <use xlink:href="#keepWindow" transform="matrix(-1,0,0,1,1400,0)"/>
+
+  <!-- Kuleler -->
+  <g id="tower">
+    <path d="M435,170 L435,75"/>
+    <path d="M435,80 L550,118 L435,156 Z" fill="#fff"/>
+    <path d="M360,880 L360,330 L510,330 L510,880 Z" fill="#fff"/>
+    <path d="M340,345 L435,170 L530,345 Z" fill="#fff"/>
+    <path d="M415,490 L415,440 C415,405 455,405 455,440 L455,490 Z" fill="#000" stroke="none"/>
+    <rect x="385" y="600" width="70" height="42" rx="12" fill="#fff"/>
+    <rect x="420" y="730" width="70" height="42" rx="12" fill="#fff"/>
+  </g>
+  <use xlink:href="#tower" transform="matrix(-1,0,0,1,1400,0)"/>
+
+  <!-- Tepe, ağaçlar ve kıvrılan yol -->
+  <path d="M-20,760 C200,740 300,850 450,862 C600,852 800,852 950,862 C1100,850 1200,740 1420,760 L1420,1020 L-20,1020 Z" fill="#fff"/>
+  <path d="M128,890 L128,800 L172,800 L172,890 Z" fill="#fff"/>
+  <path d="M80,820 C40,810 50,745 95,740 C95,685 190,675 200,725 C250,720 260,800 215,820 Z" fill="#fff"/>
+  <path d="M1218,900 L1218,810 L1262,810 L1262,900 Z" fill="#fff"/>
+  <path d="M1170,830 C1130,820 1140,755 1185,750 C1185,695 1280,685 1290,735 C1340,730 1350,810 1305,830 Z" fill="#fff"/>
+  <path d="M620,850 C600,925 520,945 470,1010 L700,1010 C730,940 800,920 780,850 Z" fill="#fff"/>
+</svg>

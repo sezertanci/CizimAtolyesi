@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gökyüzü: kuşlar ve kelebek -->
+  <path stroke-width="10" d="M120,150 C140,125 160,125 175,150 C190,125 210,125 230,150"/>
+  <path stroke-width="10" d="M260,230 C275,212 290,212 300,230 C310,212 325,212 340,230"/>
+  <path d="M1210,240 C1170,165 1085,160 1095,225 C1060,265 1100,320 1210,262 Z" fill="#fff"/>
+  <path d="M1210,240 C1250,165 1335,160 1325,225 C1360,265 1320,320 1210,262 Z" fill="#fff"/>
+  <circle cx="1145" cy="225" r="16" fill="#000" stroke="none"/>
+  <circle cx="1275" cy="225" r="16" fill="#000" stroke="none"/>
+  <ellipse cx="1210" cy="250" rx="16" ry="58" fill="#000" stroke="none"/>
+  <path stroke-width="8" d="M1205,198 C1195,170 1180,160 1165,158 M1215,198 C1225,170 1240,160 1255,158"/>
+
+  <!-- Bahçe çiti -->
+  <path d="M-40,830 L-40,565 L5,515 L50,565 L50,830 Z" fill="#fff"/>
+  <path d="M95,830 L95,565 L140,515 L185,565 L185,830 Z" fill="#fff"/>
+  <path d="M230,830 L230,565 L275,515 L320,565 L320,830 Z" fill="#fff"/>
+  <path d="M1350,830 L1350,565 L1395,515 L1440,565 L1440,830 Z" fill="#fff"/>
+  <path d="M1215,830 L1215,565 L1260,515 L1305,565 L1305,830 Z" fill="#fff"/>
+  <path d="M-20,640 L320,640 L320,685 L-20,685 Z" fill="#fff"/>
+  <path d="M1215,640 L1420,640 L1420,685 L1215,685 Z" fill="#fff"/>
+
+  <!-- Çimenli zemin -->
+  <path d="M-20,800 C350,760 1050,815 1420,775 L1420,1020 L-20,1020 Z" fill="#fff"/>
+
+  <!-- Köpek (büyütülmüş) -->
+  <g transform="matrix(1.45,0,0,1.45,-315,-331.5)" stroke-width="8.3">
+    <path d="M830,800 C890,795 935,755 935,700 C935,680 945,665 955,672 C965,680 960,700 955,720 C945,780 900,825 830,830 Z" fill="#fff"/>
+    <path d="M545,870 C495,760 470,600 530,530 C580,470 820,470 870,530 C930,600 905,760 855,870 Z" fill="#fff"/>
+    <g id="haunch">
+      <ellipse cx="570" cy="805" rx="68" ry="65" fill="#fff"/>
+      <ellipse cx="565" cy="848" rx="62" ry="22" fill="#fff"/>
+    </g>
+    <use xlink:href="#haunch" transform="matrix(-1,0,0,1,1400,0)"/>
+    <g id="leg">
+      <path d="M618,850 L618,720 C618,688 678,688 678,720 L678,850 Z" fill="#fff"/>
+      <ellipse cx="648" cy="850" rx="44" ry="24" fill="#fff"/>
+    </g>
+    <use xlink:href="#leg" transform="matrix(-1,0,0,1,1400,0)"/>
+    <path d="M585,555 C640,595 760,595 815,555 L820,590 C760,632 640,632 580,590 Z" fill="#fff"/>
+    <circle cx="700" cy="640" r="34" fill="#fff"/>
+    <ellipse cx="700" cy="430" rx="150" ry="140" fill="#fff"/>
+    <g id="ear">
+      <path d="M585,350 C525,355 485,450 505,540 C525,575 575,550 590,490 C600,450 610,400 620,370 Z" fill="#fff"/>
+    </g>
+    <use xlink:href="#ear" transform="matrix(-1,0,0,1,1400,0)"/>
+    <g id="eye">
+      <ellipse cx="645" cy="415" rx="18" ry="24" fill="#000" stroke="none"/>
+      <circle cx="650" cy="405" r="8" fill="#fff" stroke="none"/>
+    </g>
+    <use xlink:href="#eye" transform="matrix(-1,0,0,1,1400,0)"/>
+    <ellipse cx="700" cy="495" rx="72" ry="45" fill="#fff"/>
+    <ellipse cx="700" cy="475" rx="28" ry="18" fill="#000" stroke="none"/>
+    <path stroke-width="6.5" d="M700,490 L700,510 M660,508 C675,528 695,525 700,510 C705,525 725,528 740,508"/>
+  </g>
+
+  <!-- Mama kabı -->
+  <path d="M130,885 L330,885 L305,950 C295,962 165,962 155,950 Z" fill="#fff"/>
+  <ellipse cx="230" cy="885" rx="100" ry="24" fill="#fff"/>
+
+  <!-- Kemik -->
+  <path d="M1105,875 C1085,845 1045,860 1055,885 C1040,905 1070,935 1100,912 L1255,912 C1285,935 1315,905 1300,885 C1310,860 1270,845 1250,875 Z" fill="#fff"/>
+</svg>

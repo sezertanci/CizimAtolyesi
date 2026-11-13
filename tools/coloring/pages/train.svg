@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Sıcak hava balonu -->
+  <path id="balloon" d="M620,70 C720,70 770,150 752,222 C738,280 672,312 652,335 L588,335 C568,312 502,280 488,222 C470,150 520,70 620,70 Z" fill="#fff"/>
+  <path data-clip="balloon" stroke-width="10" d="M580,75 C535,150 545,260 598,335 M660,75 C705,150 695,260 642,335"/>
+  <path stroke-width="8" d="M596,338 L600,395 M644,338 L640,395"/>
+  <rect x="585" y="395" width="70" height="50" rx="10" fill="#fff"/>
+
+  <!-- Dağ ve tünel -->
+  <path d="M-20,870 L-20,330 C40,280 120,230 200,240 C300,250 420,420 540,540 L540,870 Z" fill="#fff"/>
+  <path d="M-10,870 L-10,600 C-10,395 390,395 390,600 L390,870 Z" fill="#fff"/>
+  <path d="M25,870 L25,610 C25,445 355,445 355,610 L355,870 Z" fill="#000" stroke="none"/>
+  <rect x="340" y="620" width="56" height="250" fill="#000" stroke="none"/>
+
+  <!-- Ray ve traversler -->
+  <path d="M-20,870 L1420,870"/>
+  <rect x="20" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="130" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="240" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="350" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="460" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="570" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="680" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="790" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="900" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="1010" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="1120" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="1230" y="878" width="50" height="22" fill="#000" stroke="none"/>
+  <rect x="1340" y="878" width="50" height="22" fill="#000" stroke="none"/>
+
+  <!-- Bağlantılar -->
+  <path d="M385,760 L455,760 M755,760 L805,760"/>
+
+  <!-- Yük vagonu -->
+  <rect x="110" y="530" width="125" height="115" rx="10" fill="#fff"/>
+  <rect x="160" y="530" width="24" height="115" fill="#000" stroke="none"/>
+  <rect x="270" y="560" width="100" height="85" rx="10" fill="#fff"/>
+  <rect x="308" y="560" width="24" height="85" fill="#000" stroke="none"/>
+  <rect x="80" y="640" width="310" height="150" rx="14" fill="#fff"/>
+  <circle cx="150" cy="825" r="45" fill="#fff"/>
+  <circle cx="150" cy="825" r="12" fill="#000" stroke="none"/>
+  <circle cx="320" cy="825" r="45" fill="#fff"/>
+  <circle cx="320" cy="825" r="12" fill="#000" stroke="none"/>
+
+  <!-- Yolcu vagonu -->
+  <rect x="435" y="525" width="340" height="50" rx="16" fill="#fff"/>
+  <rect x="450" y="560" width="310" height="230" rx="14" fill="#fff"/>
+  <rect x="480" y="600" width="110" height="95" rx="14" fill="#fff"/>
+  <rect x="620" y="600" width="110" height="95" rx="14" fill="#fff"/>
+  <circle cx="515" cy="825" r="45" fill="#fff"/>
+  <circle cx="515" cy="825" r="12" fill="#000" stroke="none"/>
+  <circle cx="695" cy="825" r="45" fill="#fff"/>
+  <circle cx="695" cy="825" r="12" fill="#000" stroke="none"/>
+
+  <!-- Lokomotif: duman, baca, kazan, kabin -->
+  <circle cx="1165" cy="425" r="35" fill="#fff"/>
+  <circle cx="1230" cy="345" r="45" fill="#fff"/>
+  <circle cx="1310" cy="260" r="55" fill="#fff"/>
+  <path d="M1110,605 L1100,520 L1170,520 L1160,605 Z" fill="#fff"/>
+  <rect x="1088" y="490" width="94" height="38" rx="10" fill="#fff"/>
+  <path d="M995,605 C995,530 1075,530 1075,605 Z" fill="#fff"/>
+  <path d="M1200,780 L1275,865 L1150,865 Z" fill="#000" stroke="none"/>
+  <path d="M950,600 L1180,600 C1230,600 1245,640 1245,690 C1245,740 1230,780 1180,780 L950,780 Z" fill="#fff"/>
+  <ellipse cx="1222" cy="690" rx="14" ry="24" fill="#000" stroke="none"/>
+  <rect x="780" y="440" width="200" height="45" rx="14" fill="#fff"/>
+  <rect x="800" y="475" width="160" height="305" rx="10" fill="#fff"/>
+  <rect x="830" y="515" width="100" height="90" rx="14" fill="#fff"/>
+  <circle cx="880" cy="800" r="70" fill="#fff"/>
+  <circle cx="880" cy="800" r="28" fill="#fff"/>
+  <circle cx="1060" cy="825" r="45" fill="#fff"/>
+  <circle cx="1060" cy="825" r="12" fill="#000" stroke="none"/>
+  <circle cx="1170" cy="825" r="45" fill="#fff"/>
+  <circle cx="1170" cy="825" r="12" fill="#000" stroke="none"/>
+</svg>

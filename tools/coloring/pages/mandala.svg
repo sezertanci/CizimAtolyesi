@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" width="1400" height="1000"
+     fill="none" stroke="#000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Köşe yıldızları -->
+  <path d="M0,-75 C17,-25 25,-17 75,0 C25,17 17,25 0,75 C-17,25 -25,17 -75,0 C-25,-17 -17,-25 0,-75 Z" transform="translate(115,115)" fill="#fff"/>
+  <path d="M0,-75 C17,-25 25,-17 75,0 C25,17 17,25 0,75 C-17,25 -25,17 -75,0 C-25,-17 -17,-25 0,-75 Z" transform="translate(1285,115)" fill="#fff"/>
+  <path d="M0,-75 C17,-25 25,-17 75,0 C25,17 17,25 0,75 C-17,25 -25,17 -75,0 C-25,-17 -17,-25 0,-75 Z" transform="translate(115,885)" fill="#fff"/>
+  <path d="M0,-75 C17,-25 25,-17 75,0 C25,17 17,25 0,75 C-17,25 -25,17 -75,0 C-25,-17 -17,-25 0,-75 Z" transform="translate(1285,885)" fill="#fff"/>
+
+  <!-- Mandala: dıştan içe halkalar -->
+  <g transform="translate(700,500)">
+    <circle r="460" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(0)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(22.5)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(45)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(67.5)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(90)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(112.5)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(135)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(157.5)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(180)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(202.5)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(225)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(247.5)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(270)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(292.5)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(315)" fill="#fff"/>
+    <circle cx="0" cy="-410" r="32" transform="rotate(337.5)" fill="#fff"/>
+    <circle r="360" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(0)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(30)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(60)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(90)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(120)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(150)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(180)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(210)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(240)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(270)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(300)" fill="#fff"/>
+    <path d="M0,-210 C75,-245 75,-300 0,-340 C-75,-300 -75,-245 0,-210 Z" transform="rotate(330)" fill="#fff"/>
+    <circle r="210" fill="#fff"/>
+    <path d="M0,-50 C48,-95 48,-150 0,-185 C-48,-150 -48,-95 0,-50 Z" transform="rotate(0)" fill="#fff"/>
+    <path d="M0,-50 C48,-95 48,-150 0,-185 C-48,-150 -48,-95 0,-50 Z" transform="rotate(45)" fill="#fff"/>
+    <path d="M0,-50 C48,-95 48,-150 0,-185 C-48,-150 -48,-95 0,-50 Z" transform="rotate(90)" fill="#fff"/>
+    <path d="M0,-50 C48,-95 48,-150 0,-185 C-48,-150 -48,-95 0,-50 Z" transform="rotate(135)" fill="#fff"/>
+    <path d="M0,-50 C48,-95 48,-150 0,-185 C-48,-150 -48,-95 0,-50 Z" transform="rotate(180)" fill="#fff"/>
+    <path d="M0,-50 C48,-95 48,-150 0,-185 C-48,-150 -48,-95 0,-50 Z" transform="rotate(225)" fill="#fff"/>
+    <path d="M0,-50 C48,-95 48,-150 0,-185 C-48,-150 -48,-95 0,-50 Z" transform="rotate(270)" fill="#fff"/>
+    <path d="M0,-50 C48,-95 48,-150 0,-185 C-48,-150 -48,-95 0,-50 Z" transform="rotate(315)" fill="#fff"/>
+    <circle r="50" fill="#fff"/>
+  </g>
+</svg>
