@@ -18,6 +18,11 @@ class BuiltInColoringPageCatalogTest {
     }
 
     @Test
+    fun pages_All_ListNewestFirst() {
+        assertEquals(FIRST_ADDED_ID, catalog.pages.last().id)
+    }
+
+    @Test
     fun find_KnownId_ReturnsPage() {
         val page = catalog.pages.first()
 
@@ -27,5 +32,9 @@ class BuiltInColoringPageCatalogTest {
     @Test
     fun find_UnknownId_ReturnsNull() {
         assertNull(catalog.find("missing"))
+    }
+
+    private companion object {
+        const val FIRST_ADDED_ID = "cat"
     }
 }

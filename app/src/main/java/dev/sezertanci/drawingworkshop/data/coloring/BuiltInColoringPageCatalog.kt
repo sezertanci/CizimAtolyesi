@@ -6,7 +6,8 @@ import javax.inject.Inject
 /** Uygulamayla gelen boyama sayfaları. Kimlikler kayıtlarda saklandığı için değiştirilmez. */
 class BuiltInColoringPageCatalog @Inject constructor() : ColoringPageCatalog {
 
-    override val pages: List<ColoringPage> = listOf(
+    /** Eklenme sırası: yeni sayfa listenin sonuna yazılır. */
+    private val pagesInAddedOrder = listOf(
         ColoringPage("cat", R.drawable.coloring_cat),
         ColoringPage("fish", R.drawable.coloring_fish),
         ColoringPage("house", R.drawable.coloring_house),
@@ -28,6 +29,9 @@ class BuiltInColoringPageCatalog @Inject constructor() : ColoringPageCatalog {
         ColoringPage("princess", R.drawable.coloring_princess),
         ColoringPage("ballgown", R.drawable.coloring_ballgown),
     )
+
+    /** Yeniden eskiye sıralı; yeni eklenen sayfalar galeride ilk sırada görünür. */
+    override val pages: List<ColoringPage> = pagesInAddedOrder.asReversed()
 
     private val byId = pages.associateBy(ColoringPage::id)
 
