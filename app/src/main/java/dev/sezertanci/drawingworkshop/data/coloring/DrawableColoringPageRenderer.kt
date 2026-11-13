@@ -5,9 +5,9 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.util.Size
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.sezertanci.drawingworkshop.domain.geometry.PixelRect
 import dev.sezertanci.drawingworkshop.domain.geometry.fitCenter
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 /**
  * Sayfaları vektör çizimden çizer; çizgiler her boyutta keskin kalır. Her çağrıda çizimin ayrı bir
@@ -20,18 +20,19 @@ class DrawableColoringPageRenderer @Inject constructor(
 
     override fun draw(templateId: String, canvas: Canvas, width: Int, height: Int) {
         val drawable = drawable(templateId) ?: return
-        val bounds = fitCenter(drawable.intrinsicWidth, drawable.intrinsicHeight, width, height)
-        drawable.setBounds(
-            bounds.left.roundToInt(),
-            bounds.top.roundToInt(),
-            (bounds.left + bounds.width).roundToInt(),
-            (bounds.top + bounds.height).roundToInt(),
-        )
+        val bounds = artBounds(drawable, width, height)
+        drawable.setBounds(bounds.left, bounds.top, bounds.right, bounds.bottom)
         drawable.draw(canvas)
     }
 
+    override fun artBounds(templateId: String, width: Int, height: Int): PixelRect? =
+        drawable(templateId)?.let { artBounds(it, width, height) }
+
     override fun artSize(templateId: String): Size? =
         drawable(templateId)?.let { Size(it.intrinsicWidth, it.intrinsicHeight) }
+
+    private fun artBounds(drawable: Drawable, width: Int, height: Int): PixelRect =
+        fitCenter(drawable.intrinsicWidth, drawable.intrinsicHeight, width, height).toPixelRect()
 
     private fun drawable(templateId: String): Drawable? {
         val page = catalog.find(templateId) ?: return null

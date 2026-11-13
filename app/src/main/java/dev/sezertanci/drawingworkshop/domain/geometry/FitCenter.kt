@@ -1,9 +1,18 @@
 package dev.sezertanci.drawingworkshop.domain.geometry
 
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 /** Bir görüntünün hedef alana yerleşeceği dikdörtgen. */
-data class ScaledBounds(val left: Float, val top: Float, val width: Float, val height: Float)
+data class ScaledBounds(val left: Float, val top: Float, val width: Float, val height: Float) {
+    /** Kenarları en yakın piksele yuvarlanmış hâli. */
+    fun toPixelRect(): PixelRect = PixelRect(
+        left.roundToInt(),
+        top.roundToInt(),
+        (left + width).roundToInt(),
+        (top + height).roundToInt(),
+    )
+}
 
 /**
  * Kaynağı en-boy oranını koruyarak hedefin içine sığdırır ve ortalar. Kaydedilen resim farklı

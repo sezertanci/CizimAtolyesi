@@ -21,12 +21,14 @@ class ScanlineFloodFiller @Inject constructor() : FloodFiller {
         startY: Int,
         color: Int,
         walls: BooleanArray?,
+        boundary: PixelRect?,
     ): PixelRect? {
         if (startX !in 0 until width || startY !in 0 until height) return null
         val target = pixels[startY * width + startX]
         if (target == color) return null
 
-        val region = FillRegion(pixels, width, height, target, walls)
+        val side = boundary?.let { BoundarySide(it, width, it.contains(startX, startY)) }
+        val region = FillRegion(pixels, width, height, target, walls, side)
         region.floodFrom(startX, startY, color)
         repeat(EDGE_BLEND_PASSES) { region.blendEdges(color) }
         return region.bounds()
@@ -38,6 +40,7 @@ class ScanlineFloodFiller @Inject constructor() : FloodFiller {
         private val height: Int,
         private val target: Int,
         private val walls: BooleanArray?,
+        private val side: BoundarySide?,
     ) {
         private val filled = BooleanArray(pixels.size)
         private val stack = IntStack()
@@ -88,7 +91,7 @@ class ScanlineFloodFiller @Inject constructor() : FloodFiller {
             for (y in y0..y1) {
                 for (x in x0..x1) {
                     val index = y * width + x
-                    if (!filled[index] && isTranslucent(pixels[index]) && touchesFilled(x, y)) edges.push(index)
+                    if (!filled[index] && isOnSide(index) && isTranslucent(pixels[index]) && touchesFilled(x, y)) edges.push(index)
                 }
             }
             while (edges.isNotEmpty()) {
@@ -110,7 +113,9 @@ class ScanlineFloodFiller @Inject constructor() : FloodFiller {
         }
 
         private fun canFill(index: Int): Boolean =
-            !filled[index] && (walls == null || !walls[index]) && ColorMath.isClose(pixels[index], target, TOLERANCE)
+            !filled[index] && (walls == null || !walls[index]) && isOnSide(index) && ColorMath.isClose(pixels[index], target, TOLERANCE)
+
+        private fun isOnSide(index: Int): Boolean = side == null || side.matches(index)
 
         private fun paint(index: Int, color: Int) {
             pixels[index] = color
@@ -125,6 +130,11 @@ class ScanlineFloodFiller @Inject constructor() : FloodFiller {
         }
 
         private fun isTranslucent(pixel: Int): Boolean = ColorMath.alpha(pixel) in 1 until ColorMath.MAX_CHANNEL
+    }
+
+    /** Dolgunun [boundary] kenarının hangi tarafında ([inside]) kalacağını belirler. */
+    private class BoundarySide(private val boundary: PixelRect, private val width: Int, private val inside: Boolean) {
+        fun matches(index: Int): Boolean = boundary.contains(index % width, index / width) == inside
     }
 
     private class IntStack {

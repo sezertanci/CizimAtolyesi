@@ -23,6 +23,6 @@ class LineArtFactory @Inject constructor(
         pageRenderer.draw(templateId, Canvas(bitmap), width, height)
         val pixels = IntArray(width * height)
         bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
-        LineArt(bitmap, LineWalls.fromPixels(pixels))
+        LineArt(bitmap, LineWalls.fromPixels(pixels), pageRenderer.artBounds(templateId, width, height))
     }
 }

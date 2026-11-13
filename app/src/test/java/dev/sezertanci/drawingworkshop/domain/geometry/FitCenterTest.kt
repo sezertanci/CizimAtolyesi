@@ -21,6 +21,11 @@ class FitCenterTest {
     }
 
     @Test
+    fun toPixelRect_FractionalBounds_RoundsEdges() {
+        assertEquals(PixelRect(1, 2, 13, 7), ScaledBounds(0.6f, 2.4f, 12.2f, 4.5f).toPixelRect())
+    }
+
+    @Test
     fun fitLayer_NoContent_MatchesFitCenter() {
         assertEquals(fitCenter(800, 600, 1000, 600), fitLayer(800, 600, 1000, 600))
     }

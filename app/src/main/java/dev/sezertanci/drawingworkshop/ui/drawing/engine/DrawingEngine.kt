@@ -259,9 +259,11 @@ class DrawingEngine @Inject constructor(
         isFilling = true
         try {
             val pixels = surface.readPixels()
-            val walls = currentLineArt()?.walls
+            val art = currentLineArt()
             val filled = withContext(fillDispatcher) {
-                seeds.mapNotNull { floodFiller.fill(pixels, width, height, it.x, it.y, color, walls) }.mergeOverlapping()
+                seeds.mapNotNull {
+                    floodFiller.fill(pixels, width, height, it.x, it.y, color, art?.walls, art?.artBounds)
+                }.mergeOverlapping()
             }
             if (filled.isEmpty() || surface.width != width || surface.height != height) return false
             surface.snapshot(filled.map { it.toRect() })?.let(history::record)

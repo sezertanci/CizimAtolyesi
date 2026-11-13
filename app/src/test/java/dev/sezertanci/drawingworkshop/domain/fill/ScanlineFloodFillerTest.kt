@@ -86,6 +86,39 @@ class ScanlineFloodFillerTest {
     }
 
     @Test
+    fun fill_StartInsideBoundary_StopsAtBoundaryEdge() {
+        val pixels = canvas { _, _ -> WHITE }
+
+        val bounds = filler.fill(pixels, SIZE, SIZE, 3, 3, RED, boundary = ART)
+
+        assertEquals(ART, bounds)
+        assertEquals(RED, pixels[3 * SIZE + 3])
+        assertEquals(WHITE, pixels[3 * SIZE + 1])
+        assertEquals(WHITE, pixels[0])
+    }
+
+    @Test
+    fun fill_StartOutsideBoundary_FillsOnlyOutside() {
+        val pixels = canvas { _, _ -> WHITE }
+
+        filler.fill(pixels, SIZE, SIZE, 0, 0, RED, boundary = ART)
+
+        assertEquals(RED, pixels[3 * SIZE + 1])
+        assertEquals(RED, pixels[SIZE * SIZE - 1])
+        assertEquals(WHITE, pixels[3 * SIZE + 3])
+    }
+
+    @Test
+    fun fill_TranslucentPixelAcrossBoundary_DoesNotBlend() {
+        // Çizim alanının hemen dışındaki sütun yarı saydam; içeriden başlayan dolgu ona dokunmaz.
+        val pixels = canvas { x, _ -> if (x == ART.left - 1) HALF_BLACK else WHITE }
+
+        filler.fill(pixels, SIZE, SIZE, 3, 3, RED, boundary = ART)
+
+        assertEquals(HALF_BLACK, pixels[3 * SIZE + ART.left - 1])
+    }
+
+    @Test
     fun sourceOver_OpaqueSource_ReturnsSource() {
         assertEquals(BLACK, ColorMath.sourceOver(BLACK, RED))
     }
@@ -106,5 +139,6 @@ class ScanlineFloodFillerTest {
         const val RED = 0xFFFF0000.toInt()
         const val TRANSPARENT = 0
         const val HALF_BLACK = 0x80000000.toInt()
+        val ART = PixelRect(2, 2, 5, 5)
     }
 }
