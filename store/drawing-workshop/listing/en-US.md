@@ -18,6 +18,12 @@ Drawings are saved automatically and are always waiting in the gallery.
 
 No ads, no accounts and no in-app purchases. No personal data is collected, drawings stay on the device and no internet connection is needed.
 
+## Sürüm notu (1.4.0)
+
+- Six new colouring pages: a unicorn, a dog, a castle, a fire engine, a train and a mandala.
+- The newest colouring pages now appear first in the list.
+- The paint bucket no longer spills outside the drawing.
+
 ## Sürüm notu (1.3.1)
 
 - New app icon: a rainbow flower and a paintbrush.

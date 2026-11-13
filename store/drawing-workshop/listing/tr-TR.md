@@ -18,6 +18,12 @@ Resimler otomatik olarak kaydedilir ve her zaman galeride sizi bekler.
 
 Reklam, hesap ve uygulama içi satın alma yoktur. Kişisel veri toplanmaz, resimler yalnızca cihazda saklanır ve internet bağlantısı gerekmez.
 
+## Sürüm notu (1.4.0)
+
+- Altı yeni boyama sayfası: unicorn, köpek, kale, itfaiye aracı, tren ve mandala.
+- Yeni eklenen boyama sayfaları artık listenin başında görünür.
+- Boya kovası artık çizimin dışına taşmıyor.
+
 ## Sürüm notu (1.3.1)
 
 - Yeni uygulama simgesi: gökkuşağı renkli çiçek ve boya fırçası.
